@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:fontawesome="clr-namespace:VDCA.Utils"
+             xmlns:ask="clr-namespace:VDCA.Ask"
+             x:Class="VDCA.Ask.AskViewLandscape"
+             x:Name="ask_view_landscape"
+             IsVisible="true"
+             x:DataType="ask:AskViewLandscape"
+             BackgroundColor="{StaticResource PrimaryText}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Label Text="{Binding Source={x:Reference ask_view_landscape}, Path=LandscapeAskText[0].TitleText}"
+               Grid.Row="0"
+               Grid.Column="0"
+               Grid.ColumnSpan="5"
+		       FontSize="{DynamicResource ExtraSmallFontSize}"
+               FontAttributes="Bold"
+               x:Name="ask_title_label_landscape"
+               Padding="0,0,0,0"
+               BackgroundColor="Transparent"
+               VerticalOptions="FillAndExpand"
+               HorizontalOptions="FillAndExpand"
+               TextColor="{StaticResource PrimaryBackground}"
+               VerticalTextAlignment="Center"
+               HorizontalTextAlignment="Center" />
+        <ImageButton Grid.Row="0"
+                     Grid.Column="5"
+                     Aspect="AspectFit"
+                     x:Name="close_ask_button_landscape"
+                     WidthRequest="15"
+                     HeightRequest="15"
+                     Padding="0,0,0,0"
+                     BackgroundColor="Transparent"
+                     Source="white_close.png"
+                     VerticalOptions="FillAndExpand"
+                     HorizontalOptions="EndAndExpand"
+                     Clicked="OnAskCloseButtonClicked" />
+        <Label Grid.Row="1"
+               Grid.Column="0"
+               Grid.ColumnSpan="6"
+               Text="{Binding Source={x:Reference ask_view_landscape}, Path=LandscapeAskText[0].MessageText}"
+               x:Name="ask_message_label_landscape"
+               Padding="0,0,0,0"
+		       FontSize="{DynamicResource ExtraSmallFontSize}"
+               BackgroundColor="Transparent"
+               HorizontalOptions="FillAndExpand"
+               TextColor="{StaticResource PrimaryBackground}"
+               VerticalTextAlignment="Center"
+               HorizontalTextAlignment="Center" />
+        <Button Text="{Binding Source={x:Reference ask_view_landscape}, Path=LandscapeAskText[0].YesButtonText}"
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                x:Name="yes_ask_button_landscape"
+                Padding="0,0,0,0"
+		        FontSize="{DynamicResource ExtraSmallFontSize}"
+                TextColor="{StaticResource PrimaryBackground}"
+                BackgroundColor="Transparent"
+                HorizontalOptions="FillAndExpand"
+                Clicked="OnAskYesButtonClicked" />
+        <Button Text="{Binding Source={x:Reference ask_view_landscape}, Path=LandscapeAskText[0].NoButtonText}"
+                Grid.Row="2"
+                Grid.Column="3"
+                Grid.ColumnSpan="3"
+                x:Name="no_ask_button_landscape"
+                Padding="0,0,0,0"
+		       FontSize="{DynamicResource ExtraSmallFontSize}"
+                TextColor="{StaticResource PrimaryBackground}"
+                BackgroundColor="Transparent"
+                HorizontalOptions="FillAndExpand"
+                Clicked="OnAskNoButtonClicked" />
+        <Button Text="Please Don't Ask Anymore!"
+                Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="6"
+                x:Name="dont_ask_button_landscape"
+                Padding="0,0,0,0"
+		       FontSize="{DynamicResource ExtraSmallFontSize}"
+                IsVisible="{Binding Source={x:Reference ask_view_landscape}, Path=LandscapeAskText[0].DontAsk}"
+                TextColor="{StaticResource PrimaryBackground}"
+                BackgroundColor="Transparent"
+                HorizontalOptions="FillAndExpand"
+                Clicked="OnAskCloseButtonClicked"/>
+    </Grid>
+</ContentView>

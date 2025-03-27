@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Color x:Key="PrimaryYellow">#ffc800</Color>
+    <Color x:Key="PrimaryWhite">#ffffff</Color>
+    <Color x:Key="PrimaryBlack">#000000</Color>
+    <Color x:Key="PrimaryText">#000080</Color>
+    <Color x:Key="PrimaryTextColor">#000080</Color>
+    <Color x:Key="PrimaryBackground">#ffffff</Color>
+    <Color x:Key="PrimaryBackgroundColor">#ffffff</Color>
+    <Color x:Key="PrimaryButtonBackground">#000080</Color>
+    <Color x:Key="PrimaryButtonText">#ffffff</Color>
+    <Color x:Key="PrimaryCardQBackground">#ffffff</Color>
+    <Color x:Key="PrimaryCardABackground">#d4d4d4</Color>
+    <Color x:Key="PrimaryCardQBackgroundDark">#000080</Color>
+    <Color x:Key="PrimaryCardABackgroundDark">#000046</Color>
+    <Color x:Key="PrimaryInformationBackground">#ffff00</Color>
+    <Color x:Key="PrimaryProgress">#ffff00</Color>
+    <Color x:Key="PrimaryPass">#22b573</Color>
+    <Color x:Key="PrimaryLowPass">#ffc800</Color>
+    <Color x:Key="PrimaryFail">#ff0000</Color>
+    <Color x:Key="PrimaryCardProgressbarLeft">#353b41</Color>
+    <Color x:Key="PrimaryCardProgressText">#b3b3b3</Color>
+    <Color x:Key="PrimaryListDescriptionText">#7e807f</Color>
+    <!-- Need to find out the color for the icons on the card when selected -->
+    <Color x:Key="PrimaryCardIcons">#b3b3b3</Color>
+    <Color x:Key="PrimaryCardIconsSelected">#b3b3b3</Color>
+    <Color x:Key="PrimaryAllListSelected">#ffc800</Color>
+    <Color x:Key="PrimaryGreyedText">#748073</Color>
+    <!-- Flashcard color changes for Dark Mode, there is no change to the rest of the app a2880f -->
+    <Color x:Key="PrimaryCardTextDark">#ffffff</Color>
+    <Color x:Key="PrimaryLabelOptions">#808080</Color>
+    <Color x:Key="PrimaryOptionsButtonBackground">#4d4d4d</Color>
+    <Color x:Key="PrimaryBackgroundBuzy">#80171d23</Color>
+    <Color x:Key="PrimaryIconLightMode">#666666</Color>
+    <Color x:Key="PrimaryMenuBackground">#80000000</Color>
+    
+
+
+</ResourceDictionary>

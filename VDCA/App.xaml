@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:VDCA"
+             x:Class="VDCA.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Icons.xaml" />
+                <!-- Removed Sizes.xaml reference <ResourceDictionary Source="Sizes/Sizes.xaml" /> <ResourceDictionary Source="Resources/Styles/Sizes.xaml" /> 
+                 As it is now loaded in the App.xaml.cs file-->
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+        <!-- Style for Shell -->
+        <Style TargetType="Shell">
+            <Setter Property="Shell.BackgroundColor"
+                    Value="{StaticResource PrimaryButtonBackground}" />
+            <Setter Property="Shell.ForegroundColor"
+                    Value="{StaticResource PrimaryBackground}" />
+            <Setter Property="Shell.TitleColor"
+                    Value="{StaticResource PrimaryBackground}" />
+            <Setter Property="Shell.DisabledColor"
+                    Value="{StaticResource PrimaryIconLightMode}" />
+            <Setter Property="Shell.UnselectedColor"
+                    Value="{StaticResource PrimaryBackground}" />
+            <Setter Property="Shell.TabBarBackgroundColor"
+                    Value="{StaticResource PrimaryButtonBackground}" />
+            <Setter Property="Shell.TabBarForegroundColor"
+                    Value="{StaticResource PrimaryBackground}" />
+            <Setter Property="Shell.TabBarTitleColor"
+                    Value="{StaticResource PrimaryBackground}" />
+            <Setter Property="Shell.TabBarUnselectedColor"
+                    Value="{StaticResource PrimaryBackground}" />
+        </Style>
+        <!-- 
+        <Style TargetType="{x:Type NavigationPage}">
+            <Setter Property="BarBackgroundColor" Value="{StaticResource PrimaryButtonBackground}" />
+            <Setter Property="BarTextColor" Value="{StaticResource PrimaryBackground}" />
+        </Style> -->
+        
+    </Application.Resources>
+</Application>
+
+     

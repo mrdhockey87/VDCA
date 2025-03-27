@@ -1,0 +1,354 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net9.0-ios;net9.0-maccatalyst;net9.0-android</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
+    <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+    <!-- <TargetFrameworks>$(TargetFrameworks);net6.0-tizen</TargetFrameworks> -->
+    <OutputType>Exe</OutputType>
+    <RootNamespace>VDCA</RootNamespace>
+    <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <!-- Display name -->
+    <ApplicationTitle>VA Accredited Exam Study Guide</ApplicationTitle>
+    <!-- App Identifier -->
+    <ApplicationId>com.vdcainc.vdca</ApplicationId>
+    <ApplicationIdGuid>3a6086e7-915d-4e3f-8baa-136c94590765</ApplicationIdGuid>
+    <!-- Versions -->
+    <ApplicationDisplayVersion>6.035.0513</ApplicationDisplayVersion>
+    <ApplicationVersion>5</ApplicationVersion>
+    <PackageVersion>1.0.0</PackageVersion>
+    <AssemblyVersion>$(ApplicationDisplayVersion).$(ApplicationVersion)</AssemblyVersion>
+    <MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
+    <!-- Windows App Sdk -->
+    <WindowsAppSdkDeploymentManagerInitialize>false</WindowsAppSdkDeploymentManagerInitialize>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    <!-- Supported OS Platform Versions-->
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">13.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</SupportedOSPlatformVersion>
+    <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.19041.0</TargetPlatformMinVersion>
+    <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+    <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
+    <Configurations>Release;Debug</Configurations>
+    <AndroidMinSdkVersion>21</AndroidMinSdkVersion> <!-- Set this to the minimum Android version you want to support -->
+  </PropertyGroup>  
+  <!-- added for debugging 
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+       <DebugType>portable</DebugType>
+       <DebugSymbols>true</DebugSymbols>
+       <Optimize>false</Optimize>
+   </PropertyGroup> -->
+  <!-- Specify RuntimeIdentifier for each target framework conditionally -->
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-ios'">
+    <RuntimeIdentifier>iossimulator-x64</RuntimeIdentifier>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-maccatalyst'">
+    <RuntimeIdentifier>maccatalyst-x64</RuntimeIdentifier>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
+    <RuntimeIdentifier>android-arm64</RuntimeIdentifier>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows10.0.19041.0'">
+    <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+  </PropertyGroup>
+<!-- Combined Properties Debug -->
+  <PropertyGroup>
+    <PublishAot>false</PublishAot>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AssemblyName>VDCA</AssemblyName>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DefaultLanguage>en-US</DefaultLanguage>
+  </PropertyGroup>  
+<!-- MacCatalyst Properties Debug -->
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
+    <CreatePackage>false</CreatePackage>
+    <MtouchUseLlvm>true</MtouchUseLlvm>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignProvision>VDAC_Dev</CodesignProvision>
+    <ProvisioningType>automatic</ProvisioningType>
+  </PropertyGroup>
+<!-- MacCatalyst Properties Release -->
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
+    <CreatePackage>false</CreatePackage>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignProvision>VDAC_Dev</CodesignProvision>
+    <ProvisioningType>automatic</ProvisioningType>
+  </PropertyGroup>
+<!-- iOS Properties Debug-->
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
+    <MtouchUseLlvm>True</MtouchUseLlvm>
+    <iOSAotAssemblies>False</iOSAotAssemblies>
+    <CreatePackage>false</CreatePackage>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignProvision>VDAC_Dev</CodesignProvision>
+    <ProvisioningType>automatic</ProvisioningType>
+    <CreatePackage>false</CreatePackage>
+  </PropertyGroup>
+<!-- iOS Properties Release-->  
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
+    <MtouchLink>SdkOnly</MtouchLink>
+    <CreatePackage>false</CreatePackage>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignProvision>VDAC_Dev</CodesignProvision>
+    <ProvisioningType>automatic</ProvisioningType>
+    <CreatePackage>false</CreatePackage>
+  </PropertyGroup>
+<!-- iOS Properties Both Siging Option-->    
+  <PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
+    <CodesignKey>Apple Development: Mark Dail (KK8H444RM4)</CodesignKey>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+  </PropertyGroup>
+<!-- Android Properties Debug -->
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
+    <AndroidPackageFormat>apk</AndroidPackageFormat>
+    <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
+    <PublishTrimmed>False</PublishTrimmed>
+    <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+    <AndroidEnableMultiDex>True</AndroidEnableMultiDex>
+    <AndroidUseAapt2>True</AndroidUseAapt2>
+    <RunAOTCompilation>False</RunAOTCompilation>
+    <TrimMode>link</TrimMode>
+    <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+  </PropertyGroup>  
+<!-- Android Properties Release -->
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
+    <AndroidPackageFormat>apk</AndroidPackageFormat>
+    <AndroidUseFastDeployment>False</AndroidUseFastDeployment>
+    <PublishTrimmed>False</PublishTrimmed>
+    <AndroidEnableMultiDex>True</AndroidEnableMultiDex>
+    <RunAOTCompilation>False</RunAOTCompilation>
+    <AndroidUseAapt2>True</AndroidUseAapt2>
+    <DebugSymbols>True</DebugSymbols>
+    <TrimMode>link</TrimMode>
+    <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
+    <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+    <!-- added for debugging 
+    <AndroidLinkMode>None</AndroidLinkMode>
+    <EmbedAssembliesIntoApk>false</EmbedAssembliesIntoApk>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>-->
+  </PropertyGroup>
+<!-- Windows Properties Debug-->  
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.19041.0|AnyCPU'">
+  </PropertyGroup>
+<!-- Windows Properties Release-->  
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'">
+  </PropertyGroup>
+  <!-- ItemGroups -->
+  <ItemGroup>
+    <!-- App Icon -->
+    <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" TintColor="#FFFFFF" />
+    <MauiIcon Include="Resources\AppIcon\appiconfg.svg" />
+    <!-- Splash Screen  TintColor="#FFFFFF" -->
+    <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#B0E0E6" BaseSize="400,400"/> <!-- TintColor="Transparent"/> -->
+    <!-- Images -->
+    <MauiImage Include="Resources\Images\*" />
+    <!-- Custom Fonts -->
+    <MauiFont Include="Resources\Fonts\*" />
+    <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+    <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+ <!-- Remove ItemGroups -->
+  <ItemGroup>
+    <BundleResource Remove="Platforms\iOS\Resources\back_white%402.png" />
+    <BundleResource Remove="Platforms\iOS\Resources\back_white%403.png" />
+    <BundleResource Remove="Platforms\iOS\Resources\back_white.png" />
+  </ItemGroup>
+<!-- Remove ItemGroups -->
+  <ItemGroup>
+    <None Remove="Platforms\iOS\Resources\back_white%402.png" />
+    <None Remove="Platforms\iOS\Resources\back_white%403.png" />
+    <None Remove="Platforms\iOS\Resources\back_white.png" />
+    <None Remove="Resources\AppIcon\appiconfg.svg" />
+    <None Remove="Resources\Images\arrow_down_left_navy.svg" />
+    <None Remove="Resources\Images\arrow_down_navy.svg" />
+    <None Remove="Resources\Images\arrow_down_right_navy.svg" />
+    <None Remove="Resources\Images\arrow_left_navy.svg" />
+    <None Remove="Resources\Images\arrow_right_navy.svg" />
+    <None Remove="Resources\Images\arrow_up_left_navy.svg" />
+    <None Remove="Resources\Images\arrow_up_navy.svg" />
+    <None Remove="Resources\Images\arrow_up_right_navy.svg" />
+    <None Remove="Resources\Images\back_icon.svg" />
+    <None Remove="Resources\Images\back_navy.svg" />
+    <None Remove="Resources\Images\blank_space.svg" />
+    <None Remove="Resources\Images\capital_a.svg" />
+    <None Remove="Resources\Images\capital_q.svg" />
+    <None Remove="Resources\Images\checkmark_square.svg" />
+    <None Remove="Resources\Images\chevron_left_white.svg" />
+    <None Remove="Resources\Images\citation.svg" />
+    <None Remove="Resources\Images\citation_navy.svg" />
+    <None Remove="Resources\Images\close_navy.svg" />
+    <None Remove="Resources\Images\close_white.svg" />
+    <None Remove="Resources\Images\explanation.svg" />
+    <None Remove="Resources\Images\explanation_navy.svg" />
+    <None Remove="Resources\Images\feedback_down.svg" />
+    <None Remove="Resources\Images\feedback_up.svg" />
+    <None Remove="Resources\Images\flag_off.svg" />
+    <None Remove="Resources\Images\flag_on.svg" />
+    <None Remove="Resources\Images\flip.svg" />
+    <None Remove="Resources\Images\flip_darkmode.svg" />
+    <None Remove="Resources\Images\gotit_navy.svg" />
+    <None Remove="Resources\Images\hide_off.svg" />
+    <None Remove="Resources\Images\hide_on.svg" />
+    <None Remove="Resources\Images\menu_white.svg" />
+    <None Remove="Resources\Images\navy_a.svg" />
+    <None Remove="Resources\Images\navy_b.svg" />
+    <None Remove="Resources\Images\navy_c.svg" />
+    <None Remove="Resources\Images\navy_checkmark.svg" />
+    <None Remove="Resources\Images\navy_d.svg" />
+    <None Remove="Resources\Images\navy_home_icon.svg" />
+    <None Remove="Resources\Images\navy_lock.svg" />
+    <None Remove="Resources\Images\navy_lock_big.svg" />
+    <None Remove="Resources\Images\navy_lock_centered.svg" />
+    <None Remove="Resources\Images\navy_q.svg" />
+    <None Remove="Resources\Images\navy_unlock.svg" />
+    <None Remove="Resources\Images\next_navy.svg" />
+    <None Remove="Resources\Images\settings.svg" />
+    <None Remove="Resources\Images\three_dots_vert.svg" />
+    <None Remove="Resources\Images\two_dice.svg" />
+    <None Remove="Resources\Images\unchecked_square.svg" />
+    <None Remove="Resources\Images\vdca_solid_color.svg" />
+    <None Remove="Resources\Images\vdca_solid_color_top.svg" />
+    <None Remove="Resources\Images\white_a.svg" />
+    <None Remove="Resources\Images\white_b.svg" />
+    <None Remove="Resources\Images\white_c.svg" />
+    <None Remove="Resources\Images\white_checkmark.svg" />
+    <None Remove="Resources\Images\white_close.svg" />
+    <None Remove="Resources\Images\white_d.svg" />
+    <None Remove="Resources\Images\white_lock.svg" />
+    <None Remove="Resources\Images\white_lock_big.svg" />
+    <None Remove="Resources\Images\white_lock_centered.svg" />
+    <None Remove="Resources\Images\white_q.svg" />
+    <None Remove="Resources\Images\white_unlock.svg" />
+  </ItemGroup>
+<!-- Nuget's ItemGroups -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.50" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.50" />
+    <PackageReference Include="Microsoft.Maui.Essentials" Version="9.0.50" />
+    <PackageReference Include="CommunityToolkit.Maui" Version="11.1.0" />
+    <PackageReference Include="CommunityToolkit.Maui.Markup" Version="5.1.0" />
+    <PackageReference Include="Microsoft.AppCenter" Version="5.0.7" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.7" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.11" />
+  </ItemGroup>
+<!-- Code Files (cs) ItemGroups -->
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Sizes\AppSizes.xaml.cs">
+      <DependentUpon>AppSizes.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Sizes\SmallTabletSizes.xaml.cs">
+      <DependentUpon>SmallTabletSizes.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\QuestionAlert.xaml.cs">
+      <DependentUpon>QuestionAlert.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\InformationAlert.xaml.cs">
+      <DependentUpon>InformationAlert.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MainContentPortrait.xaml.cs">
+      <DependentUpon>MainContentPortrait.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SelectPracticeView.xaml.cs">
+      <DependentUpon>SelectPracticeView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+<!-- Resources (Database) ItemGroups -->
+  <ItemGroup>
+    <MauiAsset Update="Resources\Raw\vdca.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </MauiAsset>
+  </ItemGroup>
+<!-- Code Files (XAML) ItemGroups -->
+  <ItemGroup>
+    <MauiXaml Update="AppShell.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Ask\AskViewLandscape.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Ask\AskViewPortrait.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="CustomControl\ArrowCaption.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="CustomControl\CustomCheckbox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="CustomControl\NavigationOnboardingOverlayControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="CustomControl\OnboardingOverlayControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Resources\Styles\Icons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Sizes\AppSizes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Sizes\SmallTabletSizes.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\AlertPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\ProgressBarOverlay.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\QuestionAlert.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\FlashcardView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\InformationAlert.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\MainContentPortrait.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\PracticecardView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\QuizView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\ReviewQuestion.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\ReviewQuizzesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\SelectFlashView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\SelectQuizView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+  </ItemGroup>
+<!-- Resources Embedded ItemGroups -->
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Fonts\" />
+  </ItemGroup>
+<!-- Resources Fonts ItemGroups -->
+</Project>

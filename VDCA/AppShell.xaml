@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:views="clr-namespace:VDCA.Views"
+       x:Class="VDCA.AppShell"
+       x:Name="shell"
+       FlyoutBackground="{StaticResource PrimaryBackground}"> <!-- Set the Flyout background -->
+    <!-- Define the Flyout Header -->
+    <Shell.FlyoutHeader>
+        <Grid BackgroundColor="{StaticResource PrimaryBackground}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="7*" />
+                <ColumnDefinition Width="2.5*" />
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="1"
+                   Grid.Row="0"
+                   Aspect="AspectFit"
+                   BackgroundColor="{StaticResource PrimaryBackground}"
+                   Source="vdca_solid_color.png"
+                   Margin="0,20,0,10"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center" />
+                <StackLayout Grid.Column="0"
+                             Grid.Row="1"
+                             Grid.ColumnSpan="3"
+                             Orientation="Vertical"
+                             BackgroundColor="{StaticResource PrimaryBackground}">
+                    <Label FontSize="{DynamicResource LargeFontSize}"
+                           Padding="20,0"
+                           Text="VDCA Menu Selections:"
+                           BackgroundColor="{StaticResource PrimaryBackground}"
+                           TextColor="{StaticResource PrimaryText}"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center" />
+                    <Border HeightRequest="1"
+                            BackgroundColor="{StaticResource PrimaryText}" />
+                </StackLayout>
+        </Grid>
+    </Shell.FlyoutHeader>
+
+    <!-- Define the Flyout Items -->
+    <FlyoutItem Title="Home"
+                Icon="navy_home_icon.png">
+        <ShellContent Route="MainPage"
+                      ContentTemplate="{DataTemplate views:MainPage}" />
+    </FlyoutItem>
+     <MenuItem Text="Flashcards"
+              IconImageSource="navy_chevron_right.png"
+              Clicked="OnFlashcardsClicked" />
+    <MenuItem Text="Practice"
+              IconImageSource="navy_chevron_right.png"
+              Clicked="OnPracticeClicked" />
+    <MenuItem Text="Quiz"
+              IconImageSource="navy_chevron_right.png"
+              Clicked="OnSelectQuizzesClicked" /> 
+    <MenuItem Text="Review"
+              IconImageSource="navy_chevron_right.png"
+              Clicked="OnReviewQuizzesClicked" />
+    <MenuItem Text="Flagged Question Only"
+              IconImageSource="navy_chevron_right.png"
+              Clicked="OnFlaggedOnlyClicked" />
+    <MenuItem Text="Hidden Question Only"
+              IconImageSource="navy_chevron_right.png"
+              Clicked="OnHiddenOnlyClicked" />
+    <MenuItem Text="Clear Flagged"
+              IconImageSource="navy_chevron_right.png"
+              Clicked="OnClearFlaggedClicked" />
+    <MenuItem Text="Clear Hidden"
+              IconImageSource="navy_chevron_right.png"
+              Clicked="OnClearHiddenClicked" />
+    <MenuItem Text="Clear Review"
+              IconImageSource="navy_chevron_right.png"
+              Clicked="OnClearReviewClicked" />
+    <MenuItem Text="Send Feedback"
+              IconImageSource="navy_chevron_right.png"
+              Clicked="OnSendFeedbackClicked" />
+    <MenuItem Text="Rate App"
+              IconImageSource="navy_chevron_right.png"
+              Clicked="OnRateAppClicked" />
+    <!-- Define the ItemTemplate for Flyout Items -->
+    <Shell.ItemTemplate>
+        <DataTemplate x:DataType="FlyoutItem">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Text="{Binding Title}"
+                       Grid.Column="1"
+                       VerticalOptions="Center"
+                       VerticalTextAlignment="Center"
+                       FontSize="{DynamicResource FlyoutMenuFontSize}"
+                       TextColor="{StaticResource PrimaryText}" />
+                <Image Source="{Binding Icon}"
+                       Grid.Column="0"
+                       VerticalOptions="Center"
+                       Aspect="AspectFill"
+                       WidthRequest="{DynamicResource MenuHeightRequest}"
+                       HeightRequest="{DynamicResource MenuHeightRequest}" />
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+    <!-- Define the MenuItemTemplate for Flyout Menu Items -->
+    <Shell.MenuItemTemplate>
+        <DataTemplate>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />                    
+                </Grid.ColumnDefinitions>
+                <Image Source="{Binding Icon}"
+                       Grid.Column="0"
+                       VerticalOptions="Center"
+                       Aspect="AspectFill"
+                       WidthRequest="{DynamicResource MenuHeightRequest}"
+                       HeightRequest="{DynamicResource MenuHeightRequest}"/>
+                <Label Text="{Binding Text}"
+                       Grid.Column="1"
+                       VerticalOptions="Center"
+                       VerticalTextAlignment="Center"
+                       FontSize="{DynamicResource FlyoutMenuFontSize}"
+                       TextColor="{StaticResource PrimaryText}" />
+            </Grid>
+        </DataTemplate>
+    </Shell.MenuItemTemplate>
+</Shell>

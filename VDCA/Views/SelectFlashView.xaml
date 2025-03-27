@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:SelectView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+                  ios:Page.UseSafeArea="True"
+                  x:Class="VDCA.Views.SelectFlashView"
+                  xmlns:views="clr-namespace:VDCA.Views"
+                  xmlns:vm="clr-namespace:VDCA.ViewModels"
+                  xmlns:mod="clr-namespace:VDCA.Models"
+                  xmlns:local="clr-namespace:VDCA.Converters"
+                  xmlns:checkbox="clr-namespace:VDCA.CustomControl"
+                  x:DataType="vm:SelectViewModel"
+                  Title="Select Categories for Flashcards">
+    <ContentPage.BindingContext>
+        <vm:SelectFlashViewModel x:Name="sfvm"/>
+    </ContentPage.BindingContext>
+    <Grid x:Name="SelecetFlashGrid">
+        <Grid BackgroundColor="{StaticResource PrimaryBackgroundColor}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="SelectAllButton"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="1"
+                    Margin="5,5,5,5"
+                    Text="Select All"
+                    Command="{Binding SelectCommand}"
+                    FontSize="{DynamicResource BaseFontSize}"
+                    TextColor="{StaticResource PrimaryBackgroundColor}"
+                    BackgroundColor="{StaticResource PrimaryButtonBackground}" />
+            <Button x:Name="UnselectAllButton"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="1"
+                    Margin="0,5,0,5"
+                    Text="Unselect All"
+                    Command="{Binding DeselectCommand}"
+                    FontSize="{DynamicResource BaseFontSize}"
+                    TextColor="{StaticResource PrimaryBackgroundColor}"
+                    BackgroundColor="{StaticResource PrimaryButtonBackground}" />
+            <Button x:Name="StartButton"
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="1"
+                    Margin="5,5,5,5"
+                    Text="Start"
+                    Command="{Binding StartCommand}"
+                    FontSize="{DynamicResource BaseFontSize}"
+                    TextColor="{StaticResource PrimaryBackgroundColor}"
+                    BackgroundColor="{StaticResource PrimaryButtonBackground}" />
+            <StackLayout x:Name="HeaderStackLayout"
+                          Grid.Row="1"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="3"
+                          Orientation="Horizontal"
+                          HorizontalOptions="Fill"
+                          VerticalOptions="Start"
+                          Margin="5, 0, 0, 0">
+                <Label Text="Select"
+                       BackgroundColor="{StaticResource PrimaryBackgroundColor}"
+                       TextColor="{StaticResource PrimaryGreyedText}"
+                       FontSize="{DynamicResource BaseFontSize}"
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Start"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Start" />
+                <Label Text="Category"
+                       BackgroundColor="{StaticResource PrimaryBackgroundColor}"
+                       TextColor="{StaticResource PrimaryGreyedText}"
+                       FontSize="{DynamicResource BaseFontSize}"
+                       Margin="5, 0, 0, 0"
+                       HorizontalTextAlignment="Start"
+                       HorizontalOptions="FillAndExpand"
+                       VerticalOptions="Start" />
+                <Label Text="# of Questions"
+                       Margin="0,0,4,0"
+                       BackgroundColor="{StaticResource PrimaryBackgroundColor}"
+                       TextColor="{StaticResource PrimaryGreyedText}"
+                       FontSize="{DynamicResource BaseFontSize}"
+                       HorizontalTextAlignment="End"
+                       HorizontalOptions="End"
+                       VerticalOptions="Start" />
+            </StackLayout>
+            <CollectionView x:Name="flashcardCatCollection"
+                             Grid.Row="2"
+                             Grid.Column="0"
+                             Grid.ColumnSpan="3"
+                             Margin="0, 0, 0, 0"                             
+                             BackgroundColor="{StaticResource PrimaryBackgroundColor}"
+                             ItemsLayout="VerticalList"
+                             ItemsSource="{Binding CategoriesCollection}"
+                             SelectionMode="Single"
+                             SelectionChangedCommand="{Binding CollectionViewSelectionChanged}"
+                             HorizontalOptions="Fill">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="mod:Categories">
+                        <Grid BackgroundColor="{Binding SelectedBackgroundColor}"
+                              HorizontalOptions="Fill"
+                              Margin="0, 0, 0, 0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <checkbox:CustomCheckbox Grid.Row="0"
+                                                     Grid.Column="0"
+                                                     Size="28"
+                                                     Margin="5,5,0,5"
+                                                     HorizontalOptions="Start"
+                                                     VerticalOptions="Start"
+                                                     IsChecked="{Binding ItIsChecked, Mode=TwoWay}"
+                                                     Color="{Binding SelectedCheckTextColor}" />
+                            <Label Grid.Row="0"
+                                   Grid.Column="1"
+                                   BackgroundColor="Transparent"
+                                   HorizontalOptions="Start"
+                                   VerticalOptions="Center"
+                                   Text="{Binding CategoryName}"
+                                   FontSize="{DynamicResource BaseFontSize}"
+                                   MaxLines="2"
+                                   Margin="{DynamicResource ListLeftMargin}"
+                                   InputTransparent="True"
+                                   TextColor="{StaticResource PrimaryTextColor}" />
+                            <Label Grid.Row="0"
+                                   Grid.Column="2"
+                                   BackgroundColor="Transparent"
+                                   HorizontalOptions="End"
+                                   VerticalOptions="Center"
+                                   MinimumWidthRequest="20"
+                                   Text="{Binding CategoryCount}"
+                                   HorizontalTextAlignment="End"
+                                   FontSize="{DynamicResource BaseFontSize}"
+                                   Margin="0, 5, 5, 0"
+                                   InputTransparent="True"
+                                   TextColor="{StaticResource PrimaryTextColor}" />
+                            <BoxView Color="{StaticResource PrimaryTextColor}"
+                                     Grid.Row="1"
+                                     Grid.Column="0"
+                                     Grid.ColumnSpan="3"
+                                     Margin="-2, 0, 0, 0"
+                                     HeightRequest="1"
+                                     HorizontalOptions="Fill" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+        <views:InformationAlert x:Name="informationSelectFlashcardAlert" />
+        <views:ProgressBarOverlay x:Name="progressBarSelectFlashOverlay" />
+    </Grid>
+</views:SelectView>

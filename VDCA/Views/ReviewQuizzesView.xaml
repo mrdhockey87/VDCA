@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="True"
+             xmlns:vm="clr-namespace:VDCA.ViewModels"
+             xmlns:views="clr-namespace:VDCA.Views"
+             xmlns:constants="clr-namespace:VDCA"
+             xmlns:mod="clr-namespace:VDCA.Models"
+             x:DataType="vm:ReviewQuizzesViewModel"
+             x:Class="VDCA.Views.ReviewQuizzesView"
+             x:Name="ReviewQuizzesViewPage"
+             Title="Review Quizzes">
+    <ContentPage.BindingContext>
+        <vm:ReviewQuizzesViewModel x:Name="rqvm" />
+    </ContentPage.BindingContext>
+    <Grid>
+        <StackLayout Orientation="Vertical"
+                     BackgroundColor="{StaticResource PrimaryBackground}">
+            <StackLayout Orientation="Horizontal"
+                         HorizontalOptions="FillAndExpand"
+                         Margin="0,0,0,0"
+                         VerticalOptions="Start">
+                <Grid x:Name="last_quiz_background"
+                      VerticalOptions="Start"
+                      Padding="0,0,0,25"
+                      HorizontalOptions="FillAndExpand"
+                      BackgroundColor="{Binding LastReviewQuiz.ResultColor}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6*" />
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="3*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="2*" />
+                    </Grid.RowDefinitions>
+                    <Label x:Name="last_quiz_percent"
+                           Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.RowSpan="6"
+                           Text="{Binding LastReviewQuiz.StringPercent, FallbackValue='0%'}"
+                           FontSize="{DynamicResource ExtraLargeFontSize}"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource PrimaryBackground}"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="CenterAndExpand" />
+                    <Label x:Name="last_quiz_title"
+                           Grid.Row="0"
+                           Grid.Column="1"
+                           Grid.ColumnSpan="2"
+                           Text="Quiz Results"
+                           FontSize="20"
+                           TextColor="{StaticResource PrimaryBackground}"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="CenterAndExpand" />
+                    <Label x:Name="quiz_date"
+                           Grid.Row="1"
+                           Grid.Column="1"
+                           Text="Date:"
+                           FontSize="{DynamicResource SmallFontSize}"
+                           TextColor="{StaticResource PrimaryBackground}"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="Start" />
+                    <Label x:Name="last_quiz_date"
+                           Grid.Row="1"
+                           Grid.Column="2"
+                           Text="{Binding LastReviewQuiz.DateTaken, FallbackValue='00/00/2000'}"
+                           FontSize="{DynamicResource BaseFontSize}"
+                           TextColor="{StaticResource PrimaryBackground}"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="CenterAndExpand" />
+                    <Label x:Name="quiz_time"
+                           Grid.Row="2"
+                           Grid.Column="1"
+                           Text="Time:"
+                           FontSize="{DynamicResource SmallFontSize}"
+                           TextColor="{StaticResource PrimaryBackground}"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="Start" />
+                    <Label x:Name="last_quiz_time"
+                           Grid.Row="2"
+                           Grid.Column="2"
+                           Text="{Binding LastReviewQuiz.TimeOfDay, FallbackValue='12:00:00 AM'}"
+                           FontSize="{DynamicResource BaseFontSize}"
+                           TextColor="{StaticResource PrimaryBackground}"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="CenterAndExpand" />
+                    <Label x:Name="quiz_duration"
+                           Grid.Row="3"
+                           Grid.Column="1"
+                           Text="Duration:"
+                           FontSize="{DynamicResource SmallFontSize}"
+                           TextColor="{StaticResource PrimaryBackground}"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="Start" />
+                    <Label x:Name="last_quiz_totaltime"
+                           Grid.Row="3"
+                           Grid.Column="2"
+                           Text="{Binding LastReviewQuiz.TotalTime, FallbackValue='00:00:00'}"
+                           FontSize="{DynamicResource BaseFontSize}"
+                           TextColor="{StaticResource PrimaryBackground}"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="CenterAndExpand" />
+                    <Label x:Name="last_quiz_number_correct"
+                           Grid.Row="4"
+                           Grid.Column="1"
+                           Grid.ColumnSpan="2"
+                           Text="{Binding LastReviewQuiz.CorrectOfTotal, FallbackValue='0 of 0 correct'}"
+                           FontSize="{DynamicResource MediumFontSize}"
+                           Padding="0,0,0,10"
+                           TextColor="{StaticResource PrimaryBackground}"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="CenterAndExpand" />
+                    <Button x:Name="last_quiz_qusetion_review"
+                            Grid.Row="5"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="2"
+                            Text="Review Incorrect Question"
+                            Clicked="OnReviewQuestion_Clicked"
+                            FontSize="{DynamicResource SmallFontSize}"
+                            TextColor="{StaticResource PrimaryText}"
+                            BackgroundColor="{StaticResource PrimaryBackground}"
+                            VerticalOptions="CenterAndExpand"
+                            HorizontalOptions="CenterAndExpand" />
+                </Grid>
+            </StackLayout>
+            <StackLayout Orientation="Vertical"
+                         HorizontalOptions="FillAndExpand"
+                         VerticalOptions="StartAndExpand">
+                <BoxView HeightRequest="2"
+                         VerticalOptions="Start"
+                         HorizontalOptions="FillAndExpand"
+                         BackgroundColor="{StaticResource PrimaryTextColor}" />
+                <CollectionView x:Name="ReviewCollectionView"
+                                Margin="0, 0, 0, 0"
+                                x:DataType="vm:ReviewQuizzesViewModel"
+                                ItemsSource="{Binding Quizzes}"
+                                ItemsLayout="VerticalList"
+                                VerticalOptions="FillAndExpand"
+                                HorizontalOptions="FillAndExpand">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="mod:ReviewQuiz">
+                            <StackLayout Orientation="Horizontal"
+                                         Padding="0,0,0,1"
+                                         BackgroundColor="{StaticResource PrimaryBackground}"
+                                         HorizontalOptions="FillAndExpand"
+                                         VerticalOptions="FillAndExpand">
+                                <Grid x:Name="ReviewCollectionViewGrid"
+                                      VerticalOptions="Start"
+                                      HorizontalOptions="FillAndExpand"
+                                      BackgroundColor="{StaticResource PrimaryBackground}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="8*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Label x:Name="past_quiz_percents"
+                                           Grid.Row="0"
+                                           Grid.Column="0"
+                                           Grid.RowSpan="3"
+                                           Text="{Binding StringPercent, FallbackValue='0%'}"
+                                           TextColor="{StaticResource PrimaryBackground}"
+                                           FontSize="36"
+                                           BackgroundColor="{Binding ResultColor}"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"
+                                           VerticalOptions="FillAndExpand"
+                                           HorizontalOptions="Start" />
+                                    <Label x:Name="past_quiz_dates"
+                                           Grid.Row="0"
+                                           Grid.Column="1"
+                                           Margin="5, 0, 0, 0"
+                                           Text="{Binding CorrectOfTotal, FallbackValue='0 of 0'}"
+                                           FontSize="{DynamicResource MediumFontSize}"
+                                           TextColor="{StaticResource PrimaryText}"
+                                           BackgroundColor="Transparent"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"
+                                           VerticalOptions="FillAndExpand"
+                                           HorizontalOptions="FillAndExpand" />
+                                    <Label x:Name="past_quiz_totaltime"
+                                           Grid.Row="1"
+                                           Grid.Column="1"
+                                           Margin="5, 0, 0, 0"
+                                           Text="{Binding TotalTimeLabel, FallbackValue='00:00:00'}"
+                                           FontSize="{DynamicResource MediumFontSize}"
+                                           TextColor="{StaticResource PrimaryText}"
+                                           BackgroundColor="Transparent"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"
+                                           VerticalOptions="FillAndExpand"
+                                           HorizontalOptions="FillAndExpand" />
+                                    <Label x:Name="past_quiz_score"
+                                           Grid.Row="2"
+                                           Grid.Column="1"
+                                           Margin="5, 0, 0, 0"
+                                           Text="{Binding DateAndTime, FallbackValue='12:00:00 AM 00/00/2000'}"
+                                           FontSize="{DynamicResource MediumFontSize}"
+                                           TextColor="{StaticResource PrimaryText}"
+                                           BackgroundColor="Transparent"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"
+                                           VerticalOptions="FillAndExpand"
+                                           HorizontalOptions="FillAndExpand" />
+                                </Grid>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </StackLayout>
+        <views:InformationAlert x:Name="informationReviewAlert" />
+        <views:ProgressBarOverlay x:Name="progressBarReviewOverlay" />
+    </Grid>
+</ContentPage>

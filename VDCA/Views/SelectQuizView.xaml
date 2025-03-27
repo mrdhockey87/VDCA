@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="True"
+             xmlns:views="clr-namespace:VDCA.Views"
+             x:Class="VDCA.Views.SelectQuizView"
+             Title="SelectQuizLength">
+    <Grid>
+        <FlexLayout Direction="Column"
+                    AlignItems="Stretch"
+                    AlignContent="Stretch"
+                    AlignSelf="Stretch"
+                    FlexLayout.Grow="1"
+                    BackgroundColor="{StaticResource PrimaryBackground}"
+                    JustifyContent="SpaceEvenly">
+            <Button FlexLayout.Grow="1"
+                    x:Name="btn_short"
+                    Clicked="QuizClicked"
+                    ClassId="1"
+                    LineBreakMode="WordWrap"
+                    FontSize="{DynamicResource MediumFontSize}"
+                    Margin="10,0,10,0"
+                    Text="Short Quiz&#x0a;Approximately 230 Questions&#x0a;Approximately 1 hour"
+                    BackgroundColor="{StaticResource PrimaryText}"
+                    TextColor="{StaticResource PrimaryBackground}"
+                    VerticalOptions="CenterAndExpand"
+                    HorizontalOptions="FillAndExpand" />
+            <Button FlexLayout.Grow="1"
+                    x:Name="btn_medium"
+                    Clicked="QuizClicked"
+                    ClassId="2"
+                    LineBreakMode="WordWrap"
+                    FontSize="{DynamicResource MediumFontSize}"
+                    Margin="10,0,10,0"
+                    Text="Medium Quiz&#x0a;Approximately 460 Questions&#x0a;Approximately 2 hours"
+                    BackgroundColor="{StaticResource PrimaryText}"
+                    TextColor="{StaticResource PrimaryBackground}"
+                    VerticalOptions="CenterAndExpand"
+                    HorizontalOptions="FillAndExpand" />
+            <Button FlexLayout.Grow="1"
+                    x:Name="btn_total"
+                    Clicked="QuizClicked"
+                    ClassId="3"
+                    LineBreakMode="WordWrap"
+                    FontSize="{DynamicResource MediumFontSize}"
+                    Margin="10,0,10,0"
+                    Text="Long Quiz&#x0a;Approximately 000 Questions&#x0a;Approximately 3 hour"
+                    BackgroundColor="{StaticResource PrimaryText}"
+                    TextColor="{StaticResource PrimaryBackground}"
+                    VerticalOptions="CenterAndExpand"
+                    HorizontalOptions="FillAndExpand" />
+        </FlexLayout>
+        <views:ProgressBarOverlay x:Name="progressSeleectQuizBarOverlay" />
+    </Grid>
+</ContentPage>

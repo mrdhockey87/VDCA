@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:arrow="clr-namespace:VDCA.CustomControl"
+             BindingContext="Arrow_Caption"
+             x:DataType="arrow:ArrowCaption"
+             x:Name="Arrow_Caption"
+             x:Class="VDCA.CustomControl.ArrowCaption">
+    <Grid VerticalOptions="Center"
+          HorizontalOptions="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <!-- Top Left Image -->
+        <Image x:Name="TopLeftImage"
+               Grid.Row="0"
+               Grid.Column="0"
+               Source="arrow_up_left_navy.png"
+               HeightRequest="50"
+               WidthRequest="50"
+               IsVisible="False" />
+        <!-- Top Middle Image -->
+        <Image x:Name="TopMiddleImage"
+               Grid.Row="0"
+               Grid.Column="1"
+               Source="arrow_up_navy.png"
+               HeightRequest="50"
+               WidthRequest="50"
+               IsVisible="False" />
+        <!-- Top Right Image -->
+        <Image x:Name="TopRightImage"
+               Grid.Row="0"
+               Grid.Column="2"
+               Source="arrow_up_right_navy.png"
+               HeightRequest="50"
+               WidthRequest="50"
+               IsVisible="False" />
+        <!-- Top Left Image -->
+        <Image x:Name="LeftImage"
+               Grid.Row="1"
+               Grid.Column="0"
+               Source="arrow_left_navy.png"
+               HeightRequest="50"
+               WidthRequest="50"
+               IsVisible="False" />
+        <!-- Bubble -->
+        <Border Grid.Row="1"
+               Grid.Column="1"
+               x:Name="BubbleFrame"
+               Margin="0,-20,0,0"
+               BackgroundColor="Navy"
+               VerticalOptions="Center"
+                HorizontalOptions="Center">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="15,15,15,15" />
+            </Border.StrokeShape>
+            <Label Text="{Binding BubbleText}"
+                   x:Name="BubbleLabel"
+                   TextColor="White"
+                   FontAttributes="Bold"
+                   Margin="10,20,10,20"
+                   FontSize="16"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center" />
+        </Border>
+        <!-- Top Right Image -->
+        <Image x:Name="RightImage"
+               Grid.Row="1"
+               Grid.Column="2"
+               Source="arrow_right_navy.png"
+               HeightRequest="50"
+               WidthRequest="50"
+               IsVisible="False" />
+        <!-- Bottom Left Image -->
+        <Image x:Name="BottomLeftImage"
+               Grid.Row="2"
+               Grid.Column="0"
+               Source="arrow_down_left_navy.png"
+               HeightRequest="50"
+               WidthRequest="50"
+               IsVisible="False" />
+        <!-- Bottom Middle Image -->
+        <Image x:Name="BottomMiddleImage"
+               Grid.Row="2"
+               Grid.Column="1"
+               Source="arrow_down_navy.png"
+               HeightRequest="50"
+               WidthRequest="50"
+               IsVisible="False" />
+        <!-- Bottom Right Image -->
+        <Image x:Name="BottomRightImage"
+               Grid.Row="2"
+               Grid.Column="2"
+               Source="arrow_down_right_navy.png"
+               HeightRequest="50"
+               WidthRequest="50"
+               IsVisible="False" />
+    </Grid>
+</ContentView>

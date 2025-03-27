@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:VDCA.CustomControl"
+             xmlns:converters="clr-namespace:VDCA.Converters"
+             IsVisible="False"
+             x:Name="CustomOnboardingOverlayControl"
+             x:Class="VDCA.CustomControl.OnboardingOverlayControl"
+             x:DataType="local:OnboardingOverlayControl">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converters:VisibleArrowsConverter x:Key="VisibleArrowsConverterUpLeft"
+                                               TargetArrow="UpLeft" />
+            <converters:VisibleArrowsConverter x:Key="VisibleArrowsConverterUp"
+                                               TargetArrow="Up" />
+            <converters:VisibleArrowsConverter x:Key="VisibleArrowsConverterUpRight"
+                                               TargetArrow="UpRight" />
+            <converters:VisibleArrowsConverter x:Key="VisibleArrowsConverterLeft"
+                                               TargetArrow="Left" />
+            <converters:VisibleArrowsConverter x:Key="VisibleArrowsConverterRight"
+                                               TargetArrow="Right" />
+            <converters:VisibleArrowsConverter x:Key="VisibleArrowsConverterDownLeft"
+                                               TargetArrow="DownLeft" />
+            <converters:VisibleArrowsConverter x:Key="VisibleArrowsConverterDown"
+                                               TargetArrow="Down" />
+            <converters:VisibleArrowsConverter x:Key="VisibleArrowsConverterDownRight"
+                                               TargetArrow="DownRight" />
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <Grid MaximumHeightRequest="200"
+          MaximumWidthRequest="200">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Image Grid.Row="0"
+               Grid.Column="0"
+               x:Name="UpLeft"
+               Source="arrow_up_left_navy.png"
+               Aspect="AspectFill"
+               VerticalOptions="FillAndExpand"
+               HorizontalOptions="FillAndExpand"
+               BindingContext="{x:Reference CustomOnboardingOverlayControl}"
+               x:DataType="local:OnboardingOverlayControl"
+               IsVisible="{Binding VisibleArrows, Converter={StaticResource VisibleArrowsConverterUpLeft}}" />
+        <Image Grid.Row="0"
+               Grid.Column="1"
+               x:Name="Up"
+               Source="arrow_up_navy.png"
+               Aspect="AspectFill"
+               VerticalOptions="FillAndExpand"
+               HorizontalOptions="FillAndExpand"
+               BindingContext="{x:Reference CustomOnboardingOverlayControl}"
+               x:DataType="local:OnboardingOverlayControl"
+               IsVisible="{Binding VisibleArrows, Converter={StaticResource VisibleArrowsConverterUp}}" />
+        <Image Grid.Row="0"
+               Grid.Column="2"
+               x:Name="UpRight"
+               Source="arrow_up_right_navy.png"
+               Aspect="AspectFill"
+               VerticalOptions="FillAndExpand"
+               HorizontalOptions="FillAndExpand"
+               BindingContext="{x:Reference CustomOnboardingOverlayControl}"
+               x:DataType="local:OnboardingOverlayControl"
+               IsVisible="{Binding VisibleArrows, Converter={StaticResource VisibleArrowsConverterUpRight}}" />
+        <Image Grid.Row="1"
+               Grid.Column="0"
+               x:Name="Left"
+               Source="arrow_left_navy.png"
+               Aspect="AspectFill"
+               VerticalOptions="FillAndExpand"
+               HorizontalOptions="FillAndExpand"
+               BindingContext="{x:Reference CustomOnboardingOverlayControl}"
+               x:DataType="local:OnboardingOverlayControl"
+               IsVisible="{Binding VisibleArrows, Converter={StaticResource VisibleArrowsConverterLeft}}" />
+        <Label Grid.Row="1"
+               Grid.Column="1"
+               x:Name="Information"
+               VerticalOptions="Center"
+               HorizontalOptions="CenterAndExpand" />
+        <Image Grid.Row="1"
+               Grid.Column="2"
+               x:Name="Right"
+               Source="arrow_right_navy.png"
+               Aspect="AspectFill"
+               VerticalOptions="FillAndExpand"
+               HorizontalOptions="FillAndExpand"
+               BindingContext="{x:Reference CustomOnboardingOverlayControl}"
+               x:DataType="local:OnboardingOverlayControl"
+               IsVisible="{Binding VisibleArrows, Converter={StaticResource VisibleArrowsConverterRight}}" />
+        <Image Grid.Row="2"
+               Grid.Column="0"
+               x:Name="DownLeft"
+               Source="arrow_down_left_navy.png"
+               Aspect="AspectFill"
+               VerticalOptions="FillAndExpand"
+               HorizontalOptions="FillAndExpand"
+               BindingContext="{x:Reference CustomOnboardingOverlayControl}"
+               x:DataType="local:OnboardingOverlayControl"
+               IsVisible="{Binding VisibleArrows, Converter={StaticResource VisibleArrowsConverterDownLeft}}" />
+        <Image Grid.Row="2"
+               Grid.Column="1"
+               x:Name="Down"
+               Source="arrow_down_navy.png"
+               Aspect="AspectFill"
+               VerticalOptions="FillAndExpand"
+               HorizontalOptions="FillAndExpand"
+               BindingContext="{x:Reference CustomOnboardingOverlayControl}"
+               x:DataType="local:OnboardingOverlayControl"
+               IsVisible="{Binding VisibleArrows, Converter={StaticResource VisibleArrowsConverterDown}}" />
+        <Image Grid.Row="2"
+               Grid.Column="2"
+               x:Name="DownRight"
+               Source="arrow_down_right_navy.png"
+               Aspect="AspectFill"
+               VerticalOptions="FillAndExpand"
+               HorizontalOptions="FillAndExpand"
+               BindingContext="{x:Reference CustomOnboardingOverlayControl}"
+               x:DataType="local:OnboardingOverlayControl"
+               IsVisible="{Binding VisibleArrows, Converter={StaticResource VisibleArrowsConverterDownRight}}" />
+    </Grid>
+</ContentView>

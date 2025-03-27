@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:alert="clr-namespace:VDCA.Views"
+             x:DataType="alert:InformationAlert"
+             x:Class="VDCA.Views.InformationAlert"
+             x:Name="informationAlert"
+             InputTransparent="False"
+             IsVisible="False"
+             BindingContext="{x:Reference informationAlert}">
+    <Grid VerticalOptions="FillAndExpand"
+          HorizontalOptions="FillAndExpand">
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding DummyInformationCommand}" />
+        </Grid.GestureRecognizers>
+        <!-- Background Layer -->
+        <BoxView BackgroundColor="{StaticResource PrimaryBlack}"
+                 Opacity="0.5"
+                 InputTransparent="False"
+                 VerticalOptions="FillAndExpand"
+                 HorizontalOptions="FillAndExpand" />
+        <!-- Content Layer -->
+        <Grid VerticalOptions="FillAndExpand"
+              HorizontalOptions="FillAndExpand">
+            <Border Stroke="{StaticResource PrimaryTextColor}"
+                    x:Name="AlertBorder"
+                    BackgroundColor="{StaticResource PrimaryBackground}"
+                    MaximumWidthRequest="{DynamicResource InfoMaxWidthRequest}"
+                    MinimumWidthRequest="{DynamicResource InfoMinWidthRequest}"
+                    StrokeThickness="3"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+                <Grid x:Name="AlertGrid"
+                      VerticalOptions="Center"
+                      HorizontalOptions="Center"
+                      BackgroundColor="{StaticResource PrimaryBackground}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Label x:Name="TitleLabel"
+                           Text="{Binding AlertTitle}"
+                           Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="4"
+                           Margin="0,0,0,0"
+                           Padding="5,0,0,0"
+                           FontSize="{DynamicResource MediumFontSize}"
+                           TextColor="{StaticResource PrimaryBackground}"
+                           BackgroundColor="{StaticResource PrimaryText}"
+                           VerticalOptions="FillAndExpand"
+                           HorizontalOptions="FillAndExpand"
+                           HorizontalTextAlignment="Start"
+                           VerticalTextAlignment="Center" />
+                    <Label x:Name="MessageLabel"
+                           Grid.Row="1"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="4"
+                           Margin="5"
+                           MaximumWidthRequest="{DynamicResource InfoMaxWidthRequest}"
+                           MinimumWidthRequest="{DynamicResource InfoMinWidthRequest}"
+                           Text="{Binding AlertMessage}"
+                           TextColor="{StaticResource PrimaryText}"
+                           LineBreakMode="WordWrap"
+                           FontSize="{DynamicResource BaseFontSize}"
+                           VerticalOptions="StartAndExpand"
+                           HorizontalOptions="FillAndExpand"
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="Center" />
+                    <!-- place holder as the QuestionAlert works with two buttons-->
+                    <Button x:Name="NotAButton"
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Margin="5,0,5,5"
+                            IsEnabled="false"
+                            IsVisible="false"
+                            BackgroundColor="Transparent"
+                            TextColor="Transparent"
+                            FontSize="{DynamicResource MediumFontSize}"
+                            Text="Exit"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Fill" />
+                    <Button x:Name="ExitButton"
+                            Grid.Row="2"
+                            Grid.Column="2"
+                            Grid.ColumnSpan="2"
+                            Margin="0,0,5,5"
+                            BackgroundColor="{StaticResource PrimaryText}"
+                            TextColor="{StaticResource PrimaryBackground}"
+                            FontSize="{DynamicResource MediumFontSize}"
+                            Text="Exit"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Fill"
+                            Clicked="ExitButton_Clicked" />
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</ContentView>

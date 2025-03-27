@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:overlay="clr-namespace:VDCA.CustomControl;assembly=VDCA"
+             x:Class="VDCA.CustomControl.NavigationOnboardingOverlayControl"
+             x:Name="NavigationOnboardingOverlay"
+             IsVisible="False"
+             BackgroundColor="Transparent">
+    <AbsoluteLayout x:Name="navigationOverlayAbsoluteLayout"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand">
+        <!-- Dots Indicator -->
+        <StackLayout x:Name="DotsIndicator"
+                     Orientation="Horizontal"
+                     HorizontalOptions="Center"
+                     AbsoluteLayout.LayoutBounds="0.5, 0.9, -1, -1"
+                     AbsoluteLayout.LayoutFlags="PositionProportional">
+        </StackLayout>
+
+        <!-- Previous Button -->
+        <ImageButton x:Name="PreviousButton"
+                     Clicked="OnPreviousButtonClicked"
+                     MaximumHeightRequest="30"
+                     MaximumWidthRequest="30"
+                     Aspect="AspectFit"
+                     Source="back_navy.png"
+                     BackgroundColor="White"
+                     IsVisible="False"
+                     AbsoluteLayout.LayoutBounds="0.1, 0.9, -1, -1"
+                     AbsoluteLayout.LayoutFlags="PositionProportional" />
+
+        <!-- Next/Got it Button -->
+        <ImageButton x:Name="NextButton"
+                     Clicked="OnNextButtonClicked"
+                     MaximumHeightRequest="30"
+                     MaximumWidthRequest="30"
+                     Aspect="AspectFit"
+                     Source="back_navy.png"
+                     BackgroundColor="White"
+                     AbsoluteLayout.LayoutBounds="0.9, 0.9, -1, -1"
+                     AbsoluteLayout.LayoutFlags="PositionProportional" />
+    </AbsoluteLayout>
+</ContentView>

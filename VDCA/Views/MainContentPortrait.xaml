@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:views="clr-namespace:VDCA.Views"
+             xmlns:overlay="clr-namespace:VDCA.CustomControl;assembly=VDCA"
+             ios:Page.UseSafeArea="True"
+             x:Name="MainPagePortraitView"
+             x:DataType="views:MainPage"
+             x:Class="VDCA.Views.MainContentPortrait">
+    <Grid BackgroundColor="{StaticResource PrimaryBackground}"
+          x:Name="MainGridPortrait">
+        <!-- Main Content Grid -->
+        <Grid x:Name="GirdPortrait">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2.5*"
+                               x:Name="logo_row" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="3*"
+                               x:Name="ask_row" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Image Grid.Row="0"
+                   Grid.Column="0"
+                   x:Name="logo"
+                   Source="vdca_solid_color.png"
+                   WidthRequest="{DynamicResource LogoWidthRequestPortrait}"
+                   HeightRequest="{DynamicResource LogoHeightRequestPortrait}"
+                   Aspect="AspectFit" />
+            <Button Grid.Row="1"
+                    Grid.Column="0"
+                    x:Name="flash_button"
+                    BackgroundColor="{StaticResource PrimaryText}"
+                    TextColor="{StaticResource PrimaryBackground}"
+                    Text="Flashcard"
+                    FontSize="{DynamicResource LargeFontSize}"
+                    Margin="15,10,15,10"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Center"
+                    HeightRequest="{DynamicResource MainButtonHeightRequest}"
+                    MinimumHeightRequest="40"
+                    Command="{Binding FlashCommand}" />
+            <Button Grid.Row="2"
+                    Grid.Column="0"
+                    x:Name="practice_button"
+                    BackgroundColor="{StaticResource PrimaryText}"
+                    TextColor="{StaticResource PrimaryBackground}"
+                    Text="Practice"
+                    FontSize="{DynamicResource LargeFontSize}"
+                    Margin="15,10,15,10"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Center"
+                    HeightRequest="{DynamicResource MainButtonHeightRequest}"
+                    MinimumHeightRequest="40"
+                    Command="{Binding PracticeCommand}" />
+            <Button Grid.Row="3"
+                    Grid.Column="0"
+                    x:Name="quiz_button"
+                    BackgroundColor="{StaticResource PrimaryText}"
+                    TextColor="{StaticResource PrimaryBackground}"
+                    Text="Quiz"
+                    FontSize="{DynamicResource LargeFontSize}"
+                    Margin="15,10,15,10"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Center"
+                    HeightRequest="{DynamicResource MainButtonHeightRequest}"
+                    MinimumHeightRequest="40"
+                    Command="{Binding QuizCommand}" />
+            <Button Grid.Row="4"
+                    Grid.Column="0"
+                    x:Name="review_button"
+                    BackgroundColor="{StaticResource PrimaryText}"
+                    TextColor="{StaticResource PrimaryBackground}"
+                    Text="Review"
+                    FontSize="{DynamicResource LargeFontSize}"
+                    Margin="15,10,15,10"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Center"
+                    HeightRequest="{DynamicResource MainButtonHeightRequest}"
+                    MinimumHeightRequest="40"
+                    Command="{Binding ReviewCommand}" />
+            <ContentView Grid.Row="5"
+                         Grid.Column="0"
+                         Margin="0,10,0,0"
+                         HorizontalOptions="FillAndExpand"
+                         x:Name="ask_view_holder" />
+            <Label Text="Version - Copyright info"
+                   Grid.Row="6"
+                   Grid.Column="0"
+                   x:Name="version_label"
+                   FontSize="{DynamicResource ExtraSmallFontSize}"
+                   Padding="20,0,20,10"
+                   TextColor="{StaticResource PrimaryText}"
+                   BackgroundColor="{StaticResource PrimaryBackground}"
+                   VerticalOptions="End"
+                   VerticalTextAlignment="Center"
+                   HorizontalTextAlignment="Center" />
+        </Grid>
+        <views:ProgressBarOverlay x:Name="progressBarPortraitOverlay" />
+        <overlay:NavigationOnboardingOverlayControl x:Name="navigationOnboardingOverlayControlPortrait" />
+    </Grid>
+</ContentView>

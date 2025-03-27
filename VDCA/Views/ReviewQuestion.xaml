@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="True"
+             xmlns:views="clr-namespace:VDCA.Views"
+             xmlns:vm="clr-namespace:VDCA.ViewModels"
+             xmlns:converters="clr-namespace:VDCA.Converters"
+             x:Name="reviewQuestion"
+             InputTransparent="False"
+             IsVisible="False"
+             x:DataType="vm:ReviewQuestionModel"
+             x:Class="VDCA.Views.ReviewQuestion">
+    <ContentView.BindingContext>
+        <vm:ReviewQuestionModel x:Name="rqvm"/>
+    </ContentView.BindingContext>
+    <ContentView.Resources>
+        <converters:StringToColorConverter x:Key="ColorConverter" />
+    </ContentView.Resources>
+    <Grid VerticalOptions="FillAndExpand"
+          HorizontalOptions="FillAndExpand">
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding Source={x:Reference rqvm}, Path=DummyReviewCommand}" />
+        </Grid.GestureRecognizers>
+        <BoxView BackgroundColor="{StaticResource PrimaryBlack}"
+                 Opacity="0.5"
+                 InputTransparent="False"
+                 VerticalOptions="FillAndExpand"
+                 HorizontalOptions="FillAndExpand" />
+        <Grid x:Name="last_quiz_background"
+              VerticalOptions="CenterAndExpand"
+              Padding="0,0,0,0"
+              HorizontalOptions="CenterAndExpand"
+              BackgroundColor="{Binding Review_Result_Color, Converter = {StaticResource ColorConverter}, FallbackValue={StaticResource PrimaryTextColor}}">
+            <Grid.Resources>
+                <converters:StringToColorConverter x:Key="ColorConverter" />
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Label x:Name="last_quiz_percent"
+                   Grid.Row="1"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   Grid.RowSpan="6"
+                   Margin="10,0,10,0"
+                   Text="{Binding Review_String_Percent, FallbackValue='0%'}"
+                   FontSize="{DynamicResource VeryLargeFontSize}"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"
+                   TextColor="{StaticResource PrimaryWhite}"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand" />
+            <Label x:Name="last_quiz_title"
+                   Grid.Row="0"
+                   Grid.Column="2"
+                   Grid.ColumnSpan="4"
+                   Text="Quiz Results"
+                   Margin="10,0,10,0"
+                   FontSize="{DynamicResource MediumFontSize}"
+                   TextColor="{StaticResource PrimaryBackground}"
+                   BackgroundColor="Transparent"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand" />
+            <Label x:Name="quiz_date"
+                   Grid.Row="1"
+                   Grid.Column="2"
+                   Grid.ColumnSpan="3"
+                   Text="Date"
+                   FontSize="{DynamicResource MediumFontSize}"
+                   Margin="10,0,10,0"
+                   TextColor="{StaticResource PrimaryBackground}"
+                   BackgroundColor="Transparent"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="Center" />
+            <Label x:Name="last_quiz_date"
+                   Grid.Row="2"
+                   Grid.Column="2"
+                   Grid.ColumnSpan="3"
+                   Text="{Binding Review_Date, FallbackValue='00/00/2000'}"
+                   FontSize="{DynamicResource MediumFontSize}"
+                   Margin="10,0,10,0"
+                   TextColor="{StaticResource PrimaryBackground}"
+                   BackgroundColor="Transparent"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand" />
+            <Label x:Name="quiz_time"
+                   Grid.Row="3"
+                   Grid.Column="2"
+                   Grid.ColumnSpan="3"
+                   Text="Time"
+                   FontSize="{DynamicResource MediumFontSize}"
+                   Margin="10,0,10,0"
+                   TextColor="{StaticResource PrimaryBackground}"
+                   BackgroundColor="Transparent"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="Center" />
+            <Label x:Name="last_quiz_time"
+                   Grid.Row="4"
+                   Grid.Column="2"
+                   Grid.ColumnSpan="3"
+                   Text="{Binding Review_Time, FallbackValue='12:00:00 AM'}"
+                   FontSize="{DynamicResource MediumFontSize}"
+                   Margin="10,0,10,0"
+                   TextColor="{StaticResource PrimaryBackground}"
+                   BackgroundColor="Transparent"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand" />
+            <Label x:Name="quiz_duration"
+                   Grid.Row="5"
+                   Grid.Column="2"
+                   Grid.ColumnSpan="3"
+                   Text="Duration"
+                   FontSize="{DynamicResource MediumFontSize}"
+                   Margin="10,0,10,0"
+                   TextColor="{StaticResource PrimaryBackground}"
+                   BackgroundColor="Transparent"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="Center" />
+            <Label x:Name="last_quiz_totaltime"
+                   Grid.Row="6"
+                   Grid.Column="2"
+                   Grid.ColumnSpan="3"
+                   Text="{Binding Review_TotalTime, FallbackValue='00:00:00'}"
+                   FontSize="{DynamicResource MediumFontSize}"
+                   Margin="10,0,10,0"
+                   TextColor="{StaticResource PrimaryBackground}"
+                   BackgroundColor="Transparent"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand" />
+            <Label x:Name="last_quiz_number_correct"
+                   Grid.Row="7"
+                   Grid.Column="2"
+                   Grid.ColumnSpan="4"
+                   Text="{Binding Review_CorrectOfTotal, FallbackValue='0 of 0 correct'}"
+                   FontSize="{DynamicResource MediumFontSize}"
+                   Padding="0,0,0,0"
+                   Margin="10,0,10,0"
+                   TextColor="{StaticResource PrimaryWhite}"
+                   BackgroundColor="Transparent"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand" />
+            <Button x:Name="last_quiz_qusetion_review"
+                    Grid.Row="8"
+                    Grid.Column="0"
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="6"
+                    Text="Review Questions"
+                    Clicked="ReviewQuizPopup_Clicked"
+                    FontSize="{DynamicResource SmallFontSize}"
+                    Margin="0,10,0,0"
+                    TextColor="{StaticResource PrimaryBackground}"
+                    BackgroundColor="{StaticResource PrimaryText}"
+                    VerticalOptions="CenterAndExpand"
+                    HorizontalOptions="CenterAndExpand" />
+            <Button x:Name="exit_quiz"
+                    Grid.Row="10"
+                    Grid.Column="0"
+                    Grid.RowSpan="2"
+                    Grid.ColumnSpan="6"
+                    Text="Exit Quiz"
+                    Clicked="OnExit_Clicked"
+                    FontSize="{DynamicResource SmallFontSize}"
+                    Margin="0,10,0,0"
+                    TextColor="{StaticResource PrimaryBackground}"
+                    BackgroundColor="{StaticResource PrimaryText}"
+                    VerticalOptions="CenterAndExpand"
+                    HorizontalOptions="CenterAndExpand" />
+        </Grid>
+    </Grid>
+</ContentView>

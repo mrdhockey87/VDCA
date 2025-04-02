@@ -20,7 +20,14 @@
 
 /*
  * 
- *  v 6.035.0513 Renamed the Folder that was mistyped and mode repositry to GitHub mdail 3-27-25
+ *  v 6.035.0516 Changed if (navigationStack.Count > 0) to if (navigationStack.Count > 1) to fix ShowCustomModalAsync. as navigationStack[0] is what was null
+ *               and causing the error. I am not sure what changed to make the difference however it works now. mdail 4-2-25
+ *  v 6.035.0515 Now that I have the menu looking the way I want it to, whem trying to display the alert Page it is not working and not
+ *               giving me a clear reason, it is a null exception on await navigationStack[navigationStack.Count - 1].Navigation.PushModalAsync(page, false)
+ *               which isn't making a lot of sence to me. mdail 4-1-25
+ *  v 6.035.0514 Change it so the icons show up after the text i the menu part of the flyout menu. I couldn't get the alignment to work
+ *               the way I wanted so they are right after the text in the menu. I also get the Under line to show up after the Header mdail 3-31-25
+ *  v 6.035.0513 Renamed the Folder that was mistyped and moved repositry to GitHub mdail 3-27-25
  *  v 6.035.0512 Fixed menu item missing on flyout menu by removing the datatype mdail 3-26-25
  *  v 6.035.0511 Added the await for the delay in the OnSizeChanged in the CardView to fix the problem with the card losing position
  *               in Android when the screen rotates. mdail 3-26-25

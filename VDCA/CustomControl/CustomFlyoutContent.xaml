@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:control="clr-namespace:VDCA.CustomControl"
+             x:DataType="control:CustomFlyoutContent"
+             BackgroundColor="{StaticResource PrimaryBackground}"
+             x:Class="VDCA.CustomControl.CustomFlyoutContent">
+
+    <ScrollView Margin="0"
+                Padding="0"
+                VerticalOptions="Start">
+        <VerticalStackLayout VerticalOptions="Start">
+            <Grid ColumnDefinitions="Auto, *, Auto"
+                  Padding="0"
+                  ColumnSpacing="5">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryBackground}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryIconLightMode}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <Image Grid.Column="0"
+                       Source="navy_home_icon.png"
+                       Aspect="AspectFill"
+                       HeightRequest="{DynamicResource MenuHeightRequest}"
+                       WidthRequest="{DynamicResource MenuHeightRequest}" />
+                <Label Grid.Column="1"
+                       Text="Home"
+                       VerticalOptions="Center"
+                       VerticalTextAlignment="Center"
+                       FontSize="{DynamicResource FlyoutMenuFontSize}"
+                       TextColor="{StaticResource PrimaryText}" />
+                <Image Source="blank_space.png"
+                       Grid.Column="2"
+                       VerticalOptions="Center"
+                       Aspect="AspectFill"
+                       WidthRequest="{DynamicResource MenuHeightRequest}"
+                       HeightRequest="{DynamicResource MenuHeightRequest}" />
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TapGestureRecognizerCommand}"
+                                          CommandParameter="0" />
+                </Grid.GestureRecognizers>
+            </Grid>
+            
+            <Grid ColumnDefinitions="Auto, *, Auto"
+                  Padding="0"
+                  ColumnSpacing="5">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryBackground}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryIconLightMode}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <Image Grid.Column="0"
+                       Source="blank_space.png"
+                       Aspect="AspectFill"
+                       HeightRequest="{DynamicResource MenuHeightRequest}"
+                       WidthRequest="{DynamicResource MenuHeightRequest}" />
+                <Label Grid.Column="1"
+                       Text="Flashcards"
+                       VerticalOptions="Center"
+                       VerticalTextAlignment="Center"
+                       FontSize="{DynamicResource FlyoutMenuFontSize}"
+                       TextColor="{StaticResource PrimaryText}" />
+                <Image Source="navy_chevron_right.png"
+                       Grid.Column="2"
+                       VerticalOptions="Center"
+                       Aspect="AspectFill"
+                       WidthRequest="{DynamicResource MenuHeightRequest}"
+                       HeightRequest="{DynamicResource MenuHeightRequest}" />
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TapGestureRecognizerCommand}"
+                                          CommandParameter="1" />
+                </Grid.GestureRecognizers>
+            </Grid>
+
+            <Grid ColumnDefinitions="Auto, *, Auto"
+                  Padding="0"
+                  ColumnSpacing="5">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryBackground}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryIconLightMode}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <Image Grid.Column="0"
+                       Source="blank_space.png"
+                       Aspect="AspectFill"
+                       HeightRequest="{DynamicResource MenuHeightRequest}"
+                       WidthRequest="{DynamicResource MenuHeightRequest}" />
+                <Label Grid.Column="1"
+                       Text="Practice"
+                       VerticalOptions="Center"
+                       VerticalTextAlignment="Center"
+                       FontSize="{DynamicResource FlyoutMenuFontSize}"
+                       TextColor="{StaticResource PrimaryText}" />
+                <Image Source="navy_chevron_right.png"
+                       Grid.Column="2"
+                       VerticalOptions="Center"
+                       Aspect="AspectFill"
+                       WidthRequest="{DynamicResource MenuHeightRequest}"
+                       HeightRequest="{DynamicResource MenuHeightRequest}" />
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TapGestureRecognizerCommand}"
+                                          CommandParameter="2" />
+                </Grid.GestureRecognizers>
+            </Grid>
+
+            <Grid ColumnDefinitions="Auto, *, Auto"
+                  Padding="0"
+                  ColumnSpacing="5">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryBackground}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryIconLightMode}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <Image Grid.Column="0"
+                       Source="blank_space.png"
+                       Aspect="AspectFill"
+                       HeightRequest="{DynamicResource MenuHeightRequest}"
+                       WidthRequest="{DynamicResource MenuHeightRequest}" />
+                <Label Grid.Column="1"
+                       Text="Quiz"
+                       VerticalOptions="Center"
+                       VerticalTextAlignment="Center"
+                       FontSize="{DynamicResource FlyoutMenuFontSize}"
+                       TextColor="{StaticResource PrimaryText}" />
+                <Image Source="navy_chevron_right.png"
+                       Grid.Column="2"
+                       VerticalOptions="Center"
+                       Aspect="AspectFill"
+                       WidthRequest="{DynamicResource MenuHeightRequest}"
+                       HeightRequest="{DynamicResource MenuHeightRequest}" />
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TapGestureRecognizerCommand}"
+                                          CommandParameter="3" />
+                </Grid.GestureRecognizers>
+            </Grid>
+            
+            <Grid ColumnDefinitions="Auto, *, Auto"
+                  Padding="0"
+                  ColumnSpacing="5">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryBackground}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryIconLightMode}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <Image Grid.Column="0"
+                       Source="blank_space.png"
+                       Aspect="AspectFill"
+                       HeightRequest="{DynamicResource MenuHeightRequest}"
+                       WidthRequest="{DynamicResource MenuHeightRequest}" />
+                <Label Grid.Column="1"
+                       Text="Review"
+                       VerticalOptions="Center"
+                       VerticalTextAlignment="Center"
+                       FontSize="{DynamicResource FlyoutMenuFontSize}"
+                       TextColor="{StaticResource PrimaryText}" />
+                <Image Source="navy_chevron_right.png"
+                       Grid.Column="2"
+                       VerticalOptions="Center"
+                       Aspect="AspectFill"
+                       WidthRequest="{DynamicResource MenuHeightRequest}"
+                       HeightRequest="{DynamicResource MenuHeightRequest}" />
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TapGestureRecognizerCommand}"
+                                          CommandParameter="4" />
+                </Grid.GestureRecognizers>
+            </Grid>
+
+            <Grid ColumnDefinitions="Auto, *, Auto"
+                  Padding="0"
+                  ColumnSpacing="5">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryBackground}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryIconLightMode}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <Image Grid.Column="0"
+                       Source="blank_space.png"
+                       Aspect="AspectFill"
+                       HeightRequest="{DynamicResource MenuHeightRequest}"
+                       WidthRequest="{DynamicResource MenuHeightRequest}" />
+                <Label Grid.Column="1"
+                       Text="Flagged Question Only"
+                       VerticalOptions="Center"
+                       VerticalTextAlignment="Center"
+                       FontSize="{DynamicResource FlyoutMenuFontSize}"
+                       TextColor="{StaticResource PrimaryText}" />
+                <Image Source="navy_chevron_right.png"
+                       Grid.Column="2"
+                       VerticalOptions="Center"
+                       Aspect="AspectFill"
+                       WidthRequest="{DynamicResource MenuHeightRequest}"
+                       HeightRequest="{DynamicResource MenuHeightRequest}" />
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TapGestureRecognizerCommand}"
+                                          CommandParameter="5" />
+                </Grid.GestureRecognizers>
+            </Grid>
+            
+            <Grid ColumnDefinitions="Auto, *, Auto"
+                  Padding="0"
+                  ColumnSpacing="5">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryBackground}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryIconLightMode}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <Image Grid.Column="0"
+                       Source="blank_space.png"
+                       Aspect="AspectFill"
+                       HeightRequest="{DynamicResource MenuHeightRequest}"
+                       WidthRequest="{DynamicResource MenuHeightRequest}" />
+                <Label Grid.Column="1"
+                       Text="Hidden Question Only"
+                       VerticalOptions="Center"
+                       VerticalTextAlignment="Center"
+                       FontSize="{DynamicResource FlyoutMenuFontSize}"
+                       TextColor="{StaticResource PrimaryText}" />
+                <Image Source="navy_chevron_right.png"
+                       Grid.Column="2"
+                       VerticalOptions="Center"
+                       Aspect="AspectFill"
+                       WidthRequest="{DynamicResource MenuHeightRequest}"
+                       HeightRequest="{DynamicResource MenuHeightRequest}" />
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TapGestureRecognizerCommand}"
+                                          CommandParameter="6" />
+                </Grid.GestureRecognizers>
+            </Grid>
+
+            <Grid ColumnDefinitions="Auto, *, Auto"
+                  Padding="0"
+                  ColumnSpacing="5">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryBackground}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryIconLightMode}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <Image Grid.Column="0"
+                       Source="blank_space.png"
+                       Aspect="AspectFill"
+                       HeightRequest="{DynamicResource MenuHeightRequest}"
+                       WidthRequest="{DynamicResource MenuHeightRequest}" />
+                <Label Grid.Column="1"
+                       Text="Clear Flagged"
+                       VerticalOptions="Center"
+                       VerticalTextAlignment="Center"
+                       FontSize="{DynamicResource FlyoutMenuFontSize}"
+                       TextColor="{StaticResource PrimaryText}" />
+                <Image Source="navy_chevron_right.png"
+                       Grid.Column="2"
+                       VerticalOptions="Center"
+                       Aspect="AspectFill"
+                       WidthRequest="{DynamicResource MenuHeightRequest}"
+                       HeightRequest="{DynamicResource MenuHeightRequest}" />
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TapGestureRecognizerCommand}"
+                                          CommandParameter="7" />
+                </Grid.GestureRecognizers>
+            </Grid>
+
+            <Grid ColumnDefinitions="Auto, *, Auto"
+                  Padding="0"
+                  ColumnSpacing="5">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryBackground}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryIconLightMode}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <Image Grid.Column="0"
+                       Source="blank_space.png"
+                       Aspect="AspectFill"
+                       HeightRequest="{DynamicResource MenuHeightRequest}"
+                       WidthRequest="{DynamicResource MenuHeightRequest}" />
+                <Label Grid.Column="1"
+                       Text="Clear Hidden"
+                       VerticalOptions="Center"
+                       VerticalTextAlignment="Center"
+                       FontSize="{DynamicResource FlyoutMenuFontSize}"
+                       TextColor="{StaticResource PrimaryText}" />
+                <Image Source="navy_chevron_right.png"
+                       Grid.Column="2"
+                       VerticalOptions="Center"
+                       Aspect="AspectFill"
+                       WidthRequest="{DynamicResource MenuHeightRequest}"
+                       HeightRequest="{DynamicResource MenuHeightRequest}" />
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TapGestureRecognizerCommand}"
+                                          CommandParameter="8" />
+                </Grid.GestureRecognizers>
+            </Grid>
+
+            <Grid ColumnDefinitions="Auto, *, Auto"
+                  Padding="0"
+                  ColumnSpacing="5">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryBackground}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryIconLightMode}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <Image Grid.Column="0"
+                       Source="blank_space.png"
+                       Aspect="AspectFill"
+                       HeightRequest="{DynamicResource MenuHeightRequest}"
+                       WidthRequest="{DynamicResource MenuHeightRequest}" />
+                <Label Grid.Column="1"
+                       Text="Clear Review"
+                       VerticalOptions="Center"
+                       VerticalTextAlignment="Center"
+                       FontSize="{DynamicResource FlyoutMenuFontSize}"
+                       TextColor="{StaticResource PrimaryText}" />
+                <Image Source="navy_chevron_right.png"
+                       Grid.Column="2"
+                       VerticalOptions="Center"
+                       Aspect="AspectFill"
+                       WidthRequest="{DynamicResource MenuHeightRequest}"
+                       HeightRequest="{DynamicResource MenuHeightRequest}" />
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TapGestureRecognizerCommand}"
+                                          CommandParameter="9" />
+                </Grid.GestureRecognizers>
+            </Grid>
+
+            <Grid ColumnDefinitions="Auto, *, Auto"
+                  Padding="0"
+                  ColumnSpacing="5">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryBackground}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryIconLightMode}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <Image Grid.Column="0"
+                       Source="blank_space.png"
+                       Aspect="AspectFill"
+                       HeightRequest="{DynamicResource MenuHeightRequest}"
+                       WidthRequest="{DynamicResource MenuHeightRequest}" />
+                <Label Grid.Column="1"
+                       Text="Send Feedback"
+                       VerticalOptions="Center"
+                       VerticalTextAlignment="Center"
+                       FontSize="{DynamicResource FlyoutMenuFontSize}"
+                       TextColor="{StaticResource PrimaryText}" />
+                <Image Source="navy_chevron_right.png"
+                       Grid.Column="2"
+                       VerticalOptions="Center"
+                       Aspect="AspectFill"
+                       WidthRequest="{DynamicResource MenuHeightRequest}"
+                       HeightRequest="{DynamicResource MenuHeightRequest}" />
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TapGestureRecognizerCommand}"
+                                          CommandParameter="10" />
+                </Grid.GestureRecognizers>
+            </Grid>
+
+            <Grid ColumnDefinitions="Auto, *, Auto"
+                  Padding="0"
+                  ColumnSpacing="5">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryBackground}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryIconLightMode}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <Image Grid.Column="0"
+                       Source="blank_space.png"
+                       Aspect="AspectFill"
+                       HeightRequest="{DynamicResource MenuHeightRequest}"
+                       WidthRequest="{DynamicResource MenuHeightRequest}" />
+                <Label Grid.Column="1"
+                       Text="Rate App"
+                       VerticalOptions="Center"
+                       VerticalTextAlignment="Center"
+                       FontSize="{DynamicResource FlyoutMenuFontSize}"
+                       TextColor="{StaticResource PrimaryText}" />
+                <Image Source="navy_chevron_right.png"
+                       Grid.Column="2"
+                       VerticalOptions="Center"
+                       Aspect="AspectFill"
+                       WidthRequest="{DynamicResource MenuHeightRequest}"
+                       HeightRequest="{DynamicResource MenuHeightRequest}" />
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TapGestureRecognizerCommand}"
+                                          CommandParameter="11" />
+                </Grid.GestureRecognizers>
+            </Grid>
+        </VerticalStackLayout>        
+    </ScrollView>
+</ContentView>

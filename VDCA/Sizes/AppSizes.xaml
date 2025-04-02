@@ -92,9 +92,9 @@
 
     <OnIdiom x:Key="MenuHeightRequest"
              x:TypeArguments="x:Double">
-        <OnIdiom.Phone>24</OnIdiom.Phone>
+        <OnIdiom.Phone>20</OnIdiom.Phone>
         <OnIdiom.Tablet>24</OnIdiom.Tablet>
-        <OnIdiom.Desktop>32</OnIdiom.Desktop>
+        <OnIdiom.Desktop>24</OnIdiom.Desktop>
     </OnIdiom>
 
     <OnIdiom x:Key="MainButtonHeightRequest"

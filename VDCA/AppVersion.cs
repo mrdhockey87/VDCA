@@ -20,6 +20,9 @@
 
 /*
  * 
+ *  v 6.035.0518 Got all the Icons for the menu added and changed the hidden icon to big_eye & unbig_eye mdail 4-3-25
+ *  v 6.035.0517 Started adding menu icon to flyout menu with the feedback icon, downloaded others need to make them they way I want then, impoert tem into 
+ *               the porject and cahnge and check then in the flyout menu. mdail 4-2-25
  *  v 6.035.0516 Changed if (navigationStack.Count > 0) to if (navigationStack.Count > 1) to fix ShowCustomModalAsync. as navigationStack[0] is what was null
  *               and causing the error. I am not sure what changed to make the difference however it works now. mdail 4-2-25
  *  v 6.035.0515 Now that I have the menu looking the way I want it to, whem trying to display the alert Page it is not working and not

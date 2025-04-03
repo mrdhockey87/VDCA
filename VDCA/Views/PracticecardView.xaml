@@ -245,7 +245,9 @@
                                            WidthRequest="{DynamicResource MediumHeightRequest}"
                                            HeightRequest="{DynamicResource MediumHeightRequest}"
                                            Aspect="AspectFit"
-                                           Source="hide_off.png">
+                                           HorizontalOptions="CenterAndExpand"
+                                           VerticalOptions="Center"
+                                           Source="big_eye.png">
                                         <Image.GestureRecognizers>
                                             <TapGestureRecognizer x:DataType="views:CardView" Command="{Binding Source={x:Reference Practice}, Path=HiddedCommand}" />
                                         </Image.GestureRecognizers>
@@ -254,13 +256,13 @@
                                                          Binding="{Binding Hidden}"
                                                          Value="0">
                                                 <Setter Property="Source"
-                                                        Value="hide_off.png" />
+                                                        Value="big_eye.png" />
                                             </DataTrigger>
                                             <DataTrigger TargetType="Image"
                                                          Binding="{Binding Hidden}"
                                                          Value="1">
                                                 <Setter Property="Source"
-                                                        Value="hide_on.png" />
+                                                        Value="unbig_eye.png" />
                                             </DataTrigger>
                                         </Image.Triggers>
                                     </Image>
@@ -270,6 +272,8 @@
                                            HeightRequest="{DynamicResource MediumHeightRequest}"
                                            Margin="0,2,0,0"
                                            Aspect="AspectFit"
+                                           HorizontalOptions="CenterAndExpand"
+                                           VerticalOptions="Center"
                                            Source="flag_off.png">
                                         <Image.GestureRecognizers>
                                             <TapGestureRecognizer x:DataType="views:CardView" Command="{Binding Source={x:Reference Practice}, Path=FlaggedCommand}" />

@@ -72,7 +72,7 @@
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
                 <Image Grid.Column="0"
-                       Source="blank_space.png"
+                       Source="flashcard.png"
                        Aspect="AspectFill"
                        HeightRequest="{DynamicResource MenuHeightRequest}"
                        WidthRequest="{DynamicResource MenuHeightRequest}" />
@@ -114,7 +114,7 @@
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
                 <Image Grid.Column="0"
-                       Source="blank_space.png"
+                       Source="practice.png"
                        Aspect="AspectFill"
                        HeightRequest="{DynamicResource MenuHeightRequest}"
                        WidthRequest="{DynamicResource MenuHeightRequest}" />
@@ -156,7 +156,7 @@
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
                 <Image Grid.Column="0"
-                       Source="blank_space.png"
+                       Source="quiz.png"
                        Aspect="AspectFill"
                        HeightRequest="{DynamicResource MenuHeightRequest}"
                        WidthRequest="{DynamicResource MenuHeightRequest}" />
@@ -198,7 +198,7 @@
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
                 <Image Grid.Column="0"
-                       Source="blank_space.png"
+                       Source="review.png"
                        Aspect="AspectFill"
                        HeightRequest="{DynamicResource MenuHeightRequest}"
                        WidthRequest="{DynamicResource MenuHeightRequest}" />
@@ -240,7 +240,7 @@
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
                 <Image Grid.Column="0"
-                       Source="blank_space.png"
+                       Source="flag_on.png"
                        Aspect="AspectFill"
                        HeightRequest="{DynamicResource MenuHeightRequest}"
                        WidthRequest="{DynamicResource MenuHeightRequest}" />
@@ -282,7 +282,7 @@
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
                 <Image Grid.Column="0"
-                       Source="blank_space.png"
+                       Source="big_eye.png"
                        Aspect="AspectFill"
                        HeightRequest="{DynamicResource MenuHeightRequest}"
                        WidthRequest="{DynamicResource MenuHeightRequest}" />
@@ -324,7 +324,7 @@
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
                 <Image Grid.Column="0"
-                       Source="blank_space.png"
+                       Source="unflag.png"
                        Aspect="AspectFill"
                        HeightRequest="{DynamicResource MenuHeightRequest}"
                        WidthRequest="{DynamicResource MenuHeightRequest}" />
@@ -366,7 +366,7 @@
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
                 <Image Grid.Column="0"
-                       Source="blank_space.png"
+                       Source="unbig_eye.png"
                        Aspect="AspectFill"
                        HeightRequest="{DynamicResource MenuHeightRequest}"
                        WidthRequest="{DynamicResource MenuHeightRequest}" />
@@ -408,7 +408,7 @@
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
                 <Image Grid.Column="0"
-                       Source="blank_space.png"
+                       Source="unreview.png"
                        Aspect="AspectFill"
                        HeightRequest="{DynamicResource MenuHeightRequest}"
                        WidthRequest="{DynamicResource MenuHeightRequest}" />
@@ -450,7 +450,7 @@
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
                 <Image Grid.Column="0"
-                       Source="blank_space.png"
+                       Source="feedback_up.png"
                        Aspect="AspectFill"
                        HeightRequest="{DynamicResource MenuHeightRequest}"
                        WidthRequest="{DynamicResource MenuHeightRequest}" />
@@ -492,7 +492,7 @@
                     </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
                 <Image Grid.Column="0"
-                       Source="blank_space.png"
+                       Source="rate.png"
                        Aspect="AspectFill"
                        HeightRequest="{DynamicResource MenuHeightRequest}"
                        WidthRequest="{DynamicResource MenuHeightRequest}" />

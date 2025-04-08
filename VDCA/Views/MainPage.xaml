@@ -8,6 +8,10 @@
              x:DataType="local:MainPage"
              Title="VA Accredited Exam Study Guide"
              x:Class="VDCA.Views.MainPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Help"
+                     Clicked="OnHelpClicked" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
     </ContentPage.Content>
 </ContentPage>

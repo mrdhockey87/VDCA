@@ -30,6 +30,7 @@
                          HorizontalOptions="FillAndExpand"
                          VerticalOptions="Start">
                 <Label x:Name="running_count"
+                       Margin="3,0,0,0"
                        HorizontalTextAlignment="Center"
                        TextColor="{StaticResource PrimaryTextColor}"
                        Text="0/000" />

@@ -26,40 +26,72 @@ public partial class CustomFlyoutContent : ContentView
             switch (selected)
             {
                 case 0:
-                    await ShellReference?.OnMenuItemClicked("///MainPage");
+                    zero.IsEnabled = false;
+                    await ShellReference?.OnHomeClicked();
+                    zero.IsEnabled = true;
                     break;
                 case 1:
-                    await ShellReference?.OnMenuItemClicked("SelectFlash");
+                    one.IsEnabled = false;
+                    await ShellReference?.OnFlashcardsClicked();
+                    one.IsEnabled = true;
                     break;
                 case 2:
-                    await ShellReference?.OnMenuItemClicked("SelectPractice");
+                    two.IsEnabled = false;
+                    await ShellReference?.OnPracticeClicked();
+                    Shell.Current.FlyoutIsPresented = false;
+                    two.IsEnabled = true;
                     break;
                 case 3:
-                    await ShellReference?.OnMenuItemClicked("SelectQuiz");
+                    three.IsEnabled = false;
+                    await ShellReference?.OnSelectQuizzesClicked();
+                    Shell.Current.FlyoutIsPresented = false;
+                    three.IsEnabled = true;
                     break;
                 case 4:
-                    await ShellReference?.OnMenuItemClicked("ReviewQuizzes");
+                    four.IsEnabled = false;
+                    await ShellReference?.OnReviewQuizzesClicked();
+                    Shell.Current.FlyoutIsPresented = false;
+                    four.IsEnabled = true;
                     break;
                 case 5:
+                    five.IsEnabled = false;
                     await ShellReference?.OnFlaggedOnlyClicked();
+                    five.IsEnabled = true;
                     break;
                 case 6:
+                    six.IsEnabled = false;
                     await ShellReference?.OnHiddenOnlyClicked();
+                    six.IsEnabled = true;
                     break;
                 case 7:
+                    seven.IsEnabled = false;
                     await ShellReference?.OnClearFlaggedClicked();
+                    seven.IsEnabled = true;
                     break;
                 case 8:
+                    eight.IsEnabled = false;
                     await ShellReference?.OnClearHiddenClicked();
+                    eight.IsEnabled = true;
                     break;
                 case 9:
+                    nine.IsEnabled = false;
                     await ShellReference?.OnClearReviewClicked();
+                    nine.IsEnabled = true;
                     break;
                 case 10:
+                    ten.IsEnabled = false;
                     await ShellReference?.OnSendFeedbackClicked();
+                    ten.IsEnabled = true;
                     break;
                 case 11:
+                    eleven.IsEnabled = false;
                     await ShellReference?.OnRateAppClicked();
+                    eleven.IsEnabled = true;
+                    break;
+                case 12:
+                    twelve.IsEnabled = false;
+                    await ShellReference?.OnShowHelpClicked();
+                    twelve.IsEnabled = true;
                     break;
                 default:
                     break;

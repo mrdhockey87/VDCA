@@ -19,7 +19,12 @@
 }
 
 /*
- * 
+ *  v 6.035.0522 Had to make the HelpPage different from the MainHelp view because I needed the exit button to do 
+ *               different things . mdail 4-8-25
+ *  v 6.035.0521 Fix errors in the text of the help screen and add the help screen to the flyout menu. mdail 4-4-25
+ *  v 6.035.0520 Started to add the help - onboarding page to the app. I removed the old OnboardingSupport from the 
+ *               main pages mdail 4-4-25
+ *  v 6.035.0519 Added android:hardwareAccelerated="false" because the menu icons cause the app to crash on Android. mdail 4-4-25
  *  v 6.035.0518 Got all the Icons for the menu added and changed the hidden icon to big_eye & unbig_eye mdail 4-3-25
  *  v 6.035.0517 Started adding menu icon to flyout menu with the feedback icon, downloaded others need to make them they way I want then, impoert tem into 
  *               the porject and cahnge and check then in the flyout menu. mdail 4-2-25

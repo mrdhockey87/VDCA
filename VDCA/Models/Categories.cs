@@ -45,13 +45,11 @@ namespace VDCA.Models
             {
                 SelectedCheckTextColor = Microsoft.Maui.Graphics.Color.FromArgb("#ffffff");
                 SelectedBackgroundColor = Microsoft.Maui.Graphics.Color.FromArgb("#ffc800");
-                //CheckImage = "checkmark_square.png";
             }
             else
             {
                 SelectedCheckTextColor = Microsoft.Maui.Graphics.Color.FromArgb("#000080");
                 SelectedBackgroundColor = Microsoft.Maui.Graphics.Color.FromArgb("#ffffff");
-                //CheckImage = "unchecked_square.png";
             }
         }
         private Microsoft.Maui.Graphics.Color SelectedCheckTextColorLocal { set; get; }

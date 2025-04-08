@@ -47,6 +47,20 @@ public partial class AppShell : Shell
             Shell.Current.FlyoutBehavior = FlyoutBehavior.Disabled;
         }
     }
+    protected override void OnPropertyChanged(string propertyName = null)
+    {
+        base.OnPropertyChanged(propertyName);
+
+        if (propertyName == nameof(FlyoutIsPresented))
+        {
+            if (this.FlyoutIsPresented)
+            {
+                // Reset the isNavigating flag when the flyout menu is opened
+                isNavigating = false;
+            }
+        }
+    }
+
     public async Task OnMenuItemClicked(string route)
     {
         if (isNavigating) return; // Prevent multiple clicks
@@ -58,22 +72,26 @@ public partial class AppShell : Shell
         isNavigating = false;
     }
 
-    public async void OnFlashcardsClicked(object sender, EventArgs e)
+    public async Task OnHomeClicked()
+    {
+        await OnMenuItemClicked("///MainPage");
+    }
+    public async Task OnFlashcardsClicked()
     {
         await OnMenuItemClicked("SelectFlash");
     }
 
-    public async void OnPracticeClicked(object sender, EventArgs e)
+    public async Task OnPracticeClicked()
     {
         await OnMenuItemClicked("SelectPractice");
     }
 
-    public async void OnSelectQuizzesClicked(object sender, EventArgs e)
+    public async Task OnSelectQuizzesClicked()
     {
         await OnMenuItemClicked("SelectQuiz");
     }
 
-    public async void OnReviewQuizzesClicked(object sender, EventArgs e)
+    public async Task OnReviewQuizzesClicked()
     {
         ReviewDatabase rd = new();
         await rd.GetReviewQuizzes();
@@ -84,9 +102,6 @@ public partial class AppShell : Shell
     {
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
-
-        //var menuItem = sender as MenuItem;
-        //menuItem.IsEnabled = false;
         Shell.Current.FlyoutIsPresented = false;
         await mainPage?.ShowProgressBar();
         QuestionsDatabase db = new();
@@ -103,8 +118,6 @@ public partial class AppShell : Shell
             await alertPage.ShowAlertAsync("No Flagged Questions!", "No flagged questions were found!");
         }
         mainPage?.HideProgressBar();
-        //menuItem.IsEnabled = true;
-
         isNavigating = false;
     }
 
@@ -112,9 +125,6 @@ public partial class AppShell : Shell
     {
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
-
-        //var menuItem = sender as MenuItem;
-        //menuItem.IsEnabled = false;
         Shell.Current.FlyoutIsPresented = false;
         await mainPage?.ShowProgressBar();
         QuestionsDatabase db = new();
@@ -131,8 +141,6 @@ public partial class AppShell : Shell
             await alertPage.ShowAlertAsync("No Hidden Questions!", "No hidden questions were found!");
         }
         mainPage?.HideProgressBar();
-        //menuItem.IsEnabled = true;
-
         isNavigating = false;
     }
 
@@ -140,8 +148,6 @@ public partial class AppShell : Shell
     {
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
-        //var menuItem = sender as MenuItem;
-        //menuItem.IsEnabled = false;
         Shell.Current.FlyoutIsPresented = false;
         await mainPage?.ShowProgressBar();
         QuestionsDatabase db = new();
@@ -150,7 +156,6 @@ public partial class AppShell : Shell
         await AppShell.ShowCustomModalAsync(alertPage);
         await alertPage.ShowAlertAsync("Flagged Questions Cleared!", "The flagged questions have been cleared!");
         mainPage?.HideProgressBar();
-       // menuItem.IsEnabled = true;
         isNavigating = false;
     }
 
@@ -158,8 +163,6 @@ public partial class AppShell : Shell
     {
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
-        //var menuItem = sender as MenuItem;
-        //menuItem.IsEnabled = false;
         Shell.Current.FlyoutIsPresented = false;
         await mainPage?.ShowProgressBar();
         QuestionsDatabase db = new();
@@ -168,7 +171,6 @@ public partial class AppShell : Shell
         await AppShell.ShowCustomModalAsync(alertPage);
         await alertPage.ShowAlertAsync("Hidden Questions Cleared!", "The hidden questions have been cleared!");
         mainPage?.HideProgressBar();
-        //menuItem.IsEnabled = true;
         isNavigating = false;
     }
 
@@ -176,8 +178,6 @@ public partial class AppShell : Shell
     {
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
-        //var menuItem = sender as MenuItem;
-        //menuItem.IsEnabled = false;
         Shell.Current.FlyoutIsPresented = false;
         await mainPage?.ShowProgressBar();
         ReviewDatabase rdb = new();
@@ -188,7 +188,6 @@ public partial class AppShell : Shell
         await AppShell.ShowCustomModalAsync(alertPage);
         await alertPage.ShowAlertAsync("Review Has Been Cleared!", "The past quizzes have been cleared!");
         mainPage?.HideProgressBar();
-        //menuItem.IsEnabled = true;
         isNavigating = false;
     }
 
@@ -196,14 +195,11 @@ public partial class AppShell : Shell
     {
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
-        //var menuItem = sender as MenuItem;
-        //menuItem.IsEnabled = false;
         Shell.Current.FlyoutIsPresented = false;
         await mainPage?.ShowProgressBar();
         SendFeedbackEmails sfe = new();
         await sfe.SendAppFeedback();
         mainPage?.HideProgressBar();
-        //menuItem.IsEnabled = true;
         isNavigating = false;
     }
 
@@ -211,8 +207,6 @@ public partial class AppShell : Shell
     {
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
-        //var menuItem = sender as MenuItem;
-        //menuItem.IsEnabled = false;
         Shell.Current.FlyoutIsPresented = false;
         await mainPage?.ShowProgressBar();
         // Implement your logic to rate the app here
@@ -222,7 +216,17 @@ public partial class AppShell : Shell
         await AppShell.ShowCustomModalAsync(alertPage);
         await alertPage.ShowAlertAsync("Rated App!", "Thank you for rating our app!");
         mainPage?.HideProgressBar();
-        //menuItem.IsEnabled = true;
+        isNavigating = false;
+    }
+    public async Task OnShowHelpClicked()
+    {
+        if (isNavigating) return; // Prevent multiple clicks
+        isNavigating = true;
+        await mainPage?.ShowProgressBar();
+        var helpPage = new HelpPage();
+        await AppShell.ShowCustomModalAsync(helpPage);
+        await helpPage.ShowAlertAsync();
+        mainPage?.HideProgressBar();
         isNavigating = false;
     }
 

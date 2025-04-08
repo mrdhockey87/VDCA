@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             InputTransparent="False"
+             IsVisible="False"
+             x:Class="VDCA.Views.MainHelp">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding DummyQuestionCommand}" />
+        </Grid.GestureRecognizers>
+        <!-- Background Layer -->
+        <BoxView BackgroundColor="{StaticResource PrimaryBlack}"
+                 Opacity="0.7"
+                 InputTransparent="False"
+                 VerticalOptions="Fill"
+                 HorizontalOptions="Fill" />
+        <Grid HorizontalOptions="Center"
+              VerticalOptions="Center"
+              Opacity="1"
+              BackgroundColor="{StaticResource PrimaryOptionsButtonBackground}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0"
+                   Grid.Row="0"
+                   Aspect="AspectFit"
+                   Source="burger_menu.png"
+                   Margin="10,0,10,0"
+                   HeightRequest="{DynamicResource MenuHeightRequest}"
+                   WidthRequest="{DynamicResource MenuHeightRequest}"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center" />
+            <Label   Grid.Column="1"
+                     Grid.Row="0"
+                     Grid.ColumnSpan="3"
+                     Margin="10,5,10,5"
+                     Text="Tap on the Menu Icon to get more option when it appears at the top left corner of the page."
+                     TextColor="{StaticResource PrimaryBackgroundColor}"
+                     VerticalOptions="Center"
+                     HorizontalOptions="Center" />
+            <Image Grid.Column="0"
+                   Grid.Row="1"
+                   Aspect="AspectFit"
+                   Source="explanation_navy.png"
+                   Margin="10,0,10,0"
+                   HeightRequest="{DynamicResource MenuHeightRequest}"
+                   WidthRequest="{DynamicResource MenuHeightRequest}"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center" />
+            <Label   Grid.Column="1"
+                     Grid.Row="1"
+                     Grid.ColumnSpan="3"
+                     Margin="10,5,10,5"
+                     Text="The Explanation Icon appears on any Question that has a further explanation to add understanding of the question and correct answer. Simply tap the Icon and the explanation will display."
+                     TextColor="{StaticResource PrimaryBackgroundColor}"
+                     VerticalOptions="Center"
+                     HorizontalOptions="Center" />
+            <Image Grid.Column="0"
+                   Grid.Row="2"
+                   Aspect="AspectFit"
+                   Source="citation_navy.png"
+                   Margin="10,0,10,0"
+                   HeightRequest="{DynamicResource MenuHeightRequest}"
+                   WidthRequest="{DynamicResource MenuHeightRequest}"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center" />
+            <Label   Grid.Column="1"
+                     Grid.Row="2"
+                     Grid.ColumnSpan="3"
+                     Margin="10,5,10,5"
+                     Text="The Citation Icon appears when the question or answer is a direct quote and requires notation of the location in the regulation the quote comes from. Simply tap the Icon and the citation number will display."
+                     TextColor="{StaticResource PrimaryBackgroundColor}"
+                     VerticalOptions="Center"
+                     HorizontalOptions="Center" />
+            <Image Grid.Column="0"
+                   Grid.Row="3"
+                   Aspect="AspectFit"
+                   Source="feedback_up.png"
+                   Margin="10,0,10,0"
+                   HeightRequest="{DynamicResource MenuHeightRequest}"
+                   WidthRequest="{DynamicResource MenuHeightRequest}"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center" />
+            <Label   Grid.Column="1"
+                     Grid.Row="3"
+                     Grid.ColumnSpan="3"
+                     Margin="10,5,10,5"
+                     Text="The Feedback Icon appears on the top of every Question so that if you have any input regarding the question you can tap this and send us your thoughts. It also appears on the Menu so you can send us your thoughts on the app in general."
+                     TextColor="{StaticResource PrimaryBackgroundColor}"
+                     VerticalOptions="Center"
+                     HorizontalOptions="Center" />
+            <Image Grid.Column="0"
+                   Grid.Row="4"
+                   Aspect="AspectFit"
+                   Source="big_eye.png"
+                   Margin="10,0,10,0"
+                   HeightRequest="{DynamicResource MenuHeightRequest}"
+                   WidthRequest="{DynamicResource MenuHeightRequest}"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center" />
+            <Label   Grid.Column="1"
+                     Grid.Row="4"
+                     Grid.ColumnSpan="3"
+                     Margin="10,5,10,5"
+                     Text="The Hide Icon appears on the top of every Question so that you can hide the question, once you turn the hide on it will not appear in the Flashgcards or Practice Mode when you select the Category it is in to study any more. The Menu has a selection for Hidden Question Only which allows you to unhide the questions so they show again or you can unhide all questions for the Menu as well."
+                     TextColor="{StaticResource PrimaryBackgroundColor}"
+                     VerticalOptions="Center"
+                     HorizontalOptions="Center" />
+            <Image Grid.Column="0"
+                   Grid.Row="5"
+                   Aspect="AspectFit"
+                   Source="flag_on.png"
+                   Margin="10,0,10,0"
+                   HeightRequest="{DynamicResource MenuHeightRequest}"
+                   WidthRequest="{DynamicResource MenuHeightRequest}"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center" />
+            <Label   Grid.Column="1"
+                     Grid.Row="5"
+                     Grid.ColumnSpan="3"
+                     Margin="10,5,10,5"
+                     Text="The Flag iocn appears on the top of every Question so that you can flag the question for further study because the Menu has an option to disply flagged questions only. Tap the Icon to flag the question and then you will be able to give it extra attention."
+                     TextColor="{StaticResource PrimaryBackgroundColor}"
+                     VerticalOptions="Center"
+                     HorizontalOptions="Center" />
+            <Button Grid.Column="4"
+                    Grid.Row="7"
+                    Text="Exit"
+                    Clicked="OnExit"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center" />
+        </Grid>
+    </Grid>
+</ContentView>

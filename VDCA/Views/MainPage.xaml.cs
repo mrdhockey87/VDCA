@@ -18,8 +18,8 @@ public partial class MainPage  : ContentPage, INotifyPropertyChanged
 {
     private readonly string LOGTAG = "MainPage";
     public Label versionNo;
-    private MainContentLandscape LandscapeView;
-    private MainContentPortrait PortraitView;
+    public MainContentLandscape LandscapeView;
+    public MainContentPortrait PortraitView;
     public IAskView askView;
     public ContentView askViewContainer;
     public RowDefinition askRow;
@@ -40,6 +40,18 @@ public partial class MainPage  : ContentPage, INotifyPropertyChanged
                       + " Version: " + Constants.APP_VERSION + " Database Version " + Constants.DB_VERSION_NUMBER;
         BindingContext = this;
         CheckForAsk();
+    }
+    private async void OnHelpClicked(object sender, EventArgs e)
+    {
+        if (CurrentOrientation == DisplayOrientation.Portrait)
+        {
+
+            await PortraitView.MainHelpPortrait.ShowAlertAsync();
+        }
+        else
+        {
+            await LandscapeView.MainHelpLandscape.ShowAlertAsync();
+        }
     }
     protected override void OnAppearing()
     {
@@ -74,81 +86,6 @@ public partial class MainPage  : ContentPage, INotifyPropertyChanged
             };
         }
     }
-
-    private async Task OnboardingOverlay()
-    {
-        if (OnboardingSupportHelp.SupportReguiredThisPage(SupportedPages.MainPage))
-        {
-            VisualElement targetControl;
-            VisualElement page;
-            if (CurrentOrientation == DisplayOrientation.Portrait)
-            {
-                targetControl = PortraitView.Quiz;
-                page = PortraitView;
-            }
-            else
-            {
-                targetControl = LandscapeView.Quiz;
-                page = LandscapeView;
-            }
-            NavigationOnboardingOverlayControl navigationOnboardingOverlayControl;
-            if(CurrentOrientation == DisplayOrientation.Portrait)
-            {
-                navigationOnboardingOverlayControl = PortraitView.NavigationOnboardingOverlayControlPortrait;
-            }
-            else
-            {
-                navigationOnboardingOverlayControl = LandscapeView.NavigationOnboardingOverlayControlLandscape;
-            }
-
-            OnboardingOverlayControl onboardingOverlayControl2 = new()
-            {
-                InformationText = SupportDataVersion5.SupportPagesDataList[1].ControlExplainationText,
-                VisibleArrows = SupportDataVersion5.SupportPagesDataList[1].ArrowDirection,
-                IsVisible = true,
-                Background = Colors.Aqua
-            };
-            // Get the adjusted bounds for the OnboardingOverlayControl
-            var adjustedBounds = OnboardingSupportHelp.GetAdjustedBounds(targetControl, page, onboardingOverlayControl2);
-            // Determine the arrow direction based on the adjusted bounds
-            var arrowDirection = OnboardingSupportHelp.GetArrowDirection(targetControl.Bounds, adjustedBounds);
-            if (arrowDirection != ArrowDirection.Up)
-            {
-                SupportDataVersion5.SupportPagesDataList[1].ArrowDirection = [arrowDirection, ArrowDirection.Down];
-            }
-            else if (arrowDirection != ArrowDirection.Down)
-            {
-                SupportDataVersion5.SupportPagesDataList[1].ArrowDirection = [arrowDirection, ArrowDirection.Up];
-            }
-            else
-            {
-                SupportDataVersion5.SupportPagesDataList[1].ArrowDirection = [arrowDirection];
-            }
-            OnboardingOverlayControl onboardingOverlayControl1 = new()
-            {
-                InformationText = SupportDataVersion5.SupportPagesDataList[0].ControlExplainationText,
-                VisibleArrows = SupportDataVersion5.SupportPagesDataList[0].ArrowDirection,
-                IsVisible = true
-            };
-            onboardingOverlayControl2.Background = Colors.Coral;
-            navigationOnboardingOverlayControl.NavigationOverlayAbsoluteLayout.SetLayoutBounds(onboardingOverlayControl1, new Rect(10, 10, 300, 300));
-            navigationOnboardingOverlayControl.NavigationOverlayAbsoluteLayout.SetLayoutFlags(onboardingOverlayControl1, AbsoluteLayoutFlags.All);
-            navigationOnboardingOverlayControl.NavigationOverlayAbsoluteLayout.Children.Add(onboardingOverlayControl1);
-            navigationOnboardingOverlayControl.NavigationOverlayAbsoluteLayout.SetLayoutBounds(onboardingOverlayControl2, new Rect(10, 300, 300, 300)); // adjustedBounds);
-            navigationOnboardingOverlayControl.NavigationOverlayAbsoluteLayout.SetLayoutFlags(onboardingOverlayControl2, AbsoluteLayoutFlags.All);
-            navigationOnboardingOverlayControl.NavigationOverlayAbsoluteLayout.Children.Add(onboardingOverlayControl2);
-            navigationOnboardingOverlayControl.TotalPages = 2;
-            navigationOnboardingOverlayControl.NextButtonClicked += (sender, e) =>
-            {
-                navigationOnboardingOverlayControl.HideOverlay();
-            };
-            navigationOnboardingOverlayControl.PreviousButtonClicked += (sender, e) =>
-            {
-            };
-            await navigationOnboardingOverlayControl.ShowOverlayAsync();
-        }
-    }
-
     private void CheckForAsk()
     {
         AskQuestion aq = new();

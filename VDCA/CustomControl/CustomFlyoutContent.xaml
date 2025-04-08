@@ -12,7 +12,8 @@
         <VerticalStackLayout VerticalOptions="Start">
             <Grid ColumnDefinitions="Auto, *, Auto"
                   Padding="0"
-                  ColumnSpacing="5">
+                  ColumnSpacing="5"
+                  x:Name="zero">
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="CommonStates">
                         <VisualState x:Name="Normal">
@@ -54,7 +55,8 @@
             
             <Grid ColumnDefinitions="Auto, *, Auto"
                   Padding="0"
-                  ColumnSpacing="5">
+                  ColumnSpacing="5"
+                  x:Name="one">
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="CommonStates">
                         <VisualState x:Name="Normal">
@@ -96,7 +98,8 @@
 
             <Grid ColumnDefinitions="Auto, *, Auto"
                   Padding="0"
-                  ColumnSpacing="5">
+                  ColumnSpacing="5"
+                  x:Name="two">
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="CommonStates">
                         <VisualState x:Name="Normal">
@@ -138,7 +141,8 @@
 
             <Grid ColumnDefinitions="Auto, *, Auto"
                   Padding="0"
-                  ColumnSpacing="5">
+                  ColumnSpacing="5"
+                  x:Name="three">
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="CommonStates">
                         <VisualState x:Name="Normal">
@@ -180,7 +184,8 @@
             
             <Grid ColumnDefinitions="Auto, *, Auto"
                   Padding="0"
-                  ColumnSpacing="5">
+                  ColumnSpacing="5"
+                  x:Name="four">
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="CommonStates">
                         <VisualState x:Name="Normal">
@@ -222,7 +227,8 @@
 
             <Grid ColumnDefinitions="Auto, *, Auto"
                   Padding="0"
-                  ColumnSpacing="5">
+                  ColumnSpacing="5"
+                  x:Name="five">
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="CommonStates">
                         <VisualState x:Name="Normal">
@@ -264,7 +270,8 @@
             
             <Grid ColumnDefinitions="Auto, *, Auto"
                   Padding="0"
-                  ColumnSpacing="5">
+                  ColumnSpacing="5"
+                  x:Name="six">
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="CommonStates">
                         <VisualState x:Name="Normal">
@@ -306,7 +313,8 @@
 
             <Grid ColumnDefinitions="Auto, *, Auto"
                   Padding="0"
-                  ColumnSpacing="5">
+                  ColumnSpacing="5"
+                  x:Name="seven">
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="CommonStates">
                         <VisualState x:Name="Normal">
@@ -348,7 +356,8 @@
 
             <Grid ColumnDefinitions="Auto, *, Auto"
                   Padding="0"
-                  ColumnSpacing="5">
+                  ColumnSpacing="5"
+                  x:Name="eight">
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="CommonStates">
                         <VisualState x:Name="Normal">
@@ -390,7 +399,8 @@
 
             <Grid ColumnDefinitions="Auto, *, Auto"
                   Padding="0"
-                  ColumnSpacing="5">
+                  ColumnSpacing="5"
+                  x:Name="nine">
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="CommonStates">
                         <VisualState x:Name="Normal">
@@ -432,7 +442,8 @@
 
             <Grid ColumnDefinitions="Auto, *, Auto"
                   Padding="0"
-                  ColumnSpacing="5">
+                  ColumnSpacing="5"
+                  x:Name="ten">
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="CommonStates">
                         <VisualState x:Name="Normal">
@@ -474,7 +485,8 @@
 
             <Grid ColumnDefinitions="Auto, *, Auto"
                   Padding="0"
-                  ColumnSpacing="5">
+                  ColumnSpacing="5"
+                  x:Name="eleven">
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="CommonStates">
                         <VisualState x:Name="Normal">
@@ -511,6 +523,49 @@
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding TapGestureRecognizerCommand}"
                                           CommandParameter="11" />
+                </Grid.GestureRecognizers>
+            </Grid>
+            
+            <Grid ColumnDefinitions="Auto, *, Auto"
+                  Padding="0"
+                  ColumnSpacing="5"
+                  x:Name="twelve">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryBackground}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="{StaticResource PrimaryIconLightMode}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <Image Grid.Column="0"
+                       Source="help.png"
+                       Aspect="AspectFill"
+                       HeightRequest="{DynamicResource MenuHeightRequest}"
+                       WidthRequest="{DynamicResource MenuHeightRequest}" />
+                <Label Grid.Column="1"
+                       Text="Help"
+                       VerticalOptions="Center"
+                       VerticalTextAlignment="Center"
+                       FontSize="{DynamicResource FlyoutMenuFontSize}"
+                       TextColor="{StaticResource PrimaryText}" />
+                <Image Source="navy_chevron_right.png"
+                       Grid.Column="2"
+                       VerticalOptions="Center"
+                       Aspect="AspectFill"
+                       WidthRequest="{DynamicResource MenuHeightRequest}"
+                       HeightRequest="{DynamicResource MenuHeightRequest}" />
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TapGestureRecognizerCommand}"
+                                          CommandParameter="12" />
                 </Grid.GestureRecognizers>
             </Grid>
         </VerticalStackLayout>        

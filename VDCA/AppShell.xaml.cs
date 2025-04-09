@@ -222,11 +222,9 @@ public partial class AppShell : Shell
     {
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
-        await mainPage?.ShowProgressBar();
         var helpPage = new HelpPage();
         await AppShell.ShowCustomModalAsync(helpPage);
         await helpPage.ShowAlertAsync();
-        mainPage?.HideProgressBar();
         isNavigating = false;
     }
 

@@ -20,6 +20,8 @@
 
 /*
  * 
+ *  v 6.035.0527 Fixed bug that showed up with the overlay's and screen rotation on the main page. mdail 4-9-25
+ *  v 6.035.0526 Added hide progress bar to the OnSizeChanged method in the MainPage to hide the progress bar when the screen rotates. mdail 4-9-25
  *  v 6.035.0525 Added the help view to the flashcard, practice & quiz. Added an optional variable to the help page to set the page 
  *               to hide the hamburger icon and the label and set row 0 to height 0 in the card views. mdail 4-9-25
  *  v 6.035.0524 Fixed it so the Help page uses the same code as the HelpContentView which used to be named the MainHelp by adding an

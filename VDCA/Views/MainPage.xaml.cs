@@ -5,6 +5,7 @@ using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
 using System;
 using System.ComponentModel;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using VDCA.Ask;
@@ -20,12 +21,14 @@ public partial class MainPage  : ContentPage, INotifyPropertyChanged
     public Label versionNo;
     public MainContentLandscape LandscapeView;
     public MainContentPortrait PortraitView;
+    public ProgressBarOverlay ProgressBarOverlayMain;
     public IAskView askView;
     public ContentView askViewContainer;
     public RowDefinition askRow;
     private readonly string versionText = "";
     private double _Width = 0;
     private double _Height = 0;
+    public HelpContentView HelpContent;
     private DisplayOrientation CurrentOrientation = DisplayOrientation.Unknown;
     public ICommand FlashCommand => new Command(FlashClicked);
     public ICommand PracticeCommand => new Command(PracticeClicked);
@@ -39,19 +42,13 @@ public partial class MainPage  : ContentPage, INotifyPropertyChanged
         versionText = Constants.COPYRIGHT + Constants.NEWLINE + "Build: " + Constants.APP_BUILD
                       + " Version: " + Constants.APP_VERSION + " Database Version " + Constants.DB_VERSION_NUMBER;
         BindingContext = this;
+        HelpContent = helpContent;
+        ProgressBarOverlayMain = progressBarOverlayMain;
         CheckForAsk();
     }
     private async void OnHelpClicked(object sender, EventArgs e)
     {
-        if (CurrentOrientation == DisplayOrientation.Portrait)
-        {
-
-            await PortraitView.HelpContentPortrait.ShowAlertAsync();
-        }
-        else
-        {
-            await LandscapeView.HelpContentLandscape.ShowAlertAsync();
-        }
+        await HelpContent.ShowAlertAsync();
     }
     protected override void OnAppearing()
     {
@@ -61,13 +58,15 @@ public partial class MainPage  : ContentPage, INotifyPropertyChanged
         {
             CurrentOrientation = DisplayOrientation.Landscape;
             // Landscape
-            LandscapeView ??= new MainContentLandscape();
+            LandscapeView ??= new MainContentLandscape(); 
+            MainContentContainer.Content = LandscapeView;
         }
         else
         {
             CurrentOrientation = DisplayOrientation.Portrait;
             // Portrait
             PortraitView ??= new MainContentPortrait();
+            MainContentContainer.Content = PortraitView;
         }
         // Load the proper ContentView based on the orientation
         if (CurrentOrientation == DisplayOrientation.Landscape)
@@ -111,9 +110,10 @@ public partial class MainPage  : ContentPage, INotifyPropertyChanged
             var isTablet = DeviceInfo.Idiom == DeviceIdiom.Tablet;
             if (_Width > _Height && !(DeviceInfo.Platform == DevicePlatform.WinUI) && !( DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst))
             {
+                HideProgressBar();
                 CurrentOrientation = DisplayOrientation.Landscape;
                 LandscapeView ??= new MainContentLandscape();
-                Content = LandscapeView;
+                MainContentContainer.Content = LandscapeView;
                 LandscapeView.MP = this;
                 LandscapeView.MLP = LandscapeView;
                 askView ??= new AskViewLandscape();
@@ -153,9 +153,10 @@ public partial class MainPage  : ContentPage, INotifyPropertyChanged
             }
             else
             {
+                HideProgressBar();
                 CurrentOrientation = DisplayOrientation.Portrait;
                 PortraitView ??= new MainContentPortrait();
-                Content = PortraitView;
+                MainContentContainer.Content = PortraitView;
                 PortraitView.MP = this;
                 PortraitView.MPP = PortraitView;
                 askView ??= new AskViewPortrait();
@@ -255,14 +256,7 @@ public partial class MainPage  : ContentPage, INotifyPropertyChanged
     {
         await MainThread.InvokeOnMainThreadAsync(async () =>
         {
-            if (Content is MainContentLandscape landscapeView)
-            {
-                await ShowProgressBarUtil.ShowProgressBar(landscapeView.ProgressBarLandscapeOverlay);
-            }
-            else if (Content is MainContentPortrait portraitView)
-            {
-                await ShowProgressBarUtil.ShowProgressBar(portraitView.ProgressBarPortraitOverlay);
-            }
+            await ShowProgressBarUtil.ShowProgressBar(ProgressBarOverlayMain);
         });
         await Task.Delay(5);
     }
@@ -271,14 +265,7 @@ public partial class MainPage  : ContentPage, INotifyPropertyChanged
     {
         MainThread.BeginInvokeOnMainThread(async () =>
         {
-            if (Content is MainContentLandscape landscapeView)
-            {
-                await ShowProgressBarUtil.HideProgressBar(landscapeView.ProgressBarLandscapeOverlay);
-            }
-            else if (Content is MainContentPortrait portraitView)
-            {
-                await ShowProgressBarUtil.HideProgressBar(portraitView.ProgressBarPortraitOverlay);
-            }
+            await ShowProgressBarUtil.HideProgressBar(ProgressBarOverlayMain);
         });
     }
 }

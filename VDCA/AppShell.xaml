@@ -12,7 +12,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.5*" />
@@ -24,7 +24,7 @@
                    Aspect="AspectFit"
                    BackgroundColor="{StaticResource PrimaryBackground}"
                    Source="vdca_solid_color.png"
-                   Margin="0,20,10,10"
+                   Margin="0,20,0,10"
                    VerticalOptions="Center"
                    HorizontalOptions="Center" />
                 <StackLayout Grid.Column="0"
@@ -33,7 +33,7 @@
                              Orientation="Vertical"
                              BackgroundColor="{StaticResource PrimaryBackground}">
                     <Label FontSize="{DynamicResource LargeFontSize}"
-                           Padding="10,0,0,0"
+                           Margin="5,0,0,10"
                            Text="VDCA Menu Selections:"
                            BackgroundColor="{StaticResource PrimaryBackground}"
                            TextColor="{StaticResource PrimaryText}"

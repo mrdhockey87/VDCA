@@ -7,12 +7,6 @@
              InputTransparent="False"
              BackgroundColor="Transparent"
              Title="HelpPage">
-    <Grid>
-        <!-- Container for the content -->
-        <Grid x:Name="ContentContainer"
-              HorizontalOptions="Center"
-              VerticalOptions="Center">
-            <!-- HelpContentView will be added here in code-behind -->
-        </Grid>
-    </Grid>
+    <ContentPage.Content>
+    </ContentPage.Content>
 </ContentPage>

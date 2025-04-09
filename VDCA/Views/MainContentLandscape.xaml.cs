@@ -20,15 +20,11 @@ public partial class MainContentLandscape : ContentView
     public Button Review;
     public Label VersionNo;
     public MainPage MP;
-    public ProgressBarOverlay ProgressBarLandscapeOverlay;
-    public HelpContentView HelpContentLandscape;
     public MainContentLandscape MLP;
 
     public MainContentLandscape()
 	{
 		InitializeComponent();
-        ProgressBarLandscapeOverlay = progressBarLandscapeOverlay;
-        HelpContentLandscape = helpContentLandscapeOverlay;
         GridPort = GirdLandscape;
         Logo = logo;
         AskViewContainer = ask_view_holder;

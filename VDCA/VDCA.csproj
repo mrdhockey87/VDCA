@@ -16,7 +16,7 @@
     <ApplicationId>com.vdcainc.vdca</ApplicationId>
     <ApplicationIdGuid>3a6086e7-915d-4e3f-8baa-136c94590765</ApplicationIdGuid>
     <!-- Versions -->
-    <ApplicationDisplayVersion>6.035.0525</ApplicationDisplayVersion>
+    <ApplicationDisplayVersion>6.035.0527</ApplicationDisplayVersion>
     <ApplicationVersion>5</ApplicationVersion>
     <PackageVersion>1.0.0</PackageVersion>
     <AssemblyVersion>$(ApplicationDisplayVersion).$(ApplicationVersion)</AssemblyVersion>

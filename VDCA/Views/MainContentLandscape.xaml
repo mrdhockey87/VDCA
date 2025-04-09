@@ -86,7 +86,7 @@
                    VerticalOptions="End"
                    HorizontalTextAlignment="Center" />
         </Grid>
-        <views:MainHelp x:Name="mainHelpLandscapeOverlay" />
+        <views:HelpContentView x:Name="helpContentLandscapeOverlay" />
         <views:ProgressBarOverlay x:Name="progressBarLandscapeOverlay" />
     </Grid>
 </ContentView>

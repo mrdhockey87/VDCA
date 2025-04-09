@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              InputTransparent="False"
              IsVisible="False"
-             x:Class="VDCA.Views.MainHelp">
+             BackgroundColor="Transparent"
+             x:Class="VDCA.Views.HelpContentView">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -145,6 +146,8 @@
                     Grid.Row="7"
                     Text="Exit"
                     Clicked="OnExit"
+                    BackgroundColor="{StaticResource PrimaryTextColor}"
+                    TextColor="{StaticResource PrimaryBackgroundColor}"
                     VerticalOptions="Center"
                     HorizontalOptions="Center" />
         </Grid>

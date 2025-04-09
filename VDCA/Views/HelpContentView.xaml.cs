@@ -2,11 +2,12 @@ using System.Windows.Input;
 
 namespace VDCA.Views;
 
-public partial class MainHelp : ContentView
+public partial class HelpContentView : ContentView
 {
     private TaskCompletionSource<bool> tcs;
     public ICommand DummyQuestionCommand => new Command(() => { /* Does nothing */ });
-    public MainHelp()
+    public event EventHandler ExitEventClicked;
+    public HelpContentView()
 	{
 		InitializeComponent();
 	}
@@ -19,6 +20,14 @@ public partial class MainHelp : ContentView
     }
     private void OnExit(object sender, EventArgs e)
     {
-        IsVisible = false;
+        // Trigger the ExitRequested event first
+        ExitEventClicked?.Invoke(this, EventArgs.Empty);
+        // If no subscribers (standalone use) or the subscriber didn't handle the visibility
+        // then handle it here
+        if (ExitEventClicked == null || IsVisible)
+        {
+            IsVisible = false;
+            tcs?.SetResult(true);
+        }
     }
 }

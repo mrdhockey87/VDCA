@@ -102,7 +102,7 @@
                    VerticalTextAlignment="Center"
                    HorizontalTextAlignment="Center" />
         </Grid>
-        <views:MainHelp x:Name="mainHelpPortraitOverlay" />
+        <views:HelpContentView x:Name="helpContentPortraitOverlay" />
         <views:ProgressBarOverlay x:Name="progressBarPortraitOverlay" />
     </Grid>
 </ContentView>

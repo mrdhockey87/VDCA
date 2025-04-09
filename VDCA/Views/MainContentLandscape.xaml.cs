@@ -21,14 +21,14 @@ public partial class MainContentLandscape : ContentView
     public Label VersionNo;
     public MainPage MP;
     public ProgressBarOverlay ProgressBarLandscapeOverlay;
-    public MainHelp MainHelpLandscape;
+    public HelpContentView HelpContentLandscape;
     public MainContentLandscape MLP;
 
     public MainContentLandscape()
 	{
 		InitializeComponent();
         ProgressBarLandscapeOverlay = progressBarLandscapeOverlay;
-        MainHelpLandscape = mainHelpLandscapeOverlay;
+        HelpContentLandscape = helpContentLandscapeOverlay;
         GridPort = GirdLandscape;
         Logo = logo;
         AskViewContainer = ask_view_holder;

@@ -19,6 +19,11 @@
 }
 
 /*
+ * 
+ *  v 6.035.0524 Fixed it so the Help page uses the same code as the HelpContentView which used to be named the MainHelp by adding an
+ *               event that the HelpPage can subscribe to that closes the page, if the event isn't subscribe then it just uses the
+ *               exit code in the help content view mdail 4-9-25
+ *  v 6.035.0523 Fix the help pages background and text colors mdail 4-8-25
  *  v 6.035.0522 Had to make the HelpPage different from the MainHelp view because I needed the exit button to do 
  *               different things . mdail 4-8-25
  *  v 6.035.0521 Fix errors in the text of the help screen and add the help screen to the flyout menu. mdail 4-4-25

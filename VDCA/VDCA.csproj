@@ -16,7 +16,7 @@
     <ApplicationId>com.vdcainc.vdca</ApplicationId>
     <ApplicationIdGuid>3a6086e7-915d-4e3f-8baa-136c94590765</ApplicationIdGuid>
     <!-- Versions -->
-    <ApplicationDisplayVersion>6.035.0522</ApplicationDisplayVersion>
+    <ApplicationDisplayVersion>6.035.0524</ApplicationDisplayVersion>
     <ApplicationVersion>5</ApplicationVersion>
     <PackageVersion>1.0.0</PackageVersion>
     <AssemblyVersion>$(ApplicationDisplayVersion).$(ApplicationVersion)</AssemblyVersion>
@@ -248,6 +248,9 @@
     <Compile Update="Sizes\SmallTabletSizes.xaml.cs">
       <DependentUpon>SmallTabletSizes.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\HelpContentView.xaml.cs">
+      <DependentUpon>HelpContentView.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\QuestionAlert.xaml.cs">
       <DependentUpon>QuestionAlert.xaml</DependentUpon>
     </Compile>
@@ -311,7 +314,7 @@
     <MauiXaml Update="Views\HelpPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
-    <MauiXaml Update="Views\MainHelp.xaml">
+    <MauiXaml Update="Views\HelpContentView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\ProgressBarOverlay.xaml">

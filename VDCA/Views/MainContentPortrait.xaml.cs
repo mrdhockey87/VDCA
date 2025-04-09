@@ -19,14 +19,14 @@ public partial class MainContentPortrait : ContentView
     public Label VersionNo;
     public MainPage MP;
     public ProgressBarOverlay ProgressBarPortraitOverlay;
-    public MainHelp MainHelpPortrait;
+    public HelpContentView HelpContentPortrait;
     public MainContentPortrait MPP;
 
     public MainContentPortrait()
 	{
 		InitializeComponent();
         ProgressBarPortraitOverlay = progressBarPortraitOverlay;
-        MainHelpPortrait = mainHelpPortraitOverlay;
+        HelpContentPortrait = helpContentPortraitOverlay;
         GridPort = GirdPortrait;
         AskViewContainer = ask_view_holder;
         AskRow = ask_row;

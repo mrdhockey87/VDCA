@@ -46,11 +46,11 @@ public partial class MainPage  : ContentPage, INotifyPropertyChanged
         if (CurrentOrientation == DisplayOrientation.Portrait)
         {
 
-            await PortraitView.MainHelpPortrait.ShowAlertAsync();
+            await PortraitView.HelpContentPortrait.ShowAlertAsync();
         }
         else
         {
-            await LandscapeView.MainHelpLandscape.ShowAlertAsync();
+            await LandscapeView.HelpContentLandscape.ShowAlertAsync();
         }
     }
     protected override void OnAppearing()

@@ -26,7 +26,8 @@
               Opacity="1"
               BackgroundColor="{StaticResource PrimaryOptionsButtonBackground}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"
+                               x:Name="MenuLine" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -42,6 +43,7 @@
             </Grid.ColumnDefinitions>
             <Image Grid.Column="0"
                    Grid.Row="0"
+                   x:Name="MenuIcon"
                    Aspect="AspectFit"
                    Source="burger_menu.png"
                    Margin="10,0,10,0"
@@ -51,6 +53,7 @@
                    HorizontalOptions="Center" />
             <Label   Grid.Column="1"
                      Grid.Row="0"
+                     x:Name="MenuLabel"
                      Grid.ColumnSpan="3"
                      Margin="10,5,10,5"
                      Text="Tap on the Menu Icon to get more option when it appears at the top left corner of the page."

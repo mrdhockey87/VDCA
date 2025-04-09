@@ -17,6 +17,10 @@
     <ContentPage.Resources>
         <converters:StringLengthToVisibilityConverter x:Key="stringLengthToVisibilityConverter" />
     </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Help"
+                     Command="{Binding Source={x:Reference Flash}, Path=HelpCommand}" />
+    </ContentPage.ToolbarItems>
     <Grid x:Name="pageGrid"
           VerticalOptions="FillAndExpand">
         <StackLayout Orientation="Vertical"
@@ -382,6 +386,7 @@
                         BackgroundColor="Transparent" />
             </StackLayout>
         </StackLayout>
+        <views:HelpContentView x:Name="helpContentFlashcardOverlay" />
         <views:QuestionAlert x:Name="questionFlashcardAlert" />
         <views:InformationAlert x:Name="informationFlashcardAlert" />
     </Grid>

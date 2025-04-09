@@ -15,6 +15,10 @@
     <ContentPage.BindingContext>
         <vm:QuizViewModel x:Name="qvm" />
     </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Help"
+                     Command="{Binding Source={x:Reference Quiz}, Path=HelpCommand}" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <converters:StringLengthToVisibilityConverter x:Key="stringLengthToVisibilityConverter" />
         <converters:IntToBoolConverter x:Key="intToBool" />
@@ -565,6 +569,9 @@
                     HorizontalOptions="FillAndExpand"
                     BackgroundColor="Transparent" />
         </StackLayout>
+        <views:HelpContentView x:Name="helpContentQuizOverlay"
+                               Grid.Row="1"
+                               Grid.Column="0" />
         <views:ReviewQuestion x:Name="reviewQuizQuestion"
                               Grid.Row="1"
                               Grid.Column="0" />

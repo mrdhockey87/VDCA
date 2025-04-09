@@ -20,6 +20,10 @@
         <converters:IntToBoolConverter x:Key="intToBool" />
         <converters:StringToColorConverter x:Key="ColorConverter" />
     </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Help"
+                     Command="{Binding Source={x:Reference Practice}, Path=HelpCommand}" />
+    </ContentPage.ToolbarItems>
     <Grid x:Name="pageGrid"
           VerticalOptions="FillAndExpand">
         <Grid.RowDefinitions>
@@ -562,5 +566,8 @@
         <views:InformationAlert x:Name="informationPracticeAlert"
                                 Grid.Row="1"
                                 Grid.Column="0" />
+        <views:HelpContentView x:Name="helpContentPracticeOverlay"
+                               Grid.Row="1"
+                               Grid.Column="0" />
     </Grid>
 </views:CardView>

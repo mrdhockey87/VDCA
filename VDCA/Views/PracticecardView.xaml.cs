@@ -21,7 +21,7 @@ public partial class PracticecardView : CardView
         SetViewModel(pcvm);
         SetCardView(CarouselPracticecardView, running_count, count_progress, pageGrid, mainGrid);
         pcvm.SetView(this);
-        SetContextViews(informationPracticeAlert, questionPracticeAlert);
+        SetContextViews(helpContentPracticeOverlay, informationPracticeAlert, questionPracticeAlert);
         pcvm.CurrentQuestion = pcvm.CardQuestions.FirstOrDefault();
         Orientation = DeviceDisplay.Current.MainDisplayInfo.Orientation;
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior

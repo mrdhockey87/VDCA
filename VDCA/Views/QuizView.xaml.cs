@@ -24,7 +24,7 @@ public partial class QuizView : CardView
         SetViewModel(qvm);
         SetCardView(CarouselQuizView, running_count, count_progress, pageGrid, mainGrid);
         qvm.SetView(this);
-        SetContextViews(informationQuizAlert, questionQuizAlert, progressBarQuizOverlay, reviewQuizQuestion);
+        SetContextViews(helpContentQuizOverlay, informationQuizAlert, questionQuizAlert, progressBarQuizOverlay, reviewQuizQuestion);
         Orientation = DeviceDisplay.Current.MainDisplayInfo.Orientation;
         // Set the title based on the state of ReviewQuiz
         Title = ReviewQuiz ? Constants.ReviewQuizTitle : Constants.QuizTitle;

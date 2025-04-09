@@ -20,7 +20,7 @@ public partial class FlashcardView : CardView
         SetViewModel(fcvm);
         SetCardView(CarouselFlashcardCardView, running_count, count_progress, pageGrid, mainGrid);
         fcvm.SetView(this);
-        SetContextViews(informationFlashcardAlert, questionFlashcardAlert);
+        SetContextViews(helpContentFlashcardOverlay, informationFlashcardAlert, questionFlashcardAlert);
         fcvm.CurrentQuestion = fcvm.CardQuestions.FirstOrDefault();
         Orientation = DeviceDisplay.Current.MainDisplayInfo.Orientation;
         Shell.SetBackButtonBehavior(this, new BackButtonBehavior

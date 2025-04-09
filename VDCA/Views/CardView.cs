@@ -22,7 +22,8 @@ public partial class CardView : ContentPage
     public ProgressBar RunningProgressBar;
     public Grid PageGrid;
     public Grid MainGrid;
-    public InformationAlert InformationFlashcardAlert;
+    public HelpContentView HelpContentView;
+    public InformationAlert InformationAlert;
     public QuestionAlert QuestionAlert;
     public ProgressBarOverlay ProgressBarQuizOverlay;
     public ReviewQuestion ReviewQuizQuestion;
@@ -40,6 +41,7 @@ public partial class CardView : ContentPage
     public ICommand FeedbackCommand { get; set; }
     public ICommand HiddedCommand { get; set; }
     public ICommand FlaggedCommand { get; set; }
+    public ICommand HelpCommand { get; set; }
     /*
     public bool RefreshViewIsRefreshing
     {
@@ -87,6 +89,7 @@ public partial class CardView : ContentPage
         FeedbackCommand = new Command(async () => await OnFeedbackCommandExecuted());
         HiddedCommand = new Command(async () => await OnHiddedCommandExecuted());
         FlaggedCommand = new Command(async () => await OnFlaggedCommandExecuted());
+        HelpCommand = new Command(async () => await OnHelpCommandExecuted());
         _ = OnUpdateProgressCommandExecuted();
     }
     public void SetViewModel(CardViewModel viewModel)
@@ -108,12 +111,17 @@ public partial class CardView : ContentPage
             CarouselCardView.IsScrollAnimated = false;
         }
     }
-    public void SetContextViews(InformationAlert informationAlert = null, QuestionAlert questionAlert = null, 
+    public void SetContextViews(HelpContentView helpContentView = null, InformationAlert informationAlert = null, QuestionAlert questionAlert = null, 
         ProgressBarOverlay progressBarQuizOverlay = null, ReviewQuestion reviewQuizQuestion = null)
     {
+
+        if (helpContentView != null)
+        {
+            HelpContentView = helpContentView;
+        }
         if (informationAlert != null)
         {
-            InformationFlashcardAlert = informationAlert;
+            InformationAlert = informationAlert;
         }
 
         if (questionAlert != null)
@@ -223,6 +231,16 @@ public partial class CardView : ContentPage
             Grid.SetColumn(CarouselCardView, 0);
             //RefreshViewIsRefreshing = false;
             Console.WriteLine(LOGTAG + "ExecuteRefresh Done");
+        });
+    }
+    public async Task OnHelpCommandExecuted()
+    {
+        await MainThread.InvokeOnMainThreadAsync(async () =>
+        {
+            if (HelpContentView != null)
+            {
+                await HelpContentView.ShowAlertAsync(true);
+            }
         });
     }
     public async Task OnUpdateProgressCommandExecuted()
@@ -373,7 +391,7 @@ public partial class CardView : ContentPage
     {
         await MainThread.InvokeOnMainThreadAsync(() =>
         {
-            InformationFlashcardAlert?.ShowAlert(title, message);
+            InformationAlert?.ShowAlert(title, message);
         });
     }
     public async Task<bool> ShowQuestionAlertAsync(string title, string message)

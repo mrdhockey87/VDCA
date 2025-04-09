@@ -20,6 +20,8 @@
 
 /*
  * 
+ *  v 6.035.0525 Added the help view to the flashcard, practice & quiz. Added an optional variable to the help page to set the page 
+ *               to hide the hamburger icon and the label and set row 0 to height 0 in the card views. mdail 4-9-25
  *  v 6.035.0524 Fixed it so the Help page uses the same code as the HelpContentView which used to be named the MainHelp by adding an
  *               event that the HelpPage can subscribe to that closes the page, if the event isn't subscribe then it just uses the
  *               exit code in the help content view mdail 4-9-25

@@ -20,6 +20,7 @@
 
 /*
  * 
+ *  v 6.035.0528 Commit to add the On Navigating event to the AppShell mdail 4-23-25
  *  v 6.035.0527 Fixed bug that showed up with the overlay's and screen rotation on the main page. mdail 4-9-25
  *  v 6.035.0526 Added hide progress bar to the OnSizeChanged method in the MainPage to hide the progress bar when the screen rotates. mdail 4-9-25
  *  v 6.035.0525 Added the help view to the flashcard, practice & quiz. Added an optional variable to the help page to set the page 

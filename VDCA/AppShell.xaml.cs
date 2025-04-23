@@ -31,7 +31,10 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("SelectQuiz", typeof(SelectQuizView));
         Routing.RegisterRoute("ReviewQuizzes", typeof(ReviewQuizzesView));
     }
-
+    protected override async void OnNavigating(ShellNavigatingEventArgs args)
+    {
+        base.OnNavigating(args);
+    }
     private void OnNavigated(object sender, ShellNavigatedEventArgs e)
     {
         // Change the FlyoutBehavior depending on the current route

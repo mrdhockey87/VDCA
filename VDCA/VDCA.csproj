@@ -16,9 +16,9 @@
     <ApplicationId>com.vdcainc.vdca</ApplicationId>
     <ApplicationIdGuid>3a6086e7-915d-4e3f-8baa-136c94590765</ApplicationIdGuid>
     <!-- Versions -->
-    <ApplicationDisplayVersion>6.035.0528</ApplicationDisplayVersion>
-    <ApplicationVersion>5</ApplicationVersion>
-    <PackageVersion>1.0.0</PackageVersion>
+    <ApplicationDisplayVersion>6.035.0530</ApplicationDisplayVersion>
+    <ApplicationVersion>6</ApplicationVersion>
+    <PackageVersion>6.0.0</PackageVersion>
     <AssemblyVersion>$(ApplicationDisplayVersion).$(ApplicationVersion)</AssemblyVersion>
     <MauiEnableXamlCBindingWithSourceCompilation>true</MauiEnableXamlCBindingWithSourceCompilation>
     <!-- Windows App Sdk -->
@@ -225,11 +225,11 @@
   </ItemGroup>
 <!-- Nuget's ItemGroups -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.50" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.50" />
-    <PackageReference Include="Microsoft.Maui.Essentials" Version="9.0.50" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.60" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.60" />
+    <PackageReference Include="Microsoft.Maui.Essentials" Version="9.0.60" />
     <PackageReference Include="CommunityToolkit.Maui" Version="11.2.0" />
-    <PackageReference Include="CommunityToolkit.Maui.Markup" Version="5.1.0" />
+    <PackageReference Include="CommunityToolkit.Maui.Markup" Version="6.0.0" />
     <PackageReference Include="Microsoft.AppCenter" Version="5.0.7" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.7" />
     <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />

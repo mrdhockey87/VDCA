@@ -20,6 +20,8 @@
 
 /*
  * 
+ *  v 6.035.0530 FIxed the ApplicationVersion & the PackageVersion, set them to 6 & 6.0.0 to match the ApplicationDisplayVersion better. mdail 4-29-25
+ *  v 6.035.0529 Update Nugets and test mdail 4-23-25
  *  v 6.035.0528 Commit to add the On Navigating event to the AppShell mdail 4-23-25
  *  v 6.035.0527 Fixed bug that showed up with the overlay's and screen rotation on the main page. mdail 4-9-25
  *  v 6.035.0526 Added hide progress bar to the OnSizeChanged method in the MainPage to hide the progress bar when the screen rotates. mdail 4-9-25

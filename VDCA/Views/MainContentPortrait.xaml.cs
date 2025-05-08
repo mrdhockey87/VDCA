@@ -16,7 +16,6 @@ public partial class MainContentPortrait : ContentView
     public Button Practice;
     public Button Quiz;
     public Button Review;
-    public Label VersionNo;
     public MainPage MP;
     public MainContentPortrait MPP;
 
@@ -26,7 +25,6 @@ public partial class MainContentPortrait : ContentView
         GridPort = GirdPortrait;
         AskViewContainer = ask_view_holder;
         AskRow = ask_row;
-        VersionNo = version_label;
         Flashcard = flash_button;
         Practice = practice_button;
         Quiz = quiz_button;

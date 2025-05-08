@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              xmlns:views="clr-namespace:VDCA.Views"
+             xmlns:vm="clr-namespace:VDCA.ViewModels"
              ios:Page.UseSafeArea="True"
              xmlns:local="clr-namespace:VDCA.Views"
              x:Name="MainPageView"

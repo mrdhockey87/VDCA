@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using SQLitePCL;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,7 +19,9 @@ namespace VDCA.Data
         {
             try
             {
-                db = new SQLiteConnection(Constants.DBPath);
+                var options = new SQLiteConnectionString(Constants.DBPath, true, key: Constants.COPYRIGHT);
+                db = new SQLiteConnection(options);
+                //db = new SQLiteConnection(Constants.DBPath);
             }
             catch (Exception ex)
             {
@@ -78,7 +81,7 @@ namespace VDCA.Data
                 List<Categories> categoriesLoad = [];
                 Open();
                 categoriesLoad = db.Query<Categories>(Sql.CountByCategory(), "");
-                Constants.Categories = new ObservableCollection<Categories>(categoriesLoad);
+                Constants.Categories = [.. categoriesLoad];
             }
             catch (Exception ex)
             {
@@ -97,7 +100,7 @@ namespace VDCA.Data
                 List<Categories> categoriesLoad = [];
                 Open();
                 categoriesLoad = db.Query<Categories>(Sql.CountByCategoryFlashOnly(), "");
-                Constants.CategoriesFlash = new ObservableCollection<Categories>(categoriesLoad);
+                Constants.CategoriesFlash = [.. categoriesLoad];
             }
             catch (Exception ex)
             {
@@ -118,7 +121,7 @@ namespace VDCA.Data
                     List<Categories> categoriesLoad = [];
                     Open();
                     categoriesLoad = db.Query<Categories>(Sql.CountByCategory(), "");
-                    Constants.Categories = new ObservableCollection<Categories>(categoriesLoad);
+                    Constants.Categories = [.. categoriesLoad];
                 }
                 catch (Exception ex)
                 {
@@ -140,7 +143,7 @@ namespace VDCA.Data
                     List<Categories> categoriesLoad = [];
                     Open();
                     categoriesLoad = db.Query<Categories>(Sql.CountByCategoryFlashOnly(), "");
-                    Constants.CategoriesFlash = new ObservableCollection<Categories>(categoriesLoad);
+                    Constants.CategoriesFlash = [.. categoriesLoad];
                 }
                 catch (Exception ex)
                 {
@@ -240,25 +243,6 @@ namespace VDCA.Data
                                   (string.IsNullOrEmpty(answer4) ? "" : Environment.NewLine + answer4);
             }
         }
-        /*
-        private static List<Questions> FixFlashAnswers(List<Questions> questions)
-        {
-            const string ALLANSWERS = "All of these";
-            const string SEEEXPLANATION = "; See Explanation";
-            const string NONEOFTHESE = "None of these";
-            foreach (Questions question in questions)
-            {
-                if (question.Answer1 == ALLANSWERS || question.Answer1 == ALLANSWERS + SEEEXPLANATION)
-                {
-                    string answer2 = question.Answer2 == NONEOFTHESE ? "" : question.Answer2;
-                    string answer3 = question.Answer3 == NONEOFTHESE ? "" : question.Answer3;
-                    string answer4 = question.Answer4 == NONEOFTHESE ? "" : question.Answer4;
-                    question.Answer1 = answer2 + (string.IsNullOrEmpty(answer3) ? "" : Environment.NewLine + answer3) +
-                                      (string.IsNullOrEmpty(answer4) ? "" : Environment.NewLine + answer4);
-                }
-            }
-            return questions;
-        }*/
         public async Task GetSelectQuiz1Questions()
         {
             await Task.Run(async () =>
@@ -279,7 +263,7 @@ namespace VDCA.Data
                     questionsShuffled.AddRange(Utils.ShuffleAnswers.SortAnswers(questionsPipeFixed));
                     questionsShuffled.Shuffle();
                     questionsShuffledOut.AddRange(SetShuffledAnswersNumbers(questionsShuffled));
-                    Constants.Questions = new ObservableCollection<Questions>(questionsShuffledOut);
+                    Constants.Questions = [.. questionsShuffledOut];
                 }
                 catch (Exception ex)
                 {
@@ -315,7 +299,7 @@ namespace VDCA.Data
                     questionsShuffled.AddRange(Utils.ShuffleAnswers.SortAnswers(questionsPipeFixed));
                     questionsShuffled.Shuffle();
                     questionsShuffledOut.AddRange(SetShuffledAnswersNumbers(questionsShuffled));
-                    Constants.Questions = new ObservableCollection<Questions>(questionsShuffledOut);
+                    Constants.Questions = [.. questionsShuffledOut];
                 }
                 catch (Exception ex)
                 {
@@ -347,7 +331,7 @@ namespace VDCA.Data
                     questionsShuffled.AddRange(Utils.ShuffleAnswers.SortAnswers(questionsPipeFixed));
                     questionsShuffled.Shuffle();
                     questionsShuffledOut.AddRange(SetShuffledAnswersNumbers(questionsShuffled));
-                    Constants.Questions = new ObservableCollection<Questions>(questionsShuffledOut);
+                    Constants.Questions = [.. questionsShuffledOut];
                 }
                 catch (Exception ex)
                 {
@@ -373,7 +357,7 @@ namespace VDCA.Data
                     questionsPipeFixed.AddRange(await QuestionsDatabase.FixPipeAsync(questionsLoad));
                     questionsPipeFixed.Shuffle();
                     questionsFlashOut.AddRange(QuestionsDatabase.FixFlashAnswers(questionsPipeFixed));
-                    Constants.Questions = new ObservableCollection<Questions>(questionsFlashOut);
+                    Constants.Questions = [.. questionsFlashOut];
                 }
                 catch (Exception ex)
                 {
@@ -399,7 +383,7 @@ namespace VDCA.Data
                     questionsPipeFixed.AddRange(await QuestionsDatabase.FixPipeAsync(questionsLoad));
                     questionsPipeFixed.Shuffle();
                     questionsFlashOut.AddRange(QuestionsDatabase.FixFlashAnswers(questionsPipeFixed));
-                    Constants.Questions = new ObservableCollection<Questions>(questionsFlashOut);
+                    Constants.Questions = [.. questionsFlashOut];
                 }
                 catch (Exception ex)
                 {

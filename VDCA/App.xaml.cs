@@ -2,10 +2,12 @@
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Devices;
 using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using VDCA.Ask;
 using VDCA.CustomControl;
 using VDCA.Data;
+using VDCA.Models;
 using VDCA.Sizes;
 
 namespace VDCA;
@@ -13,7 +15,8 @@ namespace VDCA;
 public partial class App : Application
 {
     private static readonly string LOGTAG = "App";
-	public App()
+    public static int AppDatabaseVersion = 0;
+    public App()
     {
         try
         {
@@ -48,7 +51,9 @@ public partial class App : Application
                 Constants.SetOnboardingSupportRequired();
                 OnboardingPreferenceService.ResetDontShowSupport();
                 OnboardingSupportHelp.SetPreviousVersion(OnboardingSupportHelp.CurrentVersion);
-            }            
+            }
+            // Make the observable collection that contains one object of ask text to control the ask text font size and text mdail 8-25-23
+            AskConstants.askText = [.. AskConstants.atList];
             await GetStartingDataAsync();
             LoadDeviceSpecificSizes();
         }
@@ -56,8 +61,6 @@ public partial class App : Application
         {
             Console.WriteLine(LOGTAG + " error: " + ex.Message);
         }
-        // Make the observable collection that contains one object of ask text to control the ask text font size and text mdail 8-25-23
-        AskConstants.askText = new(AskConstants.atList);
         //MainPage = new AppShell();
     }
 
@@ -67,8 +70,13 @@ public partial class App : Application
         DatabaseManatance dm = new();
         if (DatabaseManatance.CheckDBExists())
         {
-            DbVersion dbv = new();
-            Constants.DB_VERSION_NUMBER = await dbv.CheckVersionNo();
+            DbVersion dbVersion = await DbVersion.CreateAsync();
+            Constants.DB_VERSION_NUMBER = await dbVersion.CheckVersionNo();
+            AppDatabaseVersion = Constants.DB_VERSION_NUMBER;
+            Constants.AppVersionNumberInfo.ID= 0;
+            Constants.AppVersionNumberInfo.Version_no = App.AppDatabaseVersion;
+            Constants.AppVersionNumberInfo.VersionString = Constants.COPYRIGHT + Constants.NEWLINE + "Build: " + Constants.APP_BUILD
+                      + " Version: " + Constants.APP_VERSION + " Database Version " + Constants.AppVersionNumberInfo.Version_no;
             QuestionsDatabase db = new();
             db.LoadCountData();
             db.LoadCountDataFlashOnly();

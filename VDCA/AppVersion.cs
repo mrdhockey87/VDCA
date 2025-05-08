@@ -20,6 +20,15 @@
 
 /*
  * 
+ *  v 6.036.0536 I had to remove one nuget to get it to run on iOS, I also lowered the Explaination and Citation icon on the
+ *               flashcard to improve appeariance. I fixed the version number and copywrite line on the main page. mdail 5-8-25
+ *  v 6.036.0535 The VersionInfo VersionString gets set however the main page label does not update properly mdail 5-7-25
+ *  v 6.036.0533 Try setting the database version number and the rest of the version string in the DbVersion CheckVersionNo method by setting a
+ *               public string VersionLabelString in the MainPage. mdail 5-6-25
+ *  v 6.036.0532 Added code to check the database that is install on the device to see if it is encrypted ot not and if not copy the new database
+ *               into place. I had to change the copy database code to use FileStream CopyToAsync, and added await to the using statements to wait
+ *               for the dispose to make sure that there isn't a file left open. mdail 5-6-25
+ *  v 6.036.0531 Updated the Sqlite db to the encrypted version. mdail 5-5-25
  *  v 6.035.0530 FIxed the ApplicationVersion & the PackageVersion, set them to 6 & 6.0.0 to match the ApplicationDisplayVersion better. mdail 4-29-25
  *  v 6.035.0529 Update Nugets and test mdail 4-23-25
  *  v 6.035.0528 Commit to add the On Navigating event to the AppShell mdail 4-23-25

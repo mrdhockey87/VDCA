@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using SQLitePCL;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,7 +19,9 @@ namespace VDCA.Data
         {
             try
             {
-                db = new SQLiteConnection(Constants.DBPath);
+                var options = new SQLiteConnectionString(Constants.DBPath, true, key: Constants.COPYRIGHT);
+                db = new SQLiteConnection(options);
+                //db = new SQLiteConnection(Constants.DBPath);
             }
             catch (Exception ex)
             {

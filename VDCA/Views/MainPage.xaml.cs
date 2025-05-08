@@ -11,6 +11,7 @@ using System.Windows.Input;
 using VDCA.Ask;
 using VDCA.CustomControl;
 using VDCA.Data;
+using VDCA.Models;
 using VDCA.Utils;
 
 namespace VDCA.Views;
@@ -35,12 +36,24 @@ public partial class MainPage  : ContentPage, INotifyPropertyChanged
     public ICommand QuizCommand => new Command(QuizClicked);
     public ICommand ReviewCommand => new Command(ReviewClicked);
 
+    private DBVersionNo _versionInfo;
+    public DBVersionNo VersionInfo
+    {
+        get => _versionInfo;
+        set
+        {
+            if (_versionInfo != value)
+            {
+                _versionInfo = value;
+                OnPropertyChanged(nameof(VersionInfo));
+            }
+        }
+    }
     public MainPage()
     {
         InitializeComponent();
-        Title= "VA Accredited Exam Study Guide";
-        versionText = Constants.COPYRIGHT + Constants.NEWLINE + "Build: " + Constants.APP_BUILD
-                      + " Version: " + Constants.APP_VERSION + " Database Version " + Constants.DB_VERSION_NUMBER;
+        VersionInfo = Constants.AppVersionNumberInfo;
+        Title = "VA Accredited Exam Study Guide";
         BindingContext = this;
         HelpContent = helpContent;
         ProgressBarOverlayMain = progressBarOverlayMain;
@@ -119,7 +132,6 @@ public partial class MainPage  : ContentPage, INotifyPropertyChanged
                 askView ??= new AskViewLandscape();
                 askRow = LandscapeView.AskRow;
                 LandscapeView.AskViewContainer.Content ??= askView as ContentView;
-                LandscapeView.VersionNo.Text = versionText;
                 if (isTablet)
                 {
                     LandscapeView.Logo.Source = "vdca_solid_color.png";
@@ -162,7 +174,6 @@ public partial class MainPage  : ContentPage, INotifyPropertyChanged
                 askView ??= new AskViewPortrait();
                 askRow = PortraitView.AskRow;
                 PortraitView.AskViewContainer.Content ??= askView as ContentView;
-                PortraitView.VersionNo.Text = versionText;
             }
             askView.SetIsVisible(Constants.SHOW_ASK);
             if(!Constants.SHOW_ASK)

@@ -32,6 +32,7 @@ namespace VDCA.Data
             {
                 try
                 {
+                    /*
                     // Read the source file                   
                     using Stream fs = await FileSystem.Current.OpenAppPackageFileAsync(dbInBundleFileName);
                     //make the taget file
@@ -58,14 +59,20 @@ namespace VDCA.Data
                     }
                     writer?.Close();
                     fs?.Close();
-                    outputStream?.Close();
+                    outputStream?.Close();*/
+                    string targetFile = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, dbInBundleFileName);
+                    await using (Stream fs = await FileSystem.Current.OpenAppPackageFileAsync(dbInBundleFileName))
+                    await using (FileStream outputStream = System.IO.File.OpenWrite(targetFile))
+                    {
+                        await fs.CopyToAsync(outputStream);
+                    }
                     try
                     {
                         QuestionsDatabase db = new();
                         _ = db.LoadCountDataAsync();
                         _ = db.LoadCountDataFlashOnlyAsync().ConfigureAwait(false);
-                        DbVersion dbv = new();
-                        Constants.DB_VERSION_NUMBER = await dbv.CheckVersionNo();
+                        DbVersion dbVersion = await DbVersion.CreateAsync();
+                        Constants.DB_VERSION_NUMBER = await dbVersion.CheckVersionNo();
                     }
                     catch (Exception ex)
                     {

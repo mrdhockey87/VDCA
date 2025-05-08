@@ -334,21 +334,21 @@ namespace VDCA.Models
             }
         }
         public int Review { get; set; }
-        private int AnswerSelectedLocal { get; set; } = 0;
-        public int AnswerSelected
+        private int AnswersSelectedLocal { get; set; } = 0;
+        public int AnswersSelected
         {
             get
             {
-                return AnswerSelectedLocal;
+                return AnswersSelectedLocal;
             }
             set
             {
-                AnswerSelectedLocal = value;
-                if (AnswerSelectedLocal == 0)
+                AnswersSelectedLocal = value;
+                if (AnswersSelectedLocal == 0)
                 {
                     //SetCarouselViewsDefault();
                 }
-                OnPropertyChanged(nameof(AnswerSelected));
+                OnPropertyChanged(nameof(AnswersSelected));
             }
         }
         private int Local_Hidden { set; get; } = 0;
@@ -604,7 +604,7 @@ namespace VDCA.Models
                         BSelected = false;
                         CSelected = false;
                         DSelected = false;
-                        AnswerSelected = 1;
+                        AnswersSelected = 1;
                         SetCarouselViewsA();
                     }
                     OnPropertyChanged(nameof(ASelected));
@@ -629,7 +629,7 @@ namespace VDCA.Models
                         ASelected = false;
                         CSelected = false;
                         DSelected = false;
-                        AnswerSelected = 2;
+                        AnswersSelected = 2;
                         SetCarouselViewsB();
                     }
                     OnPropertyChanged(nameof(BSelected));
@@ -654,7 +654,7 @@ namespace VDCA.Models
                         ASelected = false;
                         BSelected = false;
                         DSelected = false;
-                        AnswerSelected = 3;
+                        AnswersSelected = 3;
                         SetCarouselViewsC();
                     }
                     OnPropertyChanged(nameof(CSelected));
@@ -679,7 +679,7 @@ namespace VDCA.Models
                         ASelected = false;
                         BSelected = false;
                         CSelected = false;
-                        AnswerSelected = 4;
+                        AnswersSelected = 4;
                         SetCarouselViewsD();
                     }
                     OnPropertyChanged(nameof(DSelected));
@@ -979,7 +979,7 @@ namespace VDCA.Models
         }
         private void CheckAnswer()
         {
-            switch (AnswerSelected)
+            switch (AnswersSelected)
             {
                 case 1:
                     if (ShuffledAnswer1Number == 1)

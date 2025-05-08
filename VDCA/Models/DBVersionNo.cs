@@ -1,14 +1,49 @@
 ﻿using SQLite;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace VDCA.Models
 {
     [Table("version_no")]
-    public class DBVersionNo
+    public class DBVersionNo : INotifyPropertyChanged
     {
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
 
-        public int Version_no { get; set; } = 0;
+        private int VersionNoLocal { get; set; } = 0;
+        public int Version_no 
+        {
+            get
+            {
+                return VersionNoLocal;
+            }
+            set
+            {
+                VersionNoLocal = value;
+                OnPropertyChanged(nameof(Version_no));
+            }
+        } 
+
+        private string VersionStringLocal { get; set; } = "";
+        public string VersionString
+        {
+            get => VersionStringLocal;
+            set
+            {
+                VersionStringLocal = value;
+                OnPropertyChanged(nameof(VersionString));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
 }
 

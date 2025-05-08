@@ -135,7 +135,7 @@ public partial class QuizViewModel : CardViewModel
             if (!scoring_answer)
             {
                 scoring_answer = true;
-                LastSelectedAnswer = CardQuestions[position].AnswerSelected;
+                LastSelectedAnswer = CardQuestions[position].AnswersSelected;
                 switch (SelectedButton)
                 {
                     case "AnswerA":
@@ -218,7 +218,7 @@ public partial class QuizViewModel : CardViewModel
         CardQuestions[position].Answered = true;
         answered++;
         skipped--;
-        CardQuestions[position].AnswerSelected = answerNumber;
+        CardQuestions[position].AnswersSelected = answerNumber;
         int idxCount = CardQuestions[position].Answers.Count;
         int chkIdx = answerNumber - 1;
         if (idxCount > chkIdx && chkIdx >= 0)
@@ -234,7 +234,7 @@ public partial class QuizViewModel : CardViewModel
         if (LastSelectedAnswer != answerNumber)
         {
             int position = qv.CarouselCardView.Position;
-            CardQuestions[position].AnswerSelected = answerNumber;
+            CardQuestions[position].AnswersSelected = answerNumber;
             int idxCount = CardQuestions[position].Answers.Count;
             int chkIdx = answerNumber - 1;
             if (idxCount > chkIdx && chkIdx >= 0)
@@ -282,7 +282,7 @@ public partial class QuizViewModel : CardViewModel
             foreach (Questions _question in CardQuestions)
             {
                 int answerSelected = -1;
-                int index = _question.AnswerSelected - 1;
+                int index = _question.AnswersSelected - 1;
                 if (index >= 0 && index < _question.Answers.Count)
                 {
                     answerSelected = _question.Answers[index].AnswerNumber;
@@ -294,8 +294,8 @@ public partial class QuizViewModel : CardViewModel
                 }
                 if (!_question.Answered)
                 {
-                    _question.AnswerSelected = 5;
-                    _question.Review = _question.AnswerSelected;
+                    _question.AnswersSelected = 5;
+                    _question.Review = _question.AnswersSelected;
                     db.SetQuestionReviewStatus(_question.Id, _question.Review);
                 }
             }

@@ -140,7 +140,7 @@
                                     </Image>
                                     <ImageButton Grid.Row="0"
                                                  Grid.Column="1"
-                                                 Margin="0,2,0,0"
+                                                 Margin="0,4,0,0"
                                                  Source="explanation_navy.png"
                                                  x:DataType="views:CardView"
                                                  Command="{Binding Source={RelativeSource AncestorType={x:Type views:CardView}}, Path=ExplanationCommand}"
@@ -176,7 +176,7 @@
                                     </ImageButton>
                                     <ImageButton Grid.Row="0"
                                                  Grid.Column="2"
-                                                 Margin="0,2,0,0"
+                                                 Margin="0,4,0,0"
                                                  Source="citation_navy.png"
                                                  x:DataType="views:CardView"
                                                  Command="{Binding Source={RelativeSource AncestorType={x:Type views:CardView}}, Path=CitationCommand}"

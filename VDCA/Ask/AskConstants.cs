@@ -8,11 +8,11 @@ namespace VDCA.Ask
     public static class AskConstants
     {
         public static int ASK_COUNT = -1;
-        public static List<AskText> atList = new()
-        {
+        public static List<AskText> atList =
+        [
             new AskText { StandardFont = 16, MessageFont = 14, GlyphSize = 16 }
-        };
-        public static ObservableCollection<AskText> askText = new();
+        ];
+        public static ObservableCollection<AskText> askText = [];
         public static MainPage mpForAsk;
         public static string yesButtonTextAsk = "Love it!";
         public static string yesButtonTextYes = "Rate Now!";

@@ -109,7 +109,7 @@ namespace VDCA.ViewModels
                             //If the AnswerSelected is 0, then this was loaded from the review button on the main page so set the AnswerSelected
                             //using the review value to find where the answer selected is now, else use the AnswerSelected as is.
                             //the other possibility it being 0 is it was skipped which is handled by the inner else statement mdail 2-22-24
-                            if (CardQuestions[position].AnswerSelected == 0)
+                            if (CardQuestions[position].AnswersSelected == 0)
                             {
                                 // Find the answer with the matching AnswerNumber
                                 var newAnswerSelected = CardQuestions[position].Answers.Find(a =>
@@ -120,31 +120,31 @@ namespace VDCA.ViewModels
                                 {
                                     if (CardQuestions[position].ShuffledAnswer1Number == selectedAnswer)
                                     {
-                                        CardQuestions[position].AnswerSelected = 1;
+                                        CardQuestions[position].AnswersSelected = 1;
                                     }
                                     else if (CardQuestions[position].ShuffledAnswer2Number == selectedAnswer)
                                     {
-                                        CardQuestions[position].AnswerSelected = 2;
+                                        CardQuestions[position].AnswersSelected = 2;
                                     }
                                     else if (CardQuestions[position].ShuffledAnswer3Number == selectedAnswer)
                                     {
-                                        CardQuestions[position].AnswerSelected = 3;
+                                        CardQuestions[position].AnswersSelected = 3;
                                     }
                                     else if (CardQuestions[position].ShuffledAnswer4Number == selectedAnswer)
                                     {
-                                        CardQuestions[position].AnswerSelected = 4;
+                                        CardQuestions[position].AnswersSelected = 4;
                                     }
                                 }
                                 else
                                 {
                                     CardQuestions[position].Review = 5;
-                                    CardQuestions[position].AnswerSelected = 5;
+                                    CardQuestions[position].AnswersSelected = 5;
                                 }
                             }
                             else
                             {
                                 CardQuestions[position].Review = 0;
-                                CardQuestions[position].AnswerSelected = CardQuestions[position].AnswerSelected;
+                                CardQuestions[position].AnswersSelected = CardQuestions[position].AnswersSelected;
                             }
                             CardQuestions[position].Locked = CardQuestions[position].Locked;
                         }

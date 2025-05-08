@@ -18,7 +18,6 @@ public partial class MainContentLandscape : ContentView
     public Button Practice;
     public Button Quiz;
     public Button Review;
-    public Label VersionNo;
     public MainPage MP;
     public MainContentLandscape MLP;
 
@@ -29,7 +28,6 @@ public partial class MainContentLandscape : ContentView
         Logo = logo;
         AskViewContainer = ask_view_holder;
         AskRow = ask_row;
-        VersionNo = version_label;
         Flashcard = flash_button;
         Practice = practice_button;
         Quiz = quiz_button;

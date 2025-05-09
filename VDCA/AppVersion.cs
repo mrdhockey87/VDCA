@@ -20,6 +20,7 @@
 
 /*
  * 
+ *  v 6.036.0537 Test for Gittyup interface for github mdail 5-9-25
  *  v 6.036.0536 I had to remove one nuget to get it to run on iOS, I also lowered the Explaination and Citation icon on the
  *               flashcard to improve appeariance. I fixed the version number and copywrite line on the main page. mdail 5-8-25
  *  v 6.036.0535 The VersionInfo VersionString gets set however the main page label does not update properly mdail 5-7-25

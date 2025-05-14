@@ -279,26 +279,6 @@ public partial class QuizViewModel : CardViewModel
             await ShowProgressBarUtil.ShowProgressBar(qv.ProgressBarQuizOverlay);
             ReviewDatabase db = new();
             await db.ClearReviewQuestions();
-            foreach (Questions _question in CardQuestions)
-            {
-                int answerSelected = -1;
-                int index = _question.AnswersSelected - 1;
-                if (index >= 0 && index < _question.Answers.Count)
-                {
-                    answerSelected = _question.Answers[index].AnswerNumber;
-                }
-                if (_question.Answered && answerSelected != 1)
-                {
-                    _question.Review = answerSelected;
-                    db.SetQuestionReviewStatus(_question.Id, _question.Review);
-                }
-                if (!_question.Answered)
-                {
-                    _question.AnswersSelected = 5;
-                    _question.Review = _question.AnswersSelected;
-                    db.SetQuestionReviewStatus(_question.Id, _question.Review);
-                }
-            }
             Constants.LastQuiz = new();
             DateTime dt = DateTime.Now;
             const string date = "dd/MM/yyyy";
@@ -313,6 +293,7 @@ public partial class QuizViewModel : CardViewModel
                 TotalTime = TotalElapsedTime
             };
             _ = await db.AddReviewRecord(Constants.LastQuiz);
+            _ = ProcessQuestionsInBackgroundAsync();
             if (Constants.LastQuiz != null)
             {
                 await ShowProgressBarUtil.HideProgressBar(qv.ProgressBarQuizOverlay);
@@ -346,5 +327,32 @@ public partial class QuizViewModel : CardViewModel
         {
             ResumeTimer();
         }
+    }
+    public async Task ProcessQuestionsInBackgroundAsync()
+    {
+        await Task.Run(() =>
+        {
+            ReviewDatabase db = new();
+            foreach (Questions _question in CardQuestions)
+            {
+                int answerSelected = -1;
+                int index = _question.AnswersSelected - 1;
+                if (index >= 0 && index < _question.Answers.Count)
+                {
+                    answerSelected = _question.Answers[index].AnswerNumber;
+                }
+                if (_question.Answered && answerSelected != 1)
+                {
+                    _question.Review = answerSelected;
+                    db.SetQuestionReviewStatus(_question.Id, _question.Review);
+                }
+                if (!_question.Answered)
+                {
+                    _question.AnswersSelected = 5;
+                    _question.Review = _question.AnswersSelected;
+                    db.SetQuestionReviewStatus(_question.Id, _question.Review);
+                }
+            }
+        });
     }
 }

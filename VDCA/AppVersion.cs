@@ -20,7 +20,8 @@
 
 /*
  * 
- *  v 6.036.0539 Update Nugets to latest version. mdail 5-13-25
+ *  v 6.036.0540 Made it so saving the review quiz question works in the background so it doesn't slow the app down so bad. mdail 5-14-25
+ *  v 6.036.0539 Update Nugets to latest version. mdail 5-14-25
  *  v 6.036.0538 Fix Maccatalyst to the correct target version because it wasn't the correct mimimum version. mdail 5-13-25
  *  v 6.036.0537 Test for Gittyup interface for github mdail 5-9-25
  *  v 6.036.0536 I had to remove one nuget to get it to run on iOS, I also lowered the Explaination and Citation icon on the

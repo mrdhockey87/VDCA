@@ -187,6 +187,7 @@ public partial class AppShell : Shell
         await rdb.ClearAllReviewQuestions();
         await rdb.ClearAllReview();
         await rdb.GetReviewQuizzes();
+        rdb.Dispose();
         var alertPage = new AlertPage();
         await AppShell.ShowCustomModalAsync(alertPage);
         await alertPage.ShowAlertAsync("Review Has Been Cleared!", "The past quizzes have been cleared!");

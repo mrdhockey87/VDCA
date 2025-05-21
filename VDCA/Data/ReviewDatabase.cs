@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using VDCA.Extension;
@@ -11,9 +12,11 @@ using VDCA.Models;
 
 namespace VDCA.Data
 {
-    public class ReviewDatabase
+    public class ReviewDatabase : IDisposable
     {
         private SQLiteConnection db;
+        private SQLiteAsyncConnection dba;
+        private bool _disposed = false;
         public ReviewDatabase() { }
         private void Open()
         {
@@ -33,12 +36,41 @@ namespace VDCA.Data
             db.Close();
             db.Dispose();
         }
-        public void SetQuestionReviewStatus(int _id, int _review)
+
+        public async Task SetQuestionReviewStatusBatchAsync(List<(int QuestionId, int ReviewStatus)> updates)
+        {
+            try
+            {
+                // Ensure database is initialized
+                //await db.CreateTableAsync<Questions>().ConfigureAwait(false);
+                var options = new SQLiteConnectionString(Constants.DBPath, true, key: Constants.COPYRIGHT);
+                dba = new SQLiteAsyncConnection(options);
+                // Begin a transaction for all updates
+                await dba.RunInTransactionAsync(tran =>
+                {
+                    foreach (var (QuestionId, ReviewStatus) in updates)
+                    {
+                        var command = tran.CreateCommand(Sql.SetReviewQuestions(QuestionId, ReviewStatus), [""]);
+                        // Execute the statement with new values
+                        command.ExecuteNonQuery();
+                    }
+                }).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(this.GetType().Name + " Error in SetQuestionReviewStatusBatchAsync error: " + ex.Message);
+            }
+            finally
+            {
+                dba?.CloseAsync().Wait();
+            }
+        }
+        /*public void SetQuestionReviewStatus(int _id, int _review)
         {
             try
             {
                 Open();
-                _ = db.Execute(Sql.SetReviewQuestions(_id, _review), [""]);
+                _ = db.ExecuteAsync(Sql.SetReviewQuestions(_id, _review), [""]);
             }
             catch (Exception ex)
             {
@@ -48,12 +80,12 @@ namespace VDCA.Data
             {
                 Close();
             }
-        }
+        }*/
         //Converted to use the regular long sql string and moved it to the Sql class mdail 9-21-23
         public async Task<string> AddReviewRecord(ReviewQuiz rq)
         {
-            long rowID = -1;
-            await Task.Run(() =>
+            int rowID = -1;
+            await Task.Run(async () =>
             {
                 try
                 {
@@ -148,7 +180,7 @@ namespace VDCA.Data
         }
         public async Task GetReviewQuizzes()
         {
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 try
                 {
@@ -233,6 +265,31 @@ namespace VDCA.Data
                 }
             }
             return Questions;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    if (db != null)
+                    {
+                        db.Close();
+                        db.Dispose();
+                    }
+                    if (dba != null)
+                        dba?.CloseAsync().Wait();
+                }
+
+                _disposed = true;
+            }
         }
     }
 }

@@ -241,6 +241,7 @@ public partial class MainPage  : ContentPage, INotifyPropertyChanged
         {
             ReviewDatabase rd = new();
             await rd.GetReviewQuizzes();
+            rd.Dispose();
             await Shell.Current.GoToAsync("ReviewQuizzes");
         }
         catch (Exception ex)

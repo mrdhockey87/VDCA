@@ -85,13 +85,18 @@ public partial class CustomFlyoutContent : ContentView
                     break;
                 case 11:
                     eleven.IsEnabled = false;
-                    await ShellReference?.OnRateAppClicked();
+                    await ShellReference?.OnLincesesInfoClicked();
                     eleven.IsEnabled = true;
                     break;
                 case 12:
                     twelve.IsEnabled = false;
-                    await ShellReference?.OnShowHelpClicked();
+                    await ShellReference?.OnRateAppClicked();
                     twelve.IsEnabled = true;
+                    break;
+                case 13:
+                    thirteen.IsEnabled = false;
+                    await ShellReference?.OnShowHelpClicked();
+                    thirteen.IsEnabled = true;
                     break;
                 default:
                     break;

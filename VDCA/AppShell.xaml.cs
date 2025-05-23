@@ -20,7 +20,6 @@ public partial class AppShell : Shell
         BindingContext = this;
         this.Navigated += OnNavigated;
     }
-
     private static void RegisterRoutes()
     {
         Routing.RegisterRoute("Flashcard", typeof(FlashcardView));
@@ -30,6 +29,8 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("SelectPractice", typeof(SelectPracticeView));
         Routing.RegisterRoute("SelectQuiz", typeof(SelectQuizView));
         Routing.RegisterRoute("ReviewQuizzes", typeof(ReviewQuizzesView));
+        Routing.RegisterRoute("LicenseInfo", typeof(LicenseInfoView));
+        Routing.RegisterRoute("LicenseView", typeof(LicenseView));
     }
     protected override async void OnNavigating(ShellNavigatingEventArgs args)
     {
@@ -63,7 +64,6 @@ public partial class AppShell : Shell
             }
         }
     }
-
     public async Task OnMenuItemClicked(string route)
     {
         if (isNavigating) return; // Prevent multiple clicks
@@ -74,7 +74,6 @@ public partial class AppShell : Shell
         mainPage?.HideProgressBar();
         isNavigating = false;
     }
-
     public async Task OnHomeClicked()
     {
         await OnMenuItemClicked("///MainPage");
@@ -83,24 +82,20 @@ public partial class AppShell : Shell
     {
         await OnMenuItemClicked("SelectFlash");
     }
-
     public async Task OnPracticeClicked()
     {
         await OnMenuItemClicked("SelectPractice");
     }
-
     public async Task OnSelectQuizzesClicked()
     {
         await OnMenuItemClicked("SelectQuiz");
     }
-
     public async Task OnReviewQuizzesClicked()
     {
         ReviewDatabase rd = new();
         await rd.GetReviewQuizzes();
         await OnMenuItemClicked("ReviewQuizzes");
     }
-
     public async Task OnFlaggedOnlyClicked()
     {
         if (isNavigating) return; // Prevent multiple clicks
@@ -123,7 +118,6 @@ public partial class AppShell : Shell
         mainPage?.HideProgressBar();
         isNavigating = false;
     }
-
     public async Task OnHiddenOnlyClicked()
     {
         if (isNavigating) return; // Prevent multiple clicks
@@ -146,7 +140,6 @@ public partial class AppShell : Shell
         mainPage?.HideProgressBar();
         isNavigating = false;
     }
-
     public async Task OnClearFlaggedClicked()
     {
         if (isNavigating) return; // Prevent multiple clicks
@@ -161,7 +154,6 @@ public partial class AppShell : Shell
         mainPage?.HideProgressBar();
         isNavigating = false;
     }
-
     public async Task OnClearHiddenClicked()
     {
         if (isNavigating) return; // Prevent multiple clicks
@@ -176,7 +168,6 @@ public partial class AppShell : Shell
         mainPage?.HideProgressBar();
         isNavigating = false;
     }
-
     public async Task OnClearReviewClicked()
     {
         if (isNavigating) return; // Prevent multiple clicks
@@ -194,7 +185,6 @@ public partial class AppShell : Shell
         mainPage?.HideProgressBar();
         isNavigating = false;
     }
-
     public async Task OnSendFeedbackClicked()
     {
         if (isNavigating) return; // Prevent multiple clicks
@@ -205,6 +195,10 @@ public partial class AppShell : Shell
         await sfe.SendAppFeedback();
         mainPage?.HideProgressBar();
         isNavigating = false;
+    }
+    public async Task OnLincesesInfoClicked()
+    {
+        await OnMenuItemClicked("LicenseInfo");
     }
 
     public async Task OnRateAppClicked()

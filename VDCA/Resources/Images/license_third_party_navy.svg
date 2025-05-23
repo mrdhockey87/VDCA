@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   fill="#000000"
+   width="800px"
+   height="800px"
+   viewBox="0 0 32 32"
+   id="icon"
+   version="1.1"
+   sodipodi:docname="license_third_party_navy.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview4"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="true"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.01875"
+     inkscape:cx="400.4908"
+     inkscape:cy="400"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="icon" />
+  <defs
+     id="defs1">
+    <style
+       id="style1">
+      .cls-1 {
+        fill: none;
+      }
+    </style>
+  </defs>
+  <path
+     d="M29.707,19.293l-3-3a.9994.9994,0,0,0-1.414,0L16,25.5859V30h4.4141l9.2929-9.293A.9994.9994,0,0,0,29.707,19.293ZM19.5859,28H18V26.4141l5-5L24.5859,23ZM26,21.5859,24.4141,20,26,18.4141,27.5859,20Z"
+     id="path1"
+     style="fill:#000080;fill-opacity:1" />
+  <path
+     d="M17,15H11a3,3,0,0,0-3,3v1h2V18a1,1,0,0,1,1-1h6a1,1,0,0,1,1,1v1h2V18A3,3,0,0,0,17,15Z"
+     id="path2"
+     style="fill:#000080;fill-opacity:1" />
+  <path
+     d="M14,14a4,4,0,1,0-4-4A4,4,0,0,0,14,14Zm0-6a2,2,0,1,1-2,2A2,2,0,0,1,14,8Z"
+     id="path3"
+     style="fill:#000080;fill-opacity:1" />
+  <path
+     d="M12,30H6a2.0021,2.0021,0,0,1-2-2V4A2.0021,2.0021,0,0,1,6,2H22a2.0021,2.0021,0,0,1,2,2V14H22V4H6V28h6Z"
+     id="path4"
+     style="fill:#000080;fill-opacity:1" />
+  <rect
+     id="_Transparent_Rectangle_"
+     data-name="&lt;Transparent Rectangle&gt;"
+     class="cls-1"
+     width="32"
+     height="32" />
+</svg>

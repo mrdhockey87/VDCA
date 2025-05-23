@@ -20,6 +20,7 @@
 
 /*
  * 
+ *  v 6.037.0543 Added the logic to display a list of 3rd party licenses and the actual license when selected mdail 5-23-25
  *  v 6.036.0542 Fixed the review quiz saving problem by using a batch async transaction on the database to save the quiz data. mdail 5-15-25
  *  v 6.036.0541 Made it so the rewiew quiz save in real time, I think I need to make it so the review quiz data has it's own database
  *               that isn't encrypted so that it doesn't slow the app down so much. mdail 5-14-25

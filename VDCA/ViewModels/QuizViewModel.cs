@@ -335,7 +335,6 @@ public partial class QuizViewModel : CardViewModel
         {
             // Create a list to batch the updates
             var questionsToUpdate = new List<(int QuestionId, int ReviewStatus)>();
-
             // Process all the questions first without DB access
             foreach (Questions _question in CardQuestions)
             {
@@ -357,39 +356,10 @@ public partial class QuizViewModel : CardViewModel
                     questionsToUpdate.Add((_question.Id, _question.Review));
                 }
             }
-
             // Now perform a single batch database operation
             using ReviewDatabase db = new();
             await db.SetQuestionReviewStatusBatchAsync(questionsToUpdate);
             db.Dispose();
         });
     }
-    /*
-    public async Task ProcessQuestionsInBackgroundAsync()
-    {
-        await Task.Run(() =>
-        {
-            ReviewDatabase db = new();
-            foreach (Questions _question in CardQuestions)
-            {
-                int answerSelected = -1;
-                int index = _question.AnswersSelected - 1;
-                if (index >= 0 && index < _question.Answers.Count)
-                {
-                    answerSelected = _question.Answers[index].AnswerNumber;
-                }
-                if (_question.Answered && answerSelected != 1)
-                {
-                    _question.Review = answerSelected;
-                    db.SetQuestionReviewStatus(_question.Id, _question.Review);
-                }
-                if (!_question.Answered)
-                {
-                    _question.AnswersSelected = 5;
-                    _question.Review = _question.AnswersSelected;
-                    db.SetQuestionReviewStatus(_question.Id, _question.Review);
-                }
-            }
-        });
-    }*/
 }

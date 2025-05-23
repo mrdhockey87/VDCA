@@ -16,7 +16,7 @@
     <ApplicationId>com.vdcainc.vdca</ApplicationId>
     <ApplicationIdGuid>3a6086e7-915d-4e3f-8baa-136c94590765</ApplicationIdGuid>
     <!-- Versions -->
-    <ApplicationDisplayVersion>6.036.0542</ApplicationDisplayVersion>
+    <ApplicationDisplayVersion>6.037.0543</ApplicationDisplayVersion>
     <ApplicationVersion>6</ApplicationVersion>
     <PackageVersion>6.0.0</PackageVersion>
     <AssemblyVersion>$(ApplicationDisplayVersion).$(ApplicationVersion)</AssemblyVersion>
@@ -317,6 +317,12 @@
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\HelpContentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\LicenseInfoView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Views\LicenseView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Views\ProgressBarOverlay.xaml">

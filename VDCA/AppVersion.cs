@@ -20,6 +20,7 @@
 
 /*
  *
+ *  v 6.037.0547 Fix the Apache License text still having some lie feeds in it. and commit a file that was missing from the last commit. mdail 5-30-25
  *  v 6.037.0546 Fixed the LicenseView get the license file based on the package name so it updates the proper copyright. Added 2 boxes
  *               to the LicenseView to get the border. mdail 6-3-25
  *  v 6.037.0545 For some reason it is reading the wrong info for the last SQLitePCLRaw.bundle_sqlcipher version and name mdail 5-29-25

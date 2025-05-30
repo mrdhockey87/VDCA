@@ -4,12 +4,14 @@
              xmlns:views="clr-namespace:VDCA.Views"
              xmlns:mod="clr-namespace:VDCA.Models"
              xmlns:converters="clr-namespace:VDCA.Converters"
+             BackgroundColor="{StaticResource PrimaryTextColor}"
              x:Class="VDCA.Views.LicenseInfoView"
              Title="LicenseInfoView">
     <ContentPage.Resources>
         <converters:StringArrayToCommaSeparatedConverter x:Key="StringArrayToCommaSeparatedConverter" />
     </ContentPage.Resources>
-    <Grid BackgroundColor="{StaticResource PrimaryBackgroundColor}">
+    <Grid Margin="7,5,7,5"
+          BackgroundColor="{StaticResource PrimaryBackgroundColor}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -26,6 +28,14 @@
                HorizontalTextAlignment="Center"
                VerticalOptions="Start"
                HorizontalOptions="Fill" />
+        <BoxView Color="{StaticResource PrimaryTextColor}"
+                 Grid.Row="0"
+                 Grid.Column="0"
+                 Grid.ColumnSpan="3"
+                 Margin="0,0,0,0"
+                 HeightRequest="1"
+                 VerticalOptions="End"
+                 HorizontalOptions="Fill" />
         <CollectionView Grid.Row="1"
                         Grid.Column="0"
                         x:Name="LicensesCollectionView"
@@ -117,12 +127,20 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        <BoxView Color="{StaticResource PrimaryTextColor}"
+                 Grid.Row="3"
+                 Grid.Column="0"
+                 Grid.ColumnSpan="3"
+                 Margin="0,0,0,0"
+                 HeightRequest="2"
+                 VerticalOptions="Start"
+                 HorizontalOptions="Fill" />
         <Label Grid.Row="2"
                Grid.Column="0"
                TextColor="{StaticResource PrimaryTextColor}"
                BackgroundColor="{StaticResource PrimaryBackgroundColor}"
                Text="Click on the item to view the License!"
-               Margin="0,5,0,0"
+               Margin="0,1,0,0"
                HorizontalTextAlignment="Center"
                VerticalOptions="End"
                HorizontalOptions="Fill" />

@@ -1,18 +1,43 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:views="clr-namespace:VDCA.Views"
              x:Class="VDCA.Views.LicenseView"
-             Title="LicenseView">
-    <ScrollView>
-        <Grid>
-            <Label Text="Welcome to .NET MAUI!"
-                   x:Name="LicenseTextLabel"
-                   HorizontalTextAlignment="Justify"
-                   VerticalTextAlignment="Start"
-                   VerticalOptions="Fill"
-                   HorizontalOptions="Fill" />
-            <views:ProgressBarOverlay x:Name="progressBarSelectOverlay" />
-        </Grid>
+             x:Name="LicensePageRef"
+             Title="License View">
+    <ScrollView BackgroundColor="{StaticResource PrimaryBackgroundColor}"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill"
+                Orientation="Vertical">
+        <StackLayout Orientation="Vertical"
+                     Margin="20,10,20,10"
+                     BackgroundColor="{StaticResource PrimaryBackgroundColor}"
+                     HorizontalOptions="Fill"
+                     VerticalOptions="Fill">
+            <Grid>
+                <!-- Outer BoxView: border color and thickness -->
+                <BoxView
+                    Color="{StaticResource PrimaryText}"
+                    CornerRadius="6"
+                    Margin="0" />
+
+                <!-- Inner BoxView: background, inset to reveal border -->
+                <BoxView
+                    Color="{StaticResource PrimaryBackgroundColor}"
+                    CornerRadius="4"
+                    Margin="2" /> <!-- Adjust margin for border thickness -->
+
+                <!-- Content: Label inside the border -->
+                <Label Text="{Binding LicenseString}"
+                       BindingContext="{x:Reference LicensePageRef}"
+                       x:Name="LicenseTextLabel"
+                       TextColor="{StaticResource PrimaryText}"
+                       Padding="12"
+                       BackgroundColor="Transparent"
+                       HorizontalTextAlignment="Justify"
+                       VerticalTextAlignment="Start"
+                       VerticalOptions="Start"
+                       HorizontalOptions="Start" />
+            </Grid>
+        </StackLayout>
     </ScrollView>
 </ContentPage>

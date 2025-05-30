@@ -8,23 +8,32 @@ public partial class LicenseView : ContentPage, IQueryAttributable
 {
     private LicenseInfo _licenseInfo;
     private readonly LicenseService _licenseService = new();
-
+    private string LicenseStringLocal { get; set; } = "";
+    public string LicenseString
+    {
+        get => LicenseStringLocal;
+        set
+        {
+            LicenseStringLocal = value;
+            OnPropertyChanged(nameof(LicenseString));
+        }
+    }
     public LicenseView()
     {
         InitializeComponent();
     }
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        if (query.TryGetValue("FileName", out var fileNameObj) && fileNameObj is string fileName)
+        if (query.TryGetValue("PackageName", out var packageNameObj) && packageNameObj is string packageName)
         {
-            LoadLicenseInfo(fileName);
+            LoadLicenseInfo(packageName);
         }
     }
 
-    private async void LoadLicenseInfo(string fileName)
+    private async void LoadLicenseInfo(string packageName)
     {
-        var licenses = await _licenseService.GetLicenseInfoAsync();
-        _licenseInfo = licenses.FirstOrDefault(l => l.LicenseFileName == fileName);
+        var licenses = await LicenseService.GetLicenseInfoAsync();
+        _licenseInfo = licenses.FirstOrDefault(l => l.PackageName == packageName);
         if (_licenseInfo != null)
         {
             Title = $"{_licenseInfo.PackageName} License";
@@ -35,25 +44,19 @@ public partial class LicenseView : ContentPage, IQueryAttributable
             Title = "License Not Found";
         }
     }
-    protected override async void OnAppearing()
-    {
-        base.OnAppearing();
-        await ShowProgressBarUtil.ShowProgressBar(progressBarSelectOverlay);
-        await LoadLicenseText();
-        await ShowProgressBarUtil.HideProgressBar(progressBarSelectOverlay);
-    }
     private async Task LoadLicenseText()
     {
         try
         {
             LicenseTextLabel.IsVisible = false;
-            var licenseText = await _licenseService.GetLicenseTextAsync(_licenseInfo.LicenseFileName);
-            LicenseTextLabel.Text = licenseText;
+            string textstring = await LicenseService.GetLicenseTextAsync(_licenseInfo.LicenseFileName);
+            LicenseString = textstring.Replace("[Copyright]", _licenseInfo.Copyright);
+            //LicenseTextLabel.Text = licenseText;
             LicenseTextLabel.IsVisible = true;
         }
         catch (Exception ex)
         {
-            LicenseTextLabel.Text = $"Error loading license text: {ex.Message}";
+            LicenseString = $"Error loading license text: {ex.Message}";
             LicenseTextLabel.IsVisible = true;
         }
     }

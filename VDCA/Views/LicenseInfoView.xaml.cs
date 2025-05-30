@@ -22,7 +22,7 @@ public partial class LicenseInfoView : ContentPage
     }
     private async Task LoadLicenses()
     {
-        var licenses = await _licenseService.GetLicenseInfoAsync();
+        var licenses = await LicenseService.GetLicenseInfoAsync();
         // Display licenses in a horizontal CollectionView
         LicensesCollectionView.ItemsSource = licenses;
     }
@@ -30,7 +30,7 @@ public partial class LicenseInfoView : ContentPage
     {
         if (e.CurrentSelection.Count > 0 && e.CurrentSelection[0] is LicenseInfo selectedLicense)
         {
-            var route = $"LicenseView?FileName={Uri.EscapeDataString(selectedLicense.LicenseFileName)}";
+            var route = $"LicenseView?PackageName={Uri.EscapeDataString(selectedLicense.PackageName)}";
             await Shell.Current.GoToAsync(route);
         }
     }

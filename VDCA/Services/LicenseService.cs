@@ -10,30 +10,33 @@ namespace VDCA.Services
 {
     public class LicenseService
     {
+        // Reusable JsonSerializerOptions instance
+        private static readonly JsonSerializerOptions _jsonOptions = new()
+        {
+            PropertyNameCaseInsensitive = true
+        };
+
         // Read JSON file containing license metadata
-        public async Task<LicenseInfo[]> GetLicenseInfoAsync()
+        public static async Task<LicenseInfo[]> GetLicenseInfoAsync()
         {
             try
             {
                 using var stream = await FileSystem.OpenAppPackageFileAsync("Licenses/vdca_licenses.json");
                 using var reader = new StreamReader(stream);
                 var jsonContent = await reader.ReadToEndAsync();
-
-                return JsonSerializer.Deserialize<LicenseInfo[]>(jsonContent, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
+                var jsonlist = JsonSerializer.Deserialize<LicenseInfo[]>(jsonContent, _jsonOptions);
+                return jsonlist; // JsonSerializer.Deserialize<LicenseInfo[]>(jsonContent, _jsonOptions);
             }
             catch (Exception ex)
             {
                 // Handle file not found or parsing errors
                 System.Diagnostics.Debug.WriteLine($"Error loading licenses.json: {ex.Message}");
-                return Array.Empty<LicenseInfo>();
+                return [];
             }
         }
 
         // Read individual license text file
-        public async Task<string> GetLicenseTextAsync(string fileName)
+        public static async Task<string> GetLicenseTextAsync(string fileName)
         {
             try
             {
@@ -49,7 +52,7 @@ namespace VDCA.Services
         }
 
         // Check if a license file exists
-        public async Task<bool> LicenseFileExistsAsync(string fileName)
+        public static async Task<bool> LicenseFileExistsAsync(string fileName)
         {
             try
             {

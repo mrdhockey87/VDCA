@@ -19,7 +19,12 @@
 }
 
 /*
- * 
+ *
+ *  v 6.037.0546 Fixed the LicenseView get the license file based on the package name so it updates the proper copyright. Added 2 boxes
+ *               to the LicenseView to get the border. mdail 6-3-25
+ *  v 6.037.0545 For some reason it is reading the wrong info for the last SQLitePCLRaw.bundle_sqlcipher version and name mdail 5-29-25
+ *  v 6.037.0544 Fixed the background & text color of the LicenseView and added a border around the License text. Removed the
+ *               Progress Overlay from the LicenseView as it wasn't needed. mdail 5-29-25
  *  v 6.037.0543 Added the logic to display a list of 3rd party licenses and the actual license when selected mdail 5-23-25
  *  v 6.036.0542 Fixed the review quiz saving problem by using a batch async transaction on the database to save the quiz data. mdail 5-15-25
  *  v 6.036.0541 Made it so the rewiew quiz save in real time, I think I need to make it so the review quiz data has it's own database

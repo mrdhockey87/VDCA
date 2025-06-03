@@ -310,6 +310,9 @@
     <MauiXaml Update="Sizes\SmallTabletSizes.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </MauiXaml>
+    <MauiXaml Update="Views\About.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Views\AlertPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>

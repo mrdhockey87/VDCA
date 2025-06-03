@@ -98,6 +98,11 @@ public partial class CustomFlyoutContent : ContentView
                     await ShellReference?.OnShowHelpClicked();
                     thirteen.IsEnabled = true;
                     break;
+                case 14:
+                    fourteen.IsEnabled = false;
+                    await ShellReference?.OnAboutClicked();
+                    fourteen.IsEnabled = true;
+                    break;
                 default:
                     break;
             }

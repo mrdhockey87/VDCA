@@ -31,6 +31,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("ReviewQuizzes", typeof(ReviewQuizzesView));
         Routing.RegisterRoute("LicenseInfo", typeof(LicenseInfoView));
         Routing.RegisterRoute("LicenseView", typeof(LicenseView));
+        Routing.RegisterRoute("About", typeof(About));
     }
     protected override async void OnNavigating(ShellNavigatingEventArgs args)
     {
@@ -225,7 +226,10 @@ public partial class AppShell : Shell
         await helpPage.ShowAlertAsync();
         isNavigating = false;
     }
-
+    public async Task OnAboutClicked()
+    {
+        await OnMenuItemClicked("About");
+    }
     private static async Task ShowCustomModalAsync(Page page)
     {
         // Check if there are any pages in the navigation stack

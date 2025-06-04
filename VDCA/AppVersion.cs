@@ -20,7 +20,7 @@
 
 /*
  *
- *
+ *  v 6.037.0550 Fix the copyright information missing when run for the first time on a device mdail 6-4-25
  *  v 6.037.0549 Added About screen to the flyout menu and added the AppVersion & Build to the About screen. mdail 6-3-25
  *  v 6.037.0548 Fix the license text files, remove unneeded content mdail 5-30-25
  *  v 6.037.0547 Fix the Apache License text still having some line feeds in it and commit a file that was missing from the last commit. mdail 5-30-25

@@ -32,34 +32,6 @@ namespace VDCA.Data
             {
                 try
                 {
-                    /*
-                    // Read the source file                   
-                    using Stream fs = await FileSystem.Current.OpenAppPackageFileAsync(dbInBundleFileName);
-                    //make the taget file
-                    string targetFile = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, dbInBundleFileName);
-                    using FileStream outputStream = System.IO.File.OpenWrite(targetFile);
-                    using BinaryWriter writer = new(outputStream);
-                    using (BinaryReader reader = new(fs))
-                    {
-                        var bytesRead = 0;
-                        const int bufferSize = 1024;
-                        var buffer = new byte[bufferSize];
-                        using (fs)
-                        {
-                            do
-                            {
-                                buffer = reader.ReadBytes(bufferSize);
-                                bytesRead = buffer.Length;
-                                writer.Write(buffer);
-                            }
-
-                            while (bytesRead > 0);
-                        }
-                        reader?.Close();
-                    }
-                    writer?.Close();
-                    fs?.Close();
-                    outputStream?.Close();*/
                     string targetFile = System.IO.Path.Combine(FileSystem.Current.AppDataDirectory, dbInBundleFileName);
                     await using (Stream fs = await FileSystem.Current.OpenAppPackageFileAsync(dbInBundleFileName))
                     await using (FileStream outputStream = System.IO.File.OpenWrite(targetFile))
@@ -73,6 +45,10 @@ namespace VDCA.Data
                         _ = db.LoadCountDataFlashOnlyAsync().ConfigureAwait(false);
                         DbVersion dbVersion = await DbVersion.CreateAsync();
                         Constants.DB_VERSION_NUMBER = await dbVersion.CheckVersionNo();
+                        Constants.AppVersionNumberInfo.ID = 0;
+                        Constants.AppVersionNumberInfo.Version_no = Constants.DB_VERSION_NUMBER;
+                        Constants.AppVersionNumberInfo.VersionString = Constants.COPYRIGHT + Constants.NEWLINE + "Build: " + Constants.APP_BUILD
+                                  + " Version: " + Constants.APP_VERSION + " Database Version " + Constants.AppVersionNumberInfo.Version_no;
                     }
                     catch (Exception ex)
                     {

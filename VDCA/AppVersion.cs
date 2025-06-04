@@ -20,7 +20,9 @@
 
 /*
  *
- *  v 6.037.0548 FIx the license text files, remove unneeded content mdail 5-30-25
+ *
+ *  v 6.037.0549 Added About screen to the flyout menu and added the AppVersion & Build to the About screen. mdail 6-3-25
+ *  v 6.037.0548 Fix the license text files, remove unneeded content mdail 5-30-25
  *  v 6.037.0547 Fix the Apache License text still having some line feeds in it and commit a file that was missing from the last commit. mdail 5-30-25
  *  v 6.037.0546 Fixed the LicenseView get the license file based on the package name so it updates the proper copyright. Added 2 boxes
  *               to the LicenseView to get the border. mdail 6-3-25

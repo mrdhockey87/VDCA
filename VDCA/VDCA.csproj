@@ -16,7 +16,7 @@
     <ApplicationId>com.vdcainc.vdca</ApplicationId>
     <ApplicationIdGuid>3a6086e7-915d-4e3f-8baa-136c94590765</ApplicationIdGuid>
     <!-- Versions -->
-    <ApplicationDisplayVersion>6.037.0548</ApplicationDisplayVersion>
+    <ApplicationDisplayVersion>6.037.0549</ApplicationDisplayVersion>
     <ApplicationVersion>6</ApplicationVersion>
     <PackageVersion>6.0.0</PackageVersion>
     <AssemblyVersion>$(ApplicationDisplayVersion).$(ApplicationVersion)</AssemblyVersion>
@@ -34,7 +34,11 @@
     <SkipValidateMauiImplicitPackageReferences>true</SkipValidateMauiImplicitPackageReferences>
     <Configurations>Release;Debug</Configurations>
     <AndroidMinSdkVersion>21</AndroidMinSdkVersion> <!-- Set this to the minimum Android version you want to support -->
-  </PropertyGroup>  
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
+    <AndroidJavaSourceCompatibility>11</AndroidJavaSourceCompatibility>
+    <AndroidJavaTargetCompatibility>11</AndroidJavaTargetCompatibility>
+  </PropertyGroup>
   <!-- added for debugging 
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
        <DebugType>portable</DebugType>

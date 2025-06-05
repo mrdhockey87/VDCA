@@ -20,6 +20,8 @@
 
 /*
  *
+ *  v 6.038.0552 Remove 32 bit cpu's from android build option as it crashes on andorid 32 bit cpu's mdail 6-5-25
+ *  v 6.038.0551 Fixed app to properly run on all types of cpu's for android ios and mac mdail 6-525
  *  v 6.037.0550 Fix the copyright information missing when run for the first time on a device mdail 6-4-25
  *  v 6.037.0549 Added About screen to the flyout menu and added the AppVersion & Build to the About screen. mdail 6-3-25
  *  v 6.037.0548 Fix the license text files, remove unneeded content mdail 5-30-25

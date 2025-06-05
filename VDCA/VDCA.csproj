@@ -16,7 +16,7 @@
     <ApplicationId>com.vdcainc.vdca</ApplicationId>
     <ApplicationIdGuid>3a6086e7-915d-4e3f-8baa-136c94590765</ApplicationIdGuid>
     <!-- Versions -->
-    <ApplicationDisplayVersion>6.037.0550</ApplicationDisplayVersion>
+    <ApplicationDisplayVersion>6.038.0552</ApplicationDisplayVersion>
     <ApplicationVersion>6</ApplicationVersion>
     <PackageVersion>6.0.0</PackageVersion>
     <AssemblyVersion>$(ApplicationDisplayVersion).$(ApplicationVersion)</AssemblyVersion>
@@ -45,18 +45,21 @@
        <DebugSymbols>true</DebugSymbols>
        <Optimize>false</Optimize>
    </PropertyGroup> -->
-  <!-- Specify RuntimeIdentifier for each target framework conditionally -->
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-ios'">
-    <RuntimeIdentifier>iossimulator-x64</RuntimeIdentifier>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-maccatalyst'">
-    <RuntimeIdentifier>maccatalyst-x64</RuntimeIdentifier>
-  </PropertyGroup>
+  <!-- Specify RuntimeIdentifier for each target framework conditionally
   <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
     <RuntimeIdentifier>android-arm64</RuntimeIdentifier>
+  </PropertyGroup> -->
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
+    <RuntimeIdentifiers>android-x64;android-arm64</RuntimeIdentifiers>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows10.0.19041.0'">
-    <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-ios'">
+    <RuntimeIdentifiers>iossimulator-arm64;iossimulator-x64;ios-arm64</RuntimeIdentifiers>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-maccatalyst'">
+    <RuntimeIdentifiers>maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net9.0-windows10.0.19041.0'">
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
 <!-- Combined Properties Debug -->
   <PropertyGroup>
@@ -140,6 +143,10 @@
   </PropertyGroup>
 <!-- Windows Properties Release-->  
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'">
+  </PropertyGroup>  
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'" />  
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
+    <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
   </PropertyGroup>
   <!-- ItemGroups -->
   <ItemGroup>

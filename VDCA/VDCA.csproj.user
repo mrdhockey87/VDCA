@@ -2,10 +2,10 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ActiveDebugFramework>net9.0-android</ActiveDebugFramework>
-    <ActiveDebugProfile>Nexus 7 (2012) - API 34 (Android 14.0 - API 34)</ActiveDebugProfile>
+    <ActiveDebugProfile>Nexus 10 - API 34 (Android 14.0 - API 34)</ActiveDebugProfile>
     <IsFirstTimeProjectOpen>False</IsFirstTimeProjectOpen>
     <SelectedPlatformGroup>Emulator</SelectedPlatformGroup>
-    <DefaultDevice>nexus_7_2012_-_api_34</DefaultDevice>
+    <DefaultDevice>nexus_10_-_api_34</DefaultDevice>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>

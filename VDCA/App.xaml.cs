@@ -45,17 +45,17 @@ public partial class App : Application
         {
             //Check to see if the app has been updated and if so set the support required flag mdail 11-1-24
             //Need to set the proper constants var for each page if new support pages are required mdail 11-1-24
-            OnboardingSupportHelp.GetVersions();
+          /*  OnboardingSupportHelp.GetVersions();
             if(OnboardingSupportHelp.CurrentVersion > OnboardingSupportHelp.PreviousVersion)
             {
                 Constants.SetOnboardingSupportRequired();
                 OnboardingPreferenceService.ResetDontShowSupport();
                 OnboardingSupportHelp.SetPreviousVersion(OnboardingSupportHelp.CurrentVersion);
-            }
+            }*/
             // Make the observable collection that contains one object of ask text to control the ask text font size and text mdail 8-25-23
             AskConstants.askText = [.. AskConstants.atList];
-            await GetStartingDataAsync();
             LoadDeviceSpecificSizes();
+            await GetStartingDataAsync();
         }
         catch (Exception ex)
         {
@@ -88,7 +88,6 @@ public partial class App : Application
         }
     }
     //Check to see if this is a small tablet or any other device and load the correct sizes file mdail 7-7-23
-    // need to test this on different iPads such as the iPad Mini to see if it works there as well mdail 7-7-23
     private void LoadDeviceSpecificSizes()
     {
         try

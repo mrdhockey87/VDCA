@@ -4,8 +4,58 @@
        xmlns:custom="clr-namespace:VDCA.CustomControl"
        xmlns:views="clr-namespace:VDCA.Views"
        x:Class="VDCA.AppShell"
+       BindingContext="{x:Reference shell}"
        x:Name="shell"
        FlyoutBackground="{StaticResource PrimaryBackground}"> <!-- Set the Flyout background -->
+    <!-- Define the MenuBar Items -->
+    <Shell.MenuBarItems>
+        <MenuBarItem Text="Home">
+            <MenuFlyoutItem Text="Home Page"
+                            Command="{Binding MenuBarHome}"/>
+            <MenuFlyoutItem Text="Exit"
+                            Command="{Binding MenuBarExit}" />
+        </MenuBarItem>
+
+        <MenuBarItem Text="Questions">
+            <MenuFlyoutItem Text="Flashcard"
+                            Command="{Binding MenuBarFlashcards}" />
+            <MenuFlyoutItem Text="Practice"
+                            Command="{Binding MenuBarPractice}" />
+            <MenuFlyoutItem Text="Quiz"
+                            Command="{Binding MenuBarQuiz}" />
+            <MenuFlyoutItem Text="Review"
+                            Command="{Binding MenuBarReview}" />
+            <MenuFlyoutItem Text="Flagged Only"
+                            Command="{Binding MenuBarFlagged}" />
+            <MenuFlyoutItem Text="Hidden Only"
+                            Command="{Binding MenuBarHidden}" />
+        </MenuBarItem>
+
+        <MenuBarItem Text="Maintenance">
+            <MenuFlyoutItem Text="Clear Flagged"
+                            Command="{Binding MenuBarClearFlagged}" />
+            <MenuFlyoutItem Text="Clear Hidden"
+                            Command="{Binding MenuBarClearHidden}" />
+            <MenuFlyoutItem Text="Clear Review"
+                            Command="{Binding MenuBarClearReview}" />
+        </MenuBarItem>
+
+        <MenuBarItem Text="Contact">
+            <MenuFlyoutItem Text="SendFeedback"
+                            Command="{Binding MenuBarSendFeedback}" />
+            <MenuFlyoutItem Text="Rate App"
+                            Command="{Binding MenuBarRateApp}" />
+        </MenuBarItem>
+
+        <MenuBarItem Text="Help">
+            <MenuFlyoutItem Text="About"
+                            Command="{Binding MenuBarAbout}" />
+            <MenuFlyoutItem Text="3rd License Info"
+                            Command="{Binding MenuBarLicenses}" />
+            <MenuFlyoutItem Text="Help"
+                            Command="{Binding MenuBarHelp}" />
+        </MenuBarItem>
+    </Shell.MenuBarItems>
     <!-- Define the Flyout Header -->
     <Shell.FlyoutHeader>
         <Grid BackgroundColor="{StaticResource PrimaryBackground}">
@@ -27,68 +77,32 @@
                    Margin="0,20,0,10"
                    VerticalOptions="Center"
                    HorizontalOptions="Center" />
-                <StackLayout Grid.Column="0"
-                             Grid.Row="2"
-                             Grid.ColumnSpan="3"
-                             Orientation="Vertical"
-                             BackgroundColor="{StaticResource PrimaryBackground}">
-                    <Label FontSize="{DynamicResource LargeFontSize}"
-                           Margin="5,0,0,10"
-                           Text="VDCA Menu Selections:"
-                           BackgroundColor="{StaticResource PrimaryBackground}"
-                           TextColor="{StaticResource PrimaryText}"
-                           FontAttributes="Bold"
-                           VerticalOptions="Center" />
-                    <Border HeightRequest="3"
-                            BackgroundColor="{StaticResource PrimaryText}" />
+            <StackLayout Grid.Column="0"
+                         Grid.Row="2"
+                         Grid.ColumnSpan="3"
+                         Orientation="Vertical"
+                         BackgroundColor="{StaticResource PrimaryBackground}">
+                <Label FontSize="{DynamicResource LargeFontSize}"
+                       Margin="5,0,0,10"
+                       Text="VDCA Menu Selections:"
+                       BackgroundColor="{StaticResource PrimaryBackground}"
+                       TextColor="{StaticResource PrimaryText}"
+                       FontAttributes="Bold"
+                       VerticalOptions="Center" />
+                <Border HeightRequest="3"
+                        BackgroundColor="{StaticResource PrimaryText}" />
             </StackLayout>
         </Grid>
     </Shell.FlyoutHeader>
-
     <!-- Define the Flyout Items  -->
     <FlyoutItem Title="Home"
                 Icon="navy_home_icon.png">
         <ShellContent Route="MainPage"
                       ContentTemplate="{DataTemplate views:MainPage}" />
     </FlyoutItem>
-
     <Shell.FlyoutContent>        
         <custom:CustomFlyoutContent ShellReference="{x:Reference shell}" />
     </Shell.FlyoutContent>
-    <!--
-     <MenuItem Text="Flashcards"
-              IconImageSource="navy_chevron_right.png"
-              Clicked="OnFlashcardsClicked" />
-    <MenuItem Text="Practice"
-              IconImageSource="navy_chevron_right.png"
-              Clicked="OnPracticeClicked" />
-    <MenuItem Text="Quiz"
-              IconImageSource="navy_chevron_right.png"
-              Clicked="OnSelectQuizzesClicked" /> 
-    <MenuItem Text="Review"
-              IconImageSource="navy_chevron_right.png"
-              Clicked="OnReviewQuizzesClicked" />
-    <MenuItem Text="Flagged Question Only"
-              IconImageSource="navy_chevron_right.png"
-              Clicked="OnFlaggedOnlyClicked" />
-    <MenuItem Text="Hidden Question Only"
-              IconImageSource="navy_chevron_right.png"
-              Clicked="OnHiddenOnlyClicked" />
-    <MenuItem Text="Clear Flagged"
-              IconImageSource="navy_chevron_right.png"
-              Clicked="OnClearFlaggedClicked" />
-    <MenuItem Text="Clear Hidden"
-              IconImageSource="navy_chevron_right.png"
-              Clicked="OnClearHiddenClicked" />
-    <MenuItem Text="Clear Review"
-              IconImageSource="navy_chevron_right.png"
-              Clicked="OnClearReviewClicked" />
-    <MenuItem Text="Send Feedback"
-              IconImageSource="navy_chevron_right.png"
-              Clicked="OnSendFeedbackClicked" />
-    <MenuItem Text="Rate App"
-              IconImageSource="navy_chevron_right.png"
-              Clicked="OnRateAppClicked" /> -->
     <!-- Define the ItemTemplate for Flyout Items -->
     <Shell.ItemTemplate>
         <DataTemplate x:DataType="FlyoutItem">
@@ -129,31 +143,4 @@
                 </Grid>
         </DataTemplate>
     </Shell.ItemTemplate>
-    <!-- Define the MenuItemTemplate for Flyout Menu Items -->
-        <!-- Add visual states for selection if needed -->
-    <!--  <Shell.MenuItemTemplate>
-        <DataTemplate>
-            <ContentView>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <Label Text="{Binding Text}"
-                           Grid.Column="0"
-                           VerticalOptions="Center"
-                           VerticalTextAlignment="Center"
-                           FontSize="{DynamicResource FlyoutMenuFontSize}"
-                           TextColor="{StaticResource PrimaryText}" />
-                    <Image Source="{Binding Icon}"
-                           Grid.Column="2"
-                           VerticalOptions="Center"
-                           Aspect="AspectFill"
-                           WidthRequest="{DynamicResource MenuHeightRequest}"
-                           HeightRequest="{DynamicResource MenuHeightRequest}" />
-                </Grid>
-            </ContentView>
-        </DataTemplate>
-    </Shell.MenuItemTemplate> -->
 </Shell>

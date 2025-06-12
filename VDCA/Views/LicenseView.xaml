@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="VDCA.Views.LicenseView"
              x:Name="LicensePageRef"
-             Title="License View">
+             Title="License">
     <ScrollView BackgroundColor="{StaticResource PrimaryBackgroundColor}"
                 HorizontalOptions="Fill"
                 VerticalOptions="Fill"

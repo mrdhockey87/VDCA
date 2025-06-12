@@ -81,6 +81,7 @@ public partial class MainPage  : ContentPage, INotifyPropertyChanged
             PortraitView ??= new MainContentPortrait();
             MainContentContainer.Content = PortraitView;
         }
+        /*
         // Load the proper ContentView based on the orientation
         if (CurrentOrientation == DisplayOrientation.Landscape)
         {
@@ -96,7 +97,7 @@ public partial class MainPage  : ContentPage, INotifyPropertyChanged
             {
                // await OnboardingOverlay();
             };
-        }
+        }*/
     }
     private void CheckForAsk()
     {

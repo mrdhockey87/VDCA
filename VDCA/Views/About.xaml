@@ -5,18 +5,39 @@
              x:Class="VDCA.Views.About"
              x:DataType="views:About"
              Title="About">
-    <VerticalStackLayout VerticalOptions="Center"
-                         HorizontalOptions="Center">
-        <Image Source="vdca_solid_color.png"
-               Margin="0,0,0,80"
-               WidthRequest="{DynamicResource LogoWidthRequest}"
-               HeightRequest="{DynamicResource LogoHeightRequest}"
+    <Grid VerticalOptions="Center"
+          HorizontalOptions="Center"
+          BackgroundColor="{StaticResource PrimaryBackground}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0"
+               Grid.Column="0"
+               Grid.RowSpan="2"
+               Grid.ColumnSpan="2"
+               x:Name="logoImage"
+               Margin="0,0,0,0"
+               WidthRequest="{DynamicResource LogoWidthRequestPortrait}"
+               HeightRequest="{DynamicResource LogoHeightRequestPortrait}"
                Aspect="AspectFit"
                HorizontalOptions="Center"
                VerticalOptions="Center" />
-        <Label Text="{Binding NameVdca}"
+        <Label Grid.Row="2"
+               Grid.Column="0"
+               Grid.ColumnSpan="2"
+               Text="{Binding NameVdca}"
                x:Name="VdcaText"
-               FontSize="24"
+               FontSize="{DynamicResource BaseFontSize}"
                TextColor="{StaticResource PrimaryText}"
                BackgroundColor="{StaticResource PrimaryBackground}"
                FontAttributes="Bold"
@@ -24,9 +45,12 @@
                HorizontalTextAlignment="Center"
                HorizontalOptions="Center"
                VerticalOptions="Center" />
-        <Label Text="{Binding TitleString}"
+        <Label Grid.Row="3"
+               Grid.Column="0"
+               Grid.ColumnSpan="2"
+               Text="{Binding TitleString}"
                x:Name="TitleText"
-               FontSize="24"
+               FontSize="{DynamicResource BaseFontSize}"
                TextColor="{StaticResource PrimaryText}"
                BackgroundColor="{StaticResource PrimaryBackground}"
                FontAttributes="Bold"
@@ -34,8 +58,11 @@
                HorizontalTextAlignment="Center"
                HorizontalOptions="Center"
                VerticalOptions="Center" />
-        <Label Text="{Binding VersionInfo.VersionString}"
-               FontSize="24"
+        <Label Grid.Row="4"
+               Grid.Column="0"
+               Grid.ColumnSpan="2"
+               Text="{Binding VersionInfo.VersionString}"
+               FontSize="{DynamicResource BaseFontSize}"
                TextColor="{StaticResource PrimaryText}"
                BackgroundColor="{StaticResource PrimaryBackground}"
                FontAttributes="Bold"
@@ -43,9 +70,12 @@
                HorizontalTextAlignment="Center"
                VerticalOptions="Center"
                HorizontalOptions="Center" />
-        <Label Text="{Binding StatementString}"
+        <Label Grid.Row="5"
+               Grid.Column="0"
+               Grid.ColumnSpan="2"
+               Text="{Binding StatementString}"
                HorizontalTextAlignment="Center"
-               FontSize="24"
+               FontSize="{DynamicResource BaseFontSize}"
                TextColor="{StaticResource PrimaryText}"
                BackgroundColor="{StaticResource PrimaryBackground}"
                FontAttributes="Bold"
@@ -53,5 +83,15 @@
                x:Name="StatementText"
                VerticalOptions="Center"
                HorizontalOptions="Center" />
-    </VerticalStackLayout>
+        <Button Grid.Row="6"
+                Grid.Column="1"
+                FontSize="{DynamicResource BaseFontSize}"
+                BackgroundColor="{StaticResource PrimaryText}"
+                TextColor="{StaticResource PrimaryBackground}"
+                Clicked="OnExit"
+                Text="Exit"
+                HorizontalOptions="Center"/>
+        
+
+    </Grid>
 </ContentPage>

@@ -19,7 +19,14 @@
 }
 
 /*
- *
+ * 
+ *  v 6.038.0555 Fixed the MenuBar for Mac & Windows, it now works and the commands work. Fixed the About screen to fit
+ *               all screen sizes. Set it so the flyout menu does not show on mac or windows. Updated Nugets. Fix it so
+ *               the Database version & copyright get updated even if the database is copied and on first run. Added the 
+ *               Progress Service to handle the progressbar showing & hiding in the app shell. Fixed the license view tiltles mdail 6-11-25
+ *  v 6.038.0554 Set trying to get the menu bar to work for Apple & WInUI, however the Commands don't work, I got the 
+ *               flyout menu back though. mdal 6-11-25
+ *  v 6.038.0553 Trying to get the menuBar to work for Apple & WInUI, however it removes the flyout when it is there. mdail 6-10-25
  *  v 6.038.0552 Remove 32 bit cpu's from android build option as it crashes on andorid 32 bit cpu's mdail 6-5-25
  *  v 6.038.0551 Fixed app to properly run on all types of cpu's for android ios and mac mdail 6-525
  *  v 6.037.0550 Fix the copyright information missing when run for the first time on a device mdail 6-4-25

@@ -42,12 +42,6 @@ public partial class CardView : ContentPage
     public ICommand HiddedCommand { get; set; }
     public ICommand FlaggedCommand { get; set; }
     public ICommand HelpCommand { get; set; }
-    /*
-    public bool RefreshViewIsRefreshing
-    {
-        get => CardRefreshView.IsRefreshing;
-        set => CardRefreshView.IsRefreshing = value;
-    }*/
     private bool ExplanationVisibleLocal { get; set; }
     public bool ExplanationVisible 
     {

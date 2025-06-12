@@ -9,8 +9,8 @@ namespace VDCA.CustomControl
 {
     public static class SupportDataVersion5
     {
-        public static List<SupportPagesData> SupportPagesDataList = new List<SupportPagesData>
-        {
+        public static List<SupportPagesData> SupportPagesDataList =
+        [
             new() {
                 PageName = SupportedPages.MainPage,
                 ControlExplainationText = "Click this for the Menu with more options.",
@@ -43,6 +43,6 @@ namespace VDCA.CustomControl
                 ArrowDirection = [ArrowDirection.UpLeft],
                 VersionNumber = 5
             }
-        };
+        ];
     }
 }

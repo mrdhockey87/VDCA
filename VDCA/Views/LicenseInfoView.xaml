@@ -6,7 +6,7 @@
              xmlns:converters="clr-namespace:VDCA.Converters"
              BackgroundColor="{StaticResource PrimaryTextColor}"
              x:Class="VDCA.Views.LicenseInfoView"
-             Title="LicenseInfoView">
+             Title="3rd Party License Information">
     <ContentPage.Resources>
         <converters:StringArrayToCommaSeparatedConverter x:Key="StringArrayToCommaSeparatedConverter" />
     </ContentPage.Resources>

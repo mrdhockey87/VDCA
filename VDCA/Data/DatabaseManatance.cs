@@ -40,15 +40,15 @@ namespace VDCA.Data
                     }
                     try
                     {
-                        QuestionsDatabase db = new();
-                        _ = db.LoadCountDataAsync();
-                        _ = db.LoadCountDataFlashOnlyAsync().ConfigureAwait(false);
                         DbVersion dbVersion = await DbVersion.CreateAsync();
                         Constants.DB_VERSION_NUMBER = await dbVersion.CheckVersionNo();
                         Constants.AppVersionNumberInfo.ID = 0;
                         Constants.AppVersionNumberInfo.Version_no = Constants.DB_VERSION_NUMBER;
                         Constants.AppVersionNumberInfo.VersionString = Constants.COPYRIGHT + Constants.NEWLINE + "Build: " + Constants.APP_BUILD
                                   + " Version: " + Constants.APP_VERSION + " Database Version " + Constants.AppVersionNumberInfo.Version_no;
+                        QuestionsDatabase db = new();
+                        _ = db.LoadCountDataAsync();
+                        _ = db.LoadCountDataFlashOnlyAsync().ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {

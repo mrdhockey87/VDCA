@@ -47,6 +47,8 @@ public partial class About : ContentPage
             OnPropertyChanged(nameof(NameVdca));
         }
     }
+    private double _Width = 0;
+    private double _Height = 0;
     public About()
 	{
 		InitializeComponent();
@@ -60,5 +62,27 @@ public partial class About : ContentPage
         OnPropertyChanged(nameof(StatementString));
         OnPropertyChanged(nameof(VersionInfo));
         OnPropertyChanged(nameof(NameVdca));
+    }
+    private async void OnExit(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("..");
+    }
+    protected override void OnSizeAllocated(double width, double height)
+    {
+        base.OnSizeAllocated(width, height);
+        if (_Width != width || _Height != height)
+        {
+            _Width = width;
+            _Height = height;
+            var isTablet = DeviceInfo.Idiom == DeviceIdiom.Tablet;
+            if (_Width > _Height && !(DeviceInfo.Platform == DevicePlatform.WinUI) && !(DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst))
+            {
+                logoImage.Source = "vdca_solid_color_top.png";
+            }
+            else
+            {
+                logoImage.Source = "vdca_solid_color.png";
+            }
+        }
     }
 }

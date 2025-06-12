@@ -3,24 +3,66 @@ using Microsoft.Maui.Devices;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using VDCA.Data;
 using VDCA.SendEmails;
+using VDCA.Services;
 using VDCA.Views;
 namespace VDCA;
 
 public partial class AppShell : Shell
 {
-    private MainPage mainPage;
     private bool isNavigating = false; // Flag to track navigation
+    //MenuBar commands for Win & Mac platforms mdail 6-10-25
+    public ICommand MenuBarHome { get; private set; }
+    public ICommand MenuBarExit { get; private set; }
+    public ICommand MenuBarFlashcards { get; private set; }
+    public ICommand MenuBarPractice { get; private set; }
+    public ICommand MenuBarQuiz { get; private set; }
+    public ICommand MenuBarReview { get; private set; } 
+    public ICommand MenuBarFlagged { get; private set; }
+    public ICommand MenuBarHidden { get; private set; }
+    public ICommand MenuBarClearFlagged { get; private set; }
+    public ICommand MenuBarClearHidden { get; private set; }
+    public ICommand MenuBarClearReview { get; private set; }
+    public ICommand MenuBarSendFeedback { get; private set; }
+    public ICommand MenuBarRateApp { get; private set; }
+    public ICommand MenuBarAbout { get; private set; }
+    public ICommand MenuBarLicenses { get; private set; }
+    public ICommand MenuBarHelp { get; private set; }
 
     public AppShell()
     {
+        InitializeCommands();
         InitializeComponent();
-        AppShell.RegisterRoutes();
-        BindingContext = this;
+        RegisterRoutes();
+        //BindingContext = this;
+        // Force flyout behavior after MenuBarItems are added
+        FlyoutBehavior = FlyoutBehavior.Flyout;
         this.Navigated += OnNavigated;
     }
-    private static void RegisterRoutes()
+
+    public void InitializeCommands()
+    {   // Set up the menu bar commands for Windows and Mac platforms
+        MenuBarHome = new Command(MenuBarHome_Clicked);
+        MenuBarExit = new Command(MenuBarExit_Clicked);
+        MenuBarFlashcards = new Command(MenuBarFlashcards_Clicked);
+        MenuBarPractice = new Command(MenuBarPractice_Clicked);
+        MenuBarQuiz = new Command(MenuBarQuiz_Clicked);
+        MenuBarReview = new Command(MenuBarReview_Clicked);
+        MenuBarFlagged = new Command(MenuBarFlagged_Clicked);
+        MenuBarHidden = new Command(MenuBarHidden_Clicked);
+        MenuBarClearFlagged = new Command(MenuBarClearFlagged_Clicked);
+        MenuBarClearHidden = new Command(MenuBarClearHidden_Clicked);
+        MenuBarClearReview = new Command(MenuBarClearReview_Clicked);
+        MenuBarSendFeedback = new Command(MenuBarSendFeedback_Clicked);
+        MenuBarRateApp = new Command(MenuBarRateApp_Clicked);
+        MenuBarAbout = new Command(MenuBarAbout_Clicked);
+        MenuBarLicenses = new Command(MenuBarLicenses_Clicked);
+        MenuBarHelp = new Command(MenuBarHelp_Clicked);
+    }
+
+    private void RegisterRoutes()
     {
         Routing.RegisterRoute("Flashcard", typeof(FlashcardView));
         Routing.RegisterRoute("Practice", typeof(PracticecardView));
@@ -39,23 +81,19 @@ public partial class AppShell : Shell
     }
     private void OnNavigated(object sender, ShellNavigatedEventArgs e)
     {
-        // Change the FlyoutBehavior depending on the current route
-        string route = e.Current?.Location.ToString();
-        if (route == @"//MainPage")
+        if ((DeviceInfo.Platform == DevicePlatform.WinUI) || (DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst))
         {
-            // Show the hamburger menu on MainPage
-            Shell.Current.FlyoutBehavior = FlyoutBehavior.Flyout;
-            mainPage = Shell.Current.CurrentPage as MainPage;
+            Shell.Current.FlyoutBehavior = FlyoutBehavior.Disabled;
         }
         else
         {
-            Shell.Current.FlyoutBehavior = FlyoutBehavior.Disabled;
+            // Show the hamburger menu
+            Shell.Current.FlyoutBehavior = FlyoutBehavior.Flyout;
         }
     }
     protected override void OnPropertyChanged(string propertyName = null)
     {
         base.OnPropertyChanged(propertyName);
-
         if (propertyName == nameof(FlyoutIsPresented))
         {
             if (this.FlyoutIsPresented)
@@ -70,9 +108,9 @@ public partial class AppShell : Shell
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
         Shell.Current.FlyoutIsPresented = false;
-        await mainPage?.ShowProgressBar();
+        await ProgressService.Instance.ShowProgressAsync();
         await Shell.Current.GoToAsync(route);
-        mainPage?.HideProgressBar();
+        ProgressService.Instance.HideProgress();
         isNavigating = false;
     }
     public async Task OnHomeClicked()
@@ -81,18 +119,22 @@ public partial class AppShell : Shell
     }
     public async Task OnFlashcardsClicked()
     {
+        await AppShell.GoMainPage();
         await OnMenuItemClicked("SelectFlash");
     }
     public async Task OnPracticeClicked()
     {
+        await AppShell.GoMainPage();
         await OnMenuItemClicked("SelectPractice");
     }
     public async Task OnSelectQuizzesClicked()
     {
+        await AppShell.GoMainPage();
         await OnMenuItemClicked("SelectQuiz");
     }
     public async Task OnReviewQuizzesClicked()
     {
+        await AppShell.GoMainPage();
         ReviewDatabase rd = new();
         await rd.GetReviewQuizzes();
         await OnMenuItemClicked("ReviewQuizzes");
@@ -102,12 +144,13 @@ public partial class AppShell : Shell
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
         Shell.Current.FlyoutIsPresented = false;
-        await mainPage?.ShowProgressBar();
+        await ProgressService.Instance.ShowProgressAsync();
         QuestionsDatabase db = new();
         await db.GetFlaggedQuestions();
         int count = Constants.Questions.Count;
         if (count > 0)
         {
+            await AppShell.GoMainPage();
             await Shell.Current.GoToAsync("Flashcard");
         }
         else
@@ -116,15 +159,16 @@ public partial class AppShell : Shell
             await AppShell.ShowCustomModalAsync(alertPage);
             await alertPage.ShowAlertAsync("No Flagged Questions!", "No flagged questions were found!");
         }
-        mainPage?.HideProgressBar();
+        ProgressService.Instance.HideProgress();
         isNavigating = false;
     }
     public async Task OnHiddenOnlyClicked()
     {
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
+        await AppShell.GoMainPage();
         Shell.Current.FlyoutIsPresented = false;
-        await mainPage?.ShowProgressBar();
+        await ProgressService.Instance.ShowProgressAsync();
         QuestionsDatabase db = new();
         await db.GetHiddenQuestions();
         int count = Constants.Questions.Count;
@@ -138,43 +182,46 @@ public partial class AppShell : Shell
             await AppShell.ShowCustomModalAsync(alertPage);
             await alertPage.ShowAlertAsync("No Hidden Questions!", "No hidden questions were found!");
         }
-        mainPage?.HideProgressBar();
+        ProgressService.Instance.HideProgress();
         isNavigating = false;
     }
     public async Task OnClearFlaggedClicked()
     {
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
+        await AppShell.GoMainPage();
         Shell.Current.FlyoutIsPresented = false;
-        await mainPage?.ShowProgressBar();
+        await ProgressService.Instance.ShowProgressAsync();
         QuestionsDatabase db = new();
         db.ClearFlaggedQuestions();
         var alertPage = new AlertPage();
         await AppShell.ShowCustomModalAsync(alertPage);
         await alertPage.ShowAlertAsync("Flagged Questions Cleared!", "The flagged questions have been cleared!");
-        mainPage?.HideProgressBar();
+        ProgressService.Instance.HideProgress();
         isNavigating = false;
     }
     public async Task OnClearHiddenClicked()
     {
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
+        await AppShell.GoMainPage();
         Shell.Current.FlyoutIsPresented = false;
-        await mainPage?.ShowProgressBar();
+        await ProgressService.Instance.ShowProgressAsync();
         QuestionsDatabase db = new();
         db.ClearHiddenQuestions();
         var alertPage = new AlertPage();
         await AppShell.ShowCustomModalAsync(alertPage);
         await alertPage.ShowAlertAsync("Hidden Questions Cleared!", "The hidden questions have been cleared!");
-        mainPage?.HideProgressBar();
+        ProgressService.Instance.HideProgress();
         isNavigating = false;
     }
     public async Task OnClearReviewClicked()
     {
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
+        await AppShell.GoMainPage();
         Shell.Current.FlyoutIsPresented = false;
-        await mainPage?.ShowProgressBar();
+        await ProgressService.Instance.ShowProgressAsync();
         ReviewDatabase rdb = new();
         await rdb.ClearAllReviewQuestions();
         await rdb.ClearAllReview();
@@ -183,18 +230,19 @@ public partial class AppShell : Shell
         var alertPage = new AlertPage();
         await AppShell.ShowCustomModalAsync(alertPage);
         await alertPage.ShowAlertAsync("Review Has Been Cleared!", "The past quizzes have been cleared!");
-        mainPage?.HideProgressBar();
+        ProgressService.Instance.HideProgress();
         isNavigating = false;
     }
     public async Task OnSendFeedbackClicked()
     {
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
+        await AppShell.GoMainPage();
         Shell.Current.FlyoutIsPresented = false;
-        await mainPage?.ShowProgressBar();
+        await ProgressService.Instance.ShowProgressAsync();
         SendFeedbackEmails sfe = new();
         await sfe.SendAppFeedback();
-        mainPage?.HideProgressBar();
+        ProgressService.Instance.HideProgress();
         isNavigating = false;
     }
     public async Task OnLincesesInfoClicked()
@@ -206,29 +254,49 @@ public partial class AppShell : Shell
     {
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
+        await AppShell.GoMainPage();
         Shell.Current.FlyoutIsPresented = false;
-        await mainPage?.ShowProgressBar();
+        await ProgressService.Instance.ShowProgressAsync();
         // Implement your logic to rate the app here
         // For example, navigate to a rating page or open the app store
 
         var alertPage = new AlertPage();
         await AppShell.ShowCustomModalAsync(alertPage);
         await alertPage.ShowAlertAsync("Rated App!", "Thank you for rating our app!");
-        mainPage?.HideProgressBar();
+        ProgressService.Instance.HideProgress();
         isNavigating = false;
     }
     public async Task OnShowHelpClicked()
     {
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
-        var helpPage = new HelpPage();
-        await AppShell.ShowCustomModalAsync(helpPage);
-        await helpPage.ShowAlertAsync();
+        await ProgressService.Instance.ShowProgressAsync();
+        // Get the current page
+        var currentPage = Shell.Current.CurrentPage;
+        // Check if the current page is a CardView (base for FlashcardView, PracticecardView, QuizView)
+        if (currentPage is VDCA.Views.CardView cardView)
+        {
+            // Fire the HelpCommand if available and can execute
+            if (cardView.HelpCommand != null && cardView.HelpCommand.CanExecute(null))
+            {
+                cardView.HelpCommand.Execute(null);
+            }
+        }
+        else
+        {
+            await AppShell.GoMainPage();
+            var helpPage = new HelpPage();
+            await AppShell.ShowCustomModalAsync(helpPage);
+            await helpPage.ShowAlertAsync();
+        }
+        ProgressService.Instance.HideProgress();
         isNavigating = false;
     }
     public async Task OnAboutClicked()
     {
+        await ProgressService.Instance.ShowProgressAsync();
         await OnMenuItemClicked("About");
+        ProgressService.Instance.HideProgress();
     }
     private static async Task ShowCustomModalAsync(Page page)
     {
@@ -244,5 +312,114 @@ public partial class AppShell : Shell
             // If the navigation stack is empty, push the modal page directly
             await Shell.Current.Navigation.PushModalAsync(page, false);
         }
+    }
+    //MenuBar Click Handlers for Win & Mac platforms mdail 6-10-25
+    public async void MenuBarHome_Clicked()
+    {
+        await OnMenuItemClicked("///MainPage");
+    }
+
+    public async void MenuBarExit_Clicked()
+    {
+        //await OnMenuItemClicked("///MainPage");
+        if(DeviceInfo.Current.Platform == DevicePlatform.WinUI || DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst)
+        {
+            // Close the application on Windows or Mac
+            Application.Current.Quit();
+        }
+        else
+        {
+            // Close the application on all other platforms
+            System.Environment.Exit(0);
+        }
+    }
+    private static async Task GoMainPage()
+    {
+        await Shell.Current.GoToAsync(new ShellNavigationState("///MainPage"), false);
+    }
+    public async void MenuBarFlashcards_Clicked()
+    {
+        await AppShell.GoMainPage();
+        await OnMenuItemClicked("SelectFlash");
+    }
+
+    public async void MenuBarPractice_Clicked()
+    {
+        await AppShell.GoMainPage();
+        await OnMenuItemClicked("SelectPractice");
+    }
+    public async void MenuBarQuiz_Clicked()
+    {
+        await AppShell.GoMainPage();
+        await OnMenuItemClicked("SelectQuiz");
+    }
+    public async void MenuBarReview_Clicked()
+    {
+        await AppShell.GoMainPage();
+        await OnMenuItemClicked("ReviewQuizzes");
+    }
+    public async void MenuBarFlagged_Clicked()
+    {
+        await AppShell.GoMainPage();
+        await OnFlaggedOnlyClicked();
+    }
+    public async void MenuBarHidden_Clicked()
+    {
+        await AppShell.GoMainPage();
+        await OnHiddenOnlyClicked();
+    }
+    public async void MenuBarClearFlagged_Clicked()
+    {
+        await AppShell.GoMainPage();
+        await OnClearFlaggedClicked();
+    }
+    public async void MenuBarClearHidden_Clicked()
+    {
+        await AppShell.GoMainPage();
+        await OnClearHiddenClicked();
+    }
+    public async void MenuBarClearReview_Clicked()
+    {
+        await AppShell.GoMainPage();
+        await OnClearReviewClicked();
+    }
+    
+    public async void MenuBarSendFeedback_Clicked()
+    {
+        await AppShell.GoMainPage();
+        await OnSendFeedbackClicked();
+    }
+    public async void MenuBarRateApp_Clicked()
+    {
+        await AppShell.GoMainPage();
+        await OnRateAppClicked();
+    }
+    public async void MenuBarAbout_Clicked()
+    {
+        await AppShell.GoMainPage();
+        await OnAboutClicked();
+    }
+    public async void MenuBarLicenses_Clicked()
+    {
+        await OnLincesesInfoClicked();
+    }
+    public async void MenuBarHelp_Clicked()
+    {
+        // Get the current page
+        var currentPage = Shell.Current.CurrentPage;
+        // Check if the current page is a CardView (base for FlashcardView, PracticecardView, QuizView)
+        if (currentPage is VDCA.Views.CardView cardView)
+        {
+            // Fire the HelpCommand if available and can execute
+            if (cardView.HelpCommand != null && cardView.HelpCommand.CanExecute(null))
+            {
+                cardView.HelpCommand.Execute(null);
+            }
+        }
+        else
+        {
+            await AppShell.GoMainPage();
+            await OnShowHelpClicked();
+        }    
     }
 }

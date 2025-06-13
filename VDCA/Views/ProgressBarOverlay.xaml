@@ -4,9 +4,9 @@
             x:Name="progressBarOverlay"  
             IsVisible="False"  
             x:Class="VDCA.Views.ProgressBarOverlay">  
-   <Grid BackgroundColor="{StaticResource PrimaryBlack}"  
-         Opacity="0.5"  
-         VerticalOptions="FillAndExpand"  
+   <Grid BackgroundColor="{StaticResource PrimaryBlack}"
+         Opacity="0.5"
+         VerticalOptions="FillAndExpand"
          HorizontalOptions="FillAndExpand">
         <Image Source="{OnPlatform Android='redbusyother.gif', WinUI='redbusyother.gif', iOS='redbusyios.gif', MacCatalyst='redbusyios.gif'}"
                Aspect="AspectFit"

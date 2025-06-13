@@ -119,22 +119,18 @@ public partial class AppShell : Shell
     }
     public async Task OnFlashcardsClicked()
     {
-        await AppShell.GoMainPage();
         await OnMenuItemClicked("SelectFlash");
     }
     public async Task OnPracticeClicked()
     {
-        await AppShell.GoMainPage();
         await OnMenuItemClicked("SelectPractice");
     }
     public async Task OnSelectQuizzesClicked()
     {
-        await AppShell.GoMainPage();
         await OnMenuItemClicked("SelectQuiz");
     }
     public async Task OnReviewQuizzesClicked()
     {
-        await AppShell.GoMainPage();
         ReviewDatabase rd = new();
         await rd.GetReviewQuizzes();
         await OnMenuItemClicked("ReviewQuizzes");
@@ -150,7 +146,6 @@ public partial class AppShell : Shell
         int count = Constants.Questions.Count;
         if (count > 0)
         {
-            await AppShell.GoMainPage();
             await Shell.Current.GoToAsync("Flashcard");
         }
         else
@@ -166,7 +161,6 @@ public partial class AppShell : Shell
     {
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
-        await AppShell.GoMainPage();
         Shell.Current.FlyoutIsPresented = false;
         await ProgressService.Instance.ShowProgressAsync();
         QuestionsDatabase db = new();
@@ -189,7 +183,6 @@ public partial class AppShell : Shell
     {
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
-        await AppShell.GoMainPage();
         Shell.Current.FlyoutIsPresented = false;
         await ProgressService.Instance.ShowProgressAsync();
         QuestionsDatabase db = new();
@@ -204,7 +197,6 @@ public partial class AppShell : Shell
     {
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
-        await AppShell.GoMainPage();
         Shell.Current.FlyoutIsPresented = false;
         await ProgressService.Instance.ShowProgressAsync();
         QuestionsDatabase db = new();
@@ -219,7 +211,6 @@ public partial class AppShell : Shell
     {
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
-        await AppShell.GoMainPage();
         Shell.Current.FlyoutIsPresented = false;
         await ProgressService.Instance.ShowProgressAsync();
         ReviewDatabase rdb = new();
@@ -237,7 +228,6 @@ public partial class AppShell : Shell
     {
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
-        await AppShell.GoMainPage();
         Shell.Current.FlyoutIsPresented = false;
         await ProgressService.Instance.ShowProgressAsync();
         SendFeedbackEmails sfe = new();
@@ -254,7 +244,6 @@ public partial class AppShell : Shell
     {
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
-        await AppShell.GoMainPage();
         Shell.Current.FlyoutIsPresented = false;
         await ProgressService.Instance.ShowProgressAsync();
         // Implement your logic to rate the app here
@@ -271,24 +260,9 @@ public partial class AppShell : Shell
         if (isNavigating) return; // Prevent multiple clicks
         isNavigating = true;
         await ProgressService.Instance.ShowProgressAsync();
-        // Get the current page
-        var currentPage = Shell.Current.CurrentPage;
-        // Check if the current page is a CardView (base for FlashcardView, PracticecardView, QuizView)
-        if (currentPage is VDCA.Views.CardView cardView)
-        {
-            // Fire the HelpCommand if available and can execute
-            if (cardView.HelpCommand != null && cardView.HelpCommand.CanExecute(null))
-            {
-                cardView.HelpCommand.Execute(null);
-            }
-        }
-        else
-        {
-            await AppShell.GoMainPage();
-            var helpPage = new HelpPage();
-            await AppShell.ShowCustomModalAsync(helpPage);
-            await helpPage.ShowAlertAsync();
-        }
+        var helpPage = new HelpPage();
+        await AppShell.ShowCustomModalAsync(helpPage);
+        await helpPage.ShowAlertAsync();
         ProgressService.Instance.HideProgress();
         isNavigating = false;
     }
@@ -337,26 +311,54 @@ public partial class AppShell : Shell
     {
         await Shell.Current.GoToAsync(new ShellNavigationState("///MainPage"), false);
     }
+    // Add this method to handle smooth page transitions
+    private static async Task NavigateSmoothly(string route)
+    {
+        // Show progress indicator with opaque background to completely mask the transition
+        await ProgressService.Instance.ShowProgressAsync();
+        try
+        {
+            // Check if we're already on the MainPage
+            if (!(Shell.Current.CurrentPage?.GetType().Name == "MainPage"))
+            {
+                // Make overlay background completely opaque
+                var overlay = ProgressService.Instance.GetOverlay();
+                overlay.BackgroundColor = Colors.Black;
+                overlay.Opacity = 1.0;
+                // Only navigate to MainPage if we're not already there
+                await Shell.Current.GoToAsync("///MainPage", false);
+            }
+            // Small delay to ensure Progress bar is animated & if needed the first navigation completes
+            await Task.Delay(15);
+            // Then navigate to the target page
+            await Shell.Current.GoToAsync(route);
+        }
+        finally
+        {
+            // Hide progress indicator
+            ProgressService.Instance.HideProgress();
+        }
+    }
     public async void MenuBarFlashcards_Clicked()
     {
-        await AppShell.GoMainPage();
-        await OnMenuItemClicked("SelectFlash");
+        //await AppShell.GoMainPage();
+        //await OnMenuItemClicked("SelectFlash");
+        await NavigateSmoothly("SelectFlash");
     }
 
     public async void MenuBarPractice_Clicked()
     {
-        await AppShell.GoMainPage();
-        await OnMenuItemClicked("SelectPractice");
+        //await AppShell.GoMainPage();
+        //await OnMenuItemClicked("SelectPractice");
+        await NavigateSmoothly("SelectPractice");
     }
     public async void MenuBarQuiz_Clicked()
     {
-        await AppShell.GoMainPage();
-        await OnMenuItemClicked("SelectQuiz");
+        await NavigateSmoothly("SelectQuiz");
     }
     public async void MenuBarReview_Clicked()
     {
-        await AppShell.GoMainPage();
-        await OnMenuItemClicked("ReviewQuizzes");
+        await NavigateSmoothly("ReviewQuizzes");
     }
     public async void MenuBarFlagged_Clicked()
     {

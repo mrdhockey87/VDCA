@@ -19,20 +19,22 @@ namespace VDCA.Services
         {
             _overlay = new ProgressBarOverlay();
         }
-
+        public ProgressBarOverlay GetOverlay()
+        {
+            return _overlay;
+        }
         public async Task ShowProgressAsync()
         {
-            // Get the current page
-            if (Application.Current?.MainPage == null) return;
-
-            Page currentPage = GetVisiblePage();
-
+            // Use IApplication instance from DI instead of the obsolete Application.Current
+            if (Application.Current == null || Application.Current.Windows.Count == 0) return;
+            var currentWindow = Application.Current.Windows[0];
+            if (currentWindow?.Page == null) return;
+            Page currentPage = ProgressService.GetVisiblePage();
             // Make sure the overlay is in the visual tree but hidden
             if (_overlay.Parent == null && currentPage != null)
             {
                 AbsoluteLayout.SetLayoutBounds(_overlay, new Rect(0, 0, 1, 1));
                 AbsoluteLayout.SetLayoutFlags(_overlay, AbsoluteLayoutFlags.All);
-
                 // Find the content area of the page to add our overlay
                 if (currentPage is ContentPage contentPage)
                 {
@@ -41,16 +43,13 @@ namespace VDCA.Services
                     {
                         var originalContent = contentPage.Content;
                         var absoluteLayout = new AbsoluteLayout();
-
                         contentPage.Content = absoluteLayout;
-
                         if (originalContent != null)
                         {
                             absoluteLayout.Children.Add(originalContent);
                             AbsoluteLayout.SetLayoutBounds(originalContent, new Rect(0, 0, 1, 1));
                             AbsoluteLayout.SetLayoutFlags(originalContent, AbsoluteLayoutFlags.All);
                         }
-
                         absoluteLayout.Children.Add(_overlay);
                     }
                     else
@@ -59,7 +58,6 @@ namespace VDCA.Services
                     }
                 }
             }
-
             // Show the overlay
             _overlay.IsVisible = true;
             await Task.Delay(50); // Small delay to ensure UI updates
@@ -70,10 +68,13 @@ namespace VDCA.Services
             _overlay.IsVisible = false;
         }
 
-        private Page GetVisiblePage()
+        private static Page GetVisiblePage()
         {
-            var mainPage = Application.Current?.MainPage;
-
+            // Access the main window directly
+            if (Application.Current == null || Application.Current.Windows.Count == 0)
+                return null;
+            var currentWindow = Application.Current.Windows[0];
+            var mainPage = currentWindow?.Page;
             if (mainPage is Shell shell)
             {
                 return shell.CurrentPage;
@@ -82,7 +83,6 @@ namespace VDCA.Services
             {
                 return navPage.CurrentPage;
             }
-
             return mainPage;
         }
     }

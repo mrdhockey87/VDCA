@@ -5,6 +5,7 @@ using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
 using System;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -61,7 +62,14 @@ public partial class MainPage  : ContentPage, INotifyPropertyChanged
     }
     private async void OnHelpClicked(object sender, EventArgs e)
     {
-        await HelpContent.ShowAlertAsync();
+        if((DeviceInfo.Platform == DevicePlatform.WinUI) || (DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst))
+        {
+            await HelpContent.ShowAlertAsync(true);
+        }
+        else
+        {
+            await HelpContent.ShowAlertAsync();
+        }
     }
     protected override void OnAppearing()
     {

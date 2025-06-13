@@ -20,6 +20,7 @@
 
 /*
  * 
+ *  v 6.038.0557 Add setting HideMenuRow = true to hide the hamburger icon row on mac and windows as it is not used there. mdail 6-13-25
  *  v 6.038.0556 Made the naviagation a little better by making the progressbar overlay background a Opace if the mainpage isn't the
  *               current page, this way it doesn't show the main page when going from one select screen to another. I also added a 
  *               check to see if the main page is currently visible then not navigating to it if it is already the current page. mdail 6-13-25

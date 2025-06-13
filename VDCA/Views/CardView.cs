@@ -99,7 +99,6 @@ public partial class CardView : ContentPage
         RunningProgressBar = runningProgressBar;
         PageGrid = painGrid;
         MainGrid = mainGrid;
-        //CardRefreshView = refreshView;
         if (DeviceInfo.Current.Platform == DevicePlatform.WinUI)
         {
             CarouselCardView.IsScrollAnimated = false;

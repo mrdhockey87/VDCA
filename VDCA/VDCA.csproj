@@ -16,7 +16,7 @@
     <ApplicationId>com.vdcainc.vdca</ApplicationId>
     <ApplicationIdGuid>3a6086e7-915d-4e3f-8baa-136c94590765</ApplicationIdGuid>
     <!-- Versions -->
-    <ApplicationDisplayVersion>6.038.0557</ApplicationDisplayVersion>
+    <ApplicationDisplayVersion>6.038.0558</ApplicationDisplayVersion>
     <ApplicationVersion>6</ApplicationVersion>
     <PackageVersion>6.0.0</PackageVersion>
     <AssemblyVersion>$(ApplicationDisplayVersion).$(ApplicationVersion)</AssemblyVersion>
@@ -236,9 +236,9 @@
   </ItemGroup>
 <!-- Nuget's ItemGroups -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.71" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.71" />
-    <PackageReference Include="Microsoft.Maui.Essentials" Version="9.0.71" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.80" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.80" />
+    <PackageReference Include="Microsoft.Maui.Essentials" Version="9.0.80" />
     <PackageReference Include="CommunityToolkit.Maui" Version="12.0.0" />
     <PackageReference Include="CommunityToolkit.Maui.Markup" Version="6.0.1" />
     <PackageReference Include="Microsoft.AppCenter" Version="5.0.7" />

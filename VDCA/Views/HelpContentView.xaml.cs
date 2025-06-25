@@ -5,14 +5,19 @@ namespace VDCA.Views;
 public partial class HelpContentView : ContentView
 {
     private TaskCompletionSource<bool> tcs;
-    public ICommand DummyQuestionCommand => new Command(() => { /* Does nothing */ });
+    public static ICommand DummyQuestionCommand { set; get; }
     public event EventHandler ExitEventClicked;
 
     public HelpContentView()
     {
         InitializeComponent();
+        HelpContentView.DummyQuestionCommand = new Command(HelpContentView.DummyQuestionCommand_Executed);
     }
-
+    public static void DummyQuestionCommand_Executed()
+    {
+        // This command is used to handle the selection change event in the CollectionView
+        // It is intentionally left empty as it is not used in this context
+    }
     public Task ShowAlertAsync(bool HideMenuRow = false)
     {
         if (DeviceInfo.Current.Platform == DevicePlatform.WinUI || DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst)

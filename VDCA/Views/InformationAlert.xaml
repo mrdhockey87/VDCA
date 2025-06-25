@@ -11,7 +11,7 @@
     <Grid VerticalOptions="FillAndExpand"
           HorizontalOptions="FillAndExpand">
         <Grid.GestureRecognizers>
-            <TapGestureRecognizer Command="{Binding DummyInformationCommand}" />
+            <TapGestureRecognizer Command="{x:Static alert:InformationAlert.DummyInformationCommand}" />
         </Grid.GestureRecognizers>
         <!-- Background Layer -->
         <BoxView BackgroundColor="{StaticResource PrimaryBlack}"

@@ -30,11 +30,18 @@ public partial class InformationAlert : ContentView
     }
 
     private TaskCompletionSource<bool> tcs; 
-    public static ICommand DummyInformationCommand => new Command(() => { /* Does nothing */ });
+    public static ICommand DummyInformationCommand { set; get; }
     public InformationAlert()
     {
         InitializeComponent();
         BindingContext = this;
+        InformationAlert.DummyInformationCommand = new Command(InformationAlert.DummyInformationCommand_Executed);
+    }
+
+    public static void DummyInformationCommand_Executed()
+    {
+        // This command is used to handle the selection change event in the CollectionView
+        // It is intentionally left empty as it is not used in this context
     }
 
     // Method to show the alert and return a task that completes when the alert is hidden

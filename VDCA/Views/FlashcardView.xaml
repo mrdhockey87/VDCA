@@ -19,7 +19,7 @@
     </ContentPage.Resources>
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Help"
-                     Command="{Binding Source={x:Reference Flash}, Path=HelpCommand}" />
+                     Command="{Binding Source={RelativeSource AncestorType={x:Type views:CardView}}, Path=HelpCommand}" />
     </ContentPage.ToolbarItems>
     <Grid x:Name="pageGrid"
           VerticalOptions="FillAndExpand">
@@ -64,9 +64,8 @@
                               ItemsUpdatingScrollMode="KeepScrollOffset"
                               HorizontalOptions="FillAndExpand"
                               VerticalOptions="FillAndExpand"
-                              x:DataType="vm:CardViewModel"
                               x:Name="CarouselFlashcardCardView">
-                    <CarouselView.ItemsLayout x:DataType="mod:Questions">
+                    <CarouselView.ItemsLayout>
                         <LinearItemsLayout SnapPointsAlignment="Center"
                                            ItemSpacing="0"
                                            SnapPointsType="MandatorySingle"
@@ -74,7 +73,7 @@
                     </CarouselView.ItemsLayout>
                     <CarouselView.ItemTemplate>
                         <!--  WidthRequest="{Binding Width, Source={x:Reference PageStack}}" -->
-                        <DataTemplate x:DataType="mod:Questions">
+                        <DataTemplate>
                             <Border Stroke="{StaticResource PrimaryTextColor}"
                                     x:Name="TheFlashcard"
                                     BackgroundColor="Transparent"
@@ -142,7 +141,6 @@
                                                  Grid.Column="1"
                                                  Margin="0,4,0,0"
                                                  Source="explanation_navy.png"
-                                                 x:DataType="views:CardView"
                                                  Command="{Binding Source={RelativeSource AncestorType={x:Type views:CardView}}, Path=ExplanationCommand}"
                                                  CommandParameter="{Binding .}"
                                                  Aspect="AspectFit"
@@ -178,7 +176,6 @@
                                                  Grid.Column="2"
                                                  Margin="0,4,0,0"
                                                  Source="citation_navy.png"
-                                                 x:DataType="views:CardView"
                                                  Command="{Binding Source={RelativeSource AncestorType={x:Type views:CardView}}, Path=CitationCommand}"
                                                  CommandParameter="{Binding .}"
                                                  Aspect="AspectFit"
@@ -212,8 +209,7 @@
                                     </ImageButton>
                                     <ImageButton Grid.Row="0"
                                                  Grid.Column="3"
-                                                 x:DataType="views:CardView"
-                                                 Command="{Binding Source={x:Reference Flash}, Path=FeedbackCommand}"
+                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type views:CardView}}, Path=FeedbackCommand}"
                                                  CommandParameter="{Binding .}"
                                                  Aspect="AspectFit"
                                                  Source="feedback_up.png"
@@ -262,7 +258,7 @@
                                            VerticalOptions="Center"
                                            Source="big_eye.png">
                                         <Image.GestureRecognizers>
-                                            <TapGestureRecognizer x:DataType="views:CardView" Command="{Binding Source={x:Reference Flash}, Path=HiddedCommand}" />
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type views:CardView}}, Path=HiddedCommand}" />
                                         </Image.GestureRecognizers>
                                         <Image.Triggers>
                                             <DataTrigger TargetType="Image"
@@ -289,7 +285,7 @@
                                            VerticalOptions="Center"
                                            Source="flag_off.png">
                                         <Image.GestureRecognizers>
-                                            <TapGestureRecognizer x:DataType="views:CardView" Command="{Binding Source={x:Reference Flash}, Path=FlaggedCommand}" />
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type views:CardView}}, Path=FlaggedCommand}" />
                                         </Image.GestureRecognizers>
                                         <Image.Triggers x:DataType="mod:Question">
                                             <DataTrigger TargetType="Image"
@@ -351,7 +347,7 @@
                          BackgroundColor="{StaticResource PrimaryCardQBackground}"
                          HorizontalOptions="FillAndExpand"
                          VerticalOptions="End">
-                <Button Command="{Binding Source={x:Reference Flash}, Path=PreviousCommand}"
+                <Button Command="{Binding Source={RelativeSource AncestorType={x:Type views:CardView}}, Path=PreviousCommand}"
                         x:DataType="views:CardView"
                         ImageSource="chevron_left.png"
                         ContentLayout="Left"
@@ -362,7 +358,7 @@
                         VerticalOptions="Center"
                         HorizontalOptions="FillAndExpand"
                         BackgroundColor="Transparent" />
-                <ImageButton Command="{Binding Source={x:Reference Flash}, Path=RandomCommand}"
+                <ImageButton Command="{Binding Source={RelativeSource AncestorType={x:Type views:CardView}}, Path=RandomCommand}"
                              x:DataType="views:CardView"
                              x:Name="Random"
                              Aspect="AspectFit"
@@ -373,7 +369,7 @@
                              VerticalOptions="Center"
                              HorizontalOptions="Center"
                              BackgroundColor="Transparent" />
-                <Button Command="{Binding Source={x:Reference Flash}, Path=NextCommand}"
+                <Button Command="{Binding Source={RelativeSource AncestorType={x:Type views:CardView}}, Path=NextCommand}"
                         x:DataType="views:CardView"
                         ImageSource="chevron_right.png"
                         ContentLayout="Right"

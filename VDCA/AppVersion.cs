@@ -20,6 +20,9 @@
 
 /*
  * 
+ *  v 6.038.0561 Fixed binding error in PracticeCardView and QuizCardView still have jumping when scrolling in the Practice & Quiz views mdail 6-25-25
+ *  v 6.038.0560 tried all fixes I could find, when trying to go from 92 to 93 (Item 91 to 82)  it jump to 184 mdail 6-21-25
+ *  v 6.038.0559 Tried to fix scrolling going crazy on windows, however it is still not working properly mdail 6-20-25
  *  v 6.038.0558 Update Nugets mdail 6-17-25
  *  v 6.038.0557 Add setting HideMenuRow = true to hide the hamburger icon row on mac and windows as it is not used there. mdail 6-13-25
  *  v 6.038.0556 Made the naviagation a little better by making the progressbar overlay background a Opace if the mainpage isn't the
@@ -60,7 +63,7 @@
  *               into place. I had to change the copy database code to use FileStream CopyToAsync, and added await to the using statements to wait
  *               for the dispose to make sure that there isn't a file left open. mdail 5-6-25
  *  v 6.036.0531 Updated the Sqlite db to the encrypted version. mdail 5-5-25
- *  v 6.035.0530 FIxed the ApplicationVersion & the PackageVersion, set them to 6 & 6.0.0 to match the ApplicationDisplayVersion better. mdail 4-29-25
+ *  v 6.035.0530 Fixed the ApplicationVersion & the PackageVersion, set them to 6 & 6.0.0 to match the ApplicationDisplayVersion better. mdail 4-29-25
  *  v 6.035.0529 Update Nugets and test mdail 4-23-25
  *  v 6.035.0528 Commit to add the On Navigating event to the AppShell mdail 4-23-25
  *  v 6.035.0527 Fixed bug that showed up with the overlay's and screen rotation on the main page. mdail 4-9-25
@@ -286,7 +289,7 @@
  *               I also made the button a little bigger when the Ask view wasn't visible. Fixed the progress bar being too small
  *               on iPhones and iPads, might need to fix it for Mac also. Need to change the ScaleX and ScaleY to make it change.
  *               Need to continue testing on all iOS & Mac. mdail 9-26-24
- *  v 5.033.0414 FIxed windows scrolling questionin only one direction mdail 9-26-24
+ *  v 5.033.0414 Fixed windows scrolling questionin only one direction mdail 9-26-24
  *  v 5.033.0413 I turned off the animation for the CarouselView in the FlashcardView and it seems to have fixed the problem with the 
  *               random button going it preminate scrolling up thru the cards. It does still sometimes come up inbetween cards, but it
  *               does it less often and it is not as bad as it was before. mdail 9-26-24

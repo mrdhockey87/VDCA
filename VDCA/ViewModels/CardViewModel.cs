@@ -52,6 +52,7 @@ namespace VDCA.ViewModels
                 {
 
                     CurrentIndexLocal = value;
+                    System.Diagnostics.Debug.WriteLine("CurrentIndex = " + CurrentIndex.ToString());
                     OnPropertyChanged();
                 }
             }
@@ -151,7 +152,6 @@ namespace VDCA.ViewModels
                     }
                     else
                     {
-                        //Questions current = (Questions)CurrentQuestion;
                         CardQuestions[position].Locked = CardQuestions[position].Locked;
                         CardQuestions[position].BorderPadding = 0;
                         CardQuestions[position].Question = CardQuestions[position].Question;

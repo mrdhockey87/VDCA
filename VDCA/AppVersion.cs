@@ -20,6 +20,7 @@
 
 /*
  * 
+ *  v 6.038.0562 Fixed a thread safty issue when loading the questions mdail 6-26-25
  *  v 6.038.0561 Fixed binding error in PracticeCardView and QuizCardView still have jumping when scrolling in the Practice & Quiz views mdail 6-25-25
  *  v 6.038.0560 tried all fixes I could find, when trying to go from 92 to 93 (Item 91 to 82)  it jump to 184 mdail 6-21-25
  *  v 6.038.0559 Tried to fix scrolling going crazy on windows, however it is still not working properly mdail 6-20-25

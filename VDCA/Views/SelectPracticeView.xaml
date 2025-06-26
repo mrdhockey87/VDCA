@@ -100,8 +100,8 @@
                     <DataTemplate x:DataType="mod:Categories">
                         <Grid x:Name="CollectionGrid"
                               BackgroundColor="{Binding SelectedBackgroundColor}"
-                              HorizontalOptions="Fill"
-                              Margin="{Binding Source={RelativeSource AncestorType={x:Type vm:SelectViewModel}}, Path=GridMargin}">
+                              HorizontalOptions="Fill">
+                            <!--Margin="{Binding Source={RelativeSource AncestorType={x:Type vm:SelectViewModel}}, Path=GridMargin}"> -->
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />

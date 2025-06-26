@@ -197,7 +197,8 @@ namespace VDCA.Data
                         Constants.ReviewQuizzes = [.. reviewLoaded];
                         List<Questions> reviewCardsLoaded = [];
                         reviewCardsLoaded = db.Query<Questions>(Sql.GetReviewQuestions());
-                        questionsShuffled.AddRange(Utils.ShuffleAnswers.SortAnswers(ReviewDatabase.FixPipe(reviewCardsLoaded)));
+                        questionsPipeFixed.AddRange(await ReviewDatabase.FixPipeAsync(reviewCardsLoaded));
+                        questionsShuffled.AddRange(Utils.ShuffleAnswers.SortAnswers(questionsPipeFixed));
                         questionsShuffled.Shuffle();
                         questionsShuffledOut.AddRange(QuestionsDatabase.SetShuffledAnswersNumbers(questionsShuffled));
                         Constants.ReviewQuestions = [.. questionsShuffledOut];
@@ -232,41 +233,28 @@ namespace VDCA.Data
                 TotalTime = reviewQuiz.TotalTime
             };
         }
-
-        private static List<Questions> FixPipe(List<Questions> Questions)
+        private static async Task<List<Questions>> FixPipeAsync(List<Questions> questions)
         {
-            const string pipe = "|";
-            foreach (Questions questions in Questions)
+            List<Questions> fixedQuestions = [];
+            object lockObj = new();
+            await Parallel.ForEachAsync(questions, async (question, cancellationToken) =>
             {
-                if (questions.Answer1.Contains(pipe))
+                question.Question = await Task.Run(() => FixPipeInString(question.Question));
+                question.Answer1 = await Task.Run(() => FixPipeInString(question.Answer1));
+                question.Answer2 = await Task.Run(() => FixPipeInString(question.Answer2));
+                question.Answer3 = await Task.Run(() => FixPipeInString(question.Answer3));
+                question.Answer4 = await Task.Run(() => FixPipeInString(question.Answer4));
+                lock (lockObj)
                 {
-                    string fixedAnswer1 = questions.Answer1.Replace(pipe, Constants.NEWLINE);
-                    questions.Answer1 = fixedAnswer1;
+                    fixedQuestions.Add(question);
                 }
-                if (questions.Answer2.Contains(pipe))
-                {
-                    string fixedAnswer2 = questions.Answer2.Replace(pipe, Constants.NEWLINE);
-                    questions.Answer2 = fixedAnswer2;
-                }
-                if (questions.Answer3.Contains(pipe))
-                {
-                    string fixedAnswer3 = questions.Answer3.Replace(pipe, Constants.NEWLINE);
-                    questions.Answer3 = fixedAnswer3;
-                }
-                if (questions.Answer4.Contains(pipe))
-                {
-                    string fixedAnswer4 = questions.Answer4.Replace(pipe, Constants.NEWLINE);
-                    questions.Answer4 = fixedAnswer4;
-                }
-                if (questions.Question.Contains(pipe))
-                {
-                    string fixedQuestion = questions.Question.Replace(pipe, Constants.NEWLINE);
-                    questions.Question = fixedQuestion;
-                }
-            }
-            return Questions;
+            });
+            return fixedQuestions;
         }
-
+        private static string FixPipeInString(string str)
+        {
+            return str.Contains('|') ? str.Replace("|", Constants.NEWLINE) : str;
+        }
         public void Dispose()
         {
             Dispose(true);

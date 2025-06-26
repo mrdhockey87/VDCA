@@ -191,11 +191,13 @@ namespace VDCA.Data
                     Open();
                     List<Questions> questionsLoad = [];
                     List<Questions> questionsShuffled = [];
+                    List<Questions> questionsPipeFixed = [];
                     List<Questions> questionsShuffledOut = [];
                     List<Questions> questionsFlashOut = [];
                     questionsLoad = db.Query<Questions>(Sql.GetCategoryQuestions(sqlPart));
+                    questionsPipeFixed.AddRange(await QuestionsDatabase.FixPipeAsync(questionsLoad));
                     //Shuffles the answers within each questions and sorts t/f and above etc questions mdail 9-20-23
-                    questionsShuffled.AddRange(Utils.ShuffleAnswers.SortAnswers(await QuestionsDatabase.FixPipeAsync(questionsLoad)));
+                    questionsShuffled.AddRange(Utils.ShuffleAnswers.SortAnswers(questionsPipeFixed));
                     //Shuffle the entire array of questions 9-200-23 mdail
                     questionsShuffled.Shuffle();
                     questionsShuffledOut.AddRange(SetShuffledAnswersNumbers(questionsShuffled));
@@ -220,7 +222,6 @@ namespace VDCA.Data
                 {
                     if (question != null)
                     {
-                        // Assuming FixFlashAnswer is a method that fixes a single question
                         FixFlashAnswer(question);
                     }
                 });
@@ -228,7 +229,6 @@ namespace VDCA.Data
             Task.WhenAll(tasks).Wait();
             return questions;
         }
-
         private static void FixFlashAnswer(Questions question)
         {
             const string ALLANSWERS = "All of these";
@@ -494,7 +494,7 @@ namespace VDCA.Data
         private static async Task<List<Questions>> FixPipeAsync(List<Questions> questions)
         {
             List<Questions> fixedQuestions = [];
-
+            object lockObj = new();
             await Parallel.ForEachAsync(questions, async (question, cancellationToken) =>
             {
                 question.Question = await Task.Run(() => FixPipeInString(question.Question));
@@ -502,8 +502,10 @@ namespace VDCA.Data
                 question.Answer2 = await Task.Run(() => FixPipeInString(question.Answer2));
                 question.Answer3 = await Task.Run(() => FixPipeInString(question.Answer3));
                 question.Answer4 = await Task.Run(() => FixPipeInString(question.Answer4));
-
-                fixedQuestions.Add(question);
+                lock (lockObj)
+                {
+                    fixedQuestions.Add(question);
+                }
             });
             return fixedQuestions;
         }
@@ -511,7 +513,6 @@ namespace VDCA.Data
         {
             return str.Contains('|') ? str.Replace("|", Constants.NEWLINE) : str;
         }
-
         public void UpdateHideStatus(int _id, int _hide)
         {
             try
@@ -528,7 +529,6 @@ namespace VDCA.Data
                 Close();
             }
         }
-
         public void UpdateFlagStatus(int _id, int _flag)
         {
             try

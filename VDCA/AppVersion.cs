@@ -20,6 +20,8 @@
 
 /*
  * 
+ *  v 6.038.0563 Matching the card to the way they are if a collection view is used as that was how I got the layout to work for the collectionview
+ *               and I thought it might be betterespecially as there is only one data type in the cards now. It went to 94 index 93 this way. mdail 6-26-25
  *  v 6.038.0562 Fixed a thread safty issue when loading the questions mdail 6-26-25
  *  v 6.038.0561 Fixed binding error in PracticeCardView and QuizCardView still have jumping when scrolling in the Practice & Quiz views mdail 6-25-25
  *  v 6.038.0560 tried all fixes I could find, when trying to go from 92 to 93 (Item 91 to 82)  it jump to 184 mdail 6-21-25

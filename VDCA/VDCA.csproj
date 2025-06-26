@@ -144,7 +144,7 @@
     <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" TintColor="#FFFFFF" />
     <MauiIcon Include="Resources\AppIcon\appiconfg.svg" />
     <!-- Splash Screen  TintColor="#FFFFFF" -->
-    <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#B0E0E6" BaseSize="400,400" TintColor="Transparent"/> <!-- TintColor="Transparent"/> -->
+    <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#B0E0E6" BaseSize="400,400" /> <!-- TintColor="Transparent"/> -->
     <!-- Images -->
     <MauiImage Include="Resources\Images\*" />
     <!-- Custom Fonts -->

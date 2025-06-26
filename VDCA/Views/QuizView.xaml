@@ -25,6 +25,7 @@
         <converters:StringToColorConverter x:Key="ColorConverter" />
     </ContentPage.Resources>
     <Grid x:Name="pageGrid"
+          HorizontalOptions="FillAndExpand"
           VerticalOptions="FillAndExpand">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -41,6 +42,7 @@
                      HorizontalOptions="FillAndExpand"
                      VerticalOptions="Start">
             <Label x:Name="running_count"
+                   Margin="3,0,0,0"
                    HorizontalTextAlignment="Center"
                    TextColor="{StaticResource PrimaryTextColor}"
                    Text="0/000" />
@@ -63,7 +65,7 @@
               HorizontalOptions="FillAndExpand"
               VerticalOptions="FillAndExpand">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -78,19 +80,20 @@
                           Loop="false"
                           PositionChanged="OnPositionChanged"
                           ItemsUpdatingScrollMode="KeepScrollOffset"
-                          HorizontalOptions="FillAndExpand"
+                          HorizontalOptions="Fill"
                           VerticalOptions="FillAndExpand"
                           x:Name="CarouselQuizView">
-                <CarouselView.ItemsLayout>
+                <CarouselView.ItemsLayout x:DataType="mod:Questions">
                     <LinearItemsLayout SnapPointsAlignment="Center"
                                        ItemSpacing="0"
                                        SnapPointsType="MandatorySingle"
                                        Orientation="Horizontal" />
                 </CarouselView.ItemsLayout>
                 <CarouselView.ItemTemplate>
-                    <DataTemplate x:Name="CardsDataTemplate">
+                    <DataTemplate>
                         <Border Stroke="{StaticResource PrimaryTextColor}"
                                 x:Name="TheQuizcard"
+                                WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type CarouselView}}, Path=Width}"
                                 BackgroundColor="Transparent"
                                 HorizontalOptions="FillAndExpand"
                                 VerticalOptions="FillAndExpand"

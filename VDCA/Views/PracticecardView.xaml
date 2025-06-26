@@ -15,16 +15,17 @@
     <ContentPage.BindingContext>
         <vm:PracticecardViewModel x:Name="pcvm" />
     </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Help"
+                     Command="{Binding Source={RelativeSource AncestorType={x:Type views:CardView}}, Path=HelpCommand}" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Resources>
         <converters:StringLengthToVisibilityConverter x:Key="stringLengthToVisibilityConverter" />
         <converters:IntToBoolConverter x:Key="intToBool" />
         <converters:StringToColorConverter x:Key="ColorConverter" />
     </ContentPage.Resources>
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Help"
-                     Command="{Binding Source={RelativeSource AncestorType={x:Type views:CardView}}, Path=HelpCommand}" />
-    </ContentPage.ToolbarItems>
     <Grid x:Name="pageGrid"
+          HorizontalOptions="FillAndExpand"
           VerticalOptions="FillAndExpand">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -41,6 +42,7 @@
                      HorizontalOptions="FillAndExpand"
                      VerticalOptions="Start">
             <Label x:Name="running_count"
+                   Margin="3,0,0,0"
                    HorizontalTextAlignment="Center"
                    TextColor="{StaticResource PrimaryTextColor}"
                    Text="0/000" />
@@ -56,7 +58,7 @@
               HorizontalOptions="FillAndExpand"
               VerticalOptions="FillAndExpand">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -70,7 +72,7 @@
                           Loop="false"
                           PositionChanged="OnPositionChanged"
                           ItemsUpdatingScrollMode="KeepScrollOffset"
-                          HorizontalOptions="FillAndExpand"
+                          HorizontalOptions="Fill"
                           VerticalOptions="FillAndExpand"
                           x:Name="CarouselPracticecardView">
                 <CarouselView.ItemsLayout x:DataType="mod:Questions">
@@ -80,10 +82,10 @@
                                        Orientation="Horizontal" />
                 </CarouselView.ItemsLayout>
                 <CarouselView.ItemTemplate>
-                    <DataTemplate x:Name="CardsDataTemplate">
-                        <!--  WidthRequest="{Binding Width, Source={x:Reference pageGrid}}" -->
+                    <DataTemplate>
                         <Border Stroke="{StaticResource PrimaryTextColor}"
                                 x:Name="ThePractcecard"
+                                WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type CarouselView}}, Path=Width}"
                                 BackgroundColor="Transparent"
                                 HorizontalOptions="FillAndExpand"
                                 VerticalOptions="FillAndExpand"

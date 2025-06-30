@@ -97,6 +97,7 @@
                             <ScrollView HorizontalOptions="FillAndExpand"
                                         VerticalOptions="FillAndExpand"
                                         x:Name="TheCardScrollView"
+                                        Unloaded="OnScrollViewUnloaded"
                                         Orientation="Vertical">
                                 <Grid Margin="0,0,0,0"
                                       VerticalOptions="FillAndExpand"

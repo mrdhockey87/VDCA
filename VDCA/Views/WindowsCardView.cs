@@ -146,6 +146,11 @@ public partial class WindowsCardView : ContentPage
             ReviewQuizQuestion = reviewQuizQuestion;
         }
     }
+    private void OnScrollViewUnloaded(object sender, EventArgs e)
+    {
+        var scrollView = sender as ScrollView;
+        scrollView.ScrollToAsync(0, 0, false);
+    }
     private void OnScrolled(object sender, ItemsViewScrolledEventArgs e)
     {
         if (sender is CollectionView collectionView)
@@ -155,17 +160,12 @@ public partial class WindowsCardView : ContentPage
 
             // If valid index and different from current selected item
             if (centerIndex >= 0 && centerIndex < ViewModel.CardQuestions.Count &&
-                ViewModel.CurrentQuestion != ViewModel.CardQuestions[centerIndex])
+                                                  ViewModel.CurrentQuestion != ViewModel.CardQuestions[centerIndex])
             {
                 // Update the selected item
                 collectionView.SelectedItem = ViewModel.CardQuestions[centerIndex];
-
                 // Update the view model's current question
                 ViewModel.CurrentQuestion = ViewModel.CardQuestions[centerIndex];
-
-                // Update progress indicators
-                //_ = OnUpdateProgressCommandExecuted();
-
                 // Handle explanation and citation visibility
                 ExplanationVisible = ViewModel.CardQuestions[centerIndex].Explanation.Length > 0;
                 CitationVisible = ViewModel.CardQuestions[centerIndex].Citation.Length > 0;
@@ -174,8 +174,10 @@ public partial class WindowsCardView : ContentPage
     }
     public async Task OnSelectionChanged()
     {
-        string CardName = ViewModel.cv.GetType().Name;
         int position = ViewModel.CardQuestions.IndexOf(ViewModel.CurrentQuestion);
+        ExplanationVisible = ViewModel.CardQuestions[position].Explanation.Length > 0;
+        CitationVisible = ViewModel.CardQuestions[position].Citation.Length > 0;
+        string CardName = ViewModel.cv.GetType().Name;
         if (CardName == Flash)
         {
             //Reset the cards before an after to unflipped so the cards are always answer up mdail 3-19-25
@@ -184,67 +186,10 @@ public partial class WindowsCardView : ContentPage
         }
         else if ((CardName == Practice || CardName == Quiz) && (DeviceInfo.Current.Platform != DevicePlatform.WinUI))
         {
-            // Find the ScrollView inside the current & previous items then scroll to the top mdail 2-27-25
-            await ResetScrollToTop(e.PreviousPosition);
-            System.Diagnostics.Debug.WriteLine("OnPositionChanged e.PreviousPosition = ");
+            System.Diagnostics.Debug.WriteLine("OnPositionChanged");
         }
-        ExplanationVisible = ViewModel.CardQuestions[position].Explanation.Length > 0;
-        CitationVisible = ViewModel.CardQuestions[position].Citation.Length > 0;
         await ViewModel.ReloadCurrentItem();
     }
-    private async Task ResetScrollToTop(int previousPosition)
-{
-    // For the current item
-    var currentItem = ViewModel.CurrentQuestion;
-    if (currentItem == null)
-        return;
-
-    await MainThread.InvokeOnMainThreadAsync(async () =>
-    {
-        // Use GetVisualTreeDescendants to find the container for the current item
-        var containers = CollectionCardView.GetVisualTreeDescendants();
-        
-        // Look for container that holds the current item
-        var currentContainers = containers
-            .Where(c => c is ContentView && ((ContentView)c).BindingContext is Questions q && q == currentItem)
-            .Cast<ContentView>()
-            .ToList();
-
-        // For the current item container
-        foreach (var container in currentContainers)
-        {
-            // Find the ScrollView within the container
-            var scrollView = container.FindByName<ScrollView>("TheCardScrollView");
-            if (scrollView != null)
-            {
-                await scrollView.ScrollToAsync(0, 0, false);
-            }
-        }
-
-        // For the previous item if valid
-        if (previousPosition >= 0 && previousPosition < ViewModel.CardQuestions.Count)
-        {
-            var previousItem = ViewModel.CardQuestions[previousPosition];
-            
-            // Look for container that holds the previous item
-            var previousContainers = containers
-                .Where(c => c is ContentView && ((ContentView)c).BindingContext is Questions q && q == previousItem)
-                .Cast<ContentView>()
-                .ToList();
-
-            // For each container that matches the previous item
-            foreach (var container in previousContainers)
-            {
-                // Find the ScrollView within the container
-                var scrollView = container.FindByName<ScrollView>("TheCardScrollView");
-                if (scrollView != null)
-                {
-                    await scrollView.ScrollToAsync(0, 0, false);
-                }
-            }
-        }
-    });
-}
     private void ResetFlipp(int PreviousPosition) 
     {
         if (PreviousPosition >= 0 && PreviousPosition < ViewModel.CardQuestions.Count)

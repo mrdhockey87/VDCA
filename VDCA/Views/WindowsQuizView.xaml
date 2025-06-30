@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:WindowsCardView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+                ios:Page.UseSafeArea="True"
+                xmlns:views="clr-namespace:VDCA.Views"
+                xmlns:vm="clr-namespace:VDCA.ViewModels"
+                xmlns:mod="clr-namespace:VDCA.Models"
+                xmlns:converters="clr-namespace:VDCA.Converters"
+                xmlns:toastmsg="clr-namespace:VDCA.Popups"
+                BackgroundColor="{StaticResource PrimaryCardQBackground}"
+                x:Class="VDCA.Views.WindowsQuizView"
+                x:Name="Quiz"
+                Title="Quiz">
+    <ContentPage.BindingContext>
+        <vm:WindowsQuizViewModel x:Name="winqvm" />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <converters:StringLengthToVisibilityConverter x:Key="stringLengthToVisibilityConverter" />
+        <converters:IntToBoolConverter x:Key="intToBool" />
+        <converters:StringToColorConverter x:Key="ColorConverter" />
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Help"
+                     Command="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=HelpCommand}" />
+    </ContentPage.ToolbarItems>
+    <Grid x:Name="pageGrid"
+          HorizontalOptions="FillAndExpand"
+          VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackLayout Orientation="Horizontal"
+                     Grid.Row="0"
+                     Grid.Column="0"
+                     BackgroundColor="Transparent"
+                     HorizontalOptions="FillAndExpand"
+                     VerticalOptions="Start">
+            <Label x:Name="running_count"
+                   Margin="3,0,0,0"
+                   HorizontalTextAlignment="Center"
+                   TextColor="{StaticResource PrimaryTextColor}"
+                   Text="0/000" />
+            <ProgressBar x:Name="count_progress"
+                         HorizontalOptions="FillAndExpand"
+                         Margin="5,0,5,0"
+                         Progress="0.0"
+                         ProgressColor="{StaticResource PrimaryTextColor}" />
+            <Label x:Name="elapsedTimeLabel"
+                   x:DataType="vm:WindowsQuizViewModel"
+                   Text="{Binding ElapsedTime}"
+                   TextColor="{StaticResource PrimaryTextColor}"
+                   Margin="0,0,8,0"
+                   HorizontalOptions="End"
+                   VerticalOptions="Center" />
+        </StackLayout>
+        <Grid x:Name="mainGrid"
+              Grid.Row="1"
+              Grid.Column="0"
+              HorizontalOptions="FillAndExpand"
+              VerticalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <CollectionView Grid.Row="0"
+                            Grid.Column="0"
+                            ItemsSource="{Binding CardQuestions}"
+                            SelectedItem="{Binding CurrentQuestion, Mode=TwoWay}"
+                            Loaded="CarouselViewLoaded"
+                            Scrolled="OnScrolled"
+                            SelectionChangedCommand="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=OnSelectionChangedCommand}"
+                            ItemsUpdatingScrollMode="KeepScrollOffset"
+                            HorizontalOptions="Fill"
+                            VerticalOptions="FillAndExpand"
+                            x:Name="CarouselQuizView">
+                <CollectionView.ItemsLayout x:DataType="mod:Questions">
+                    <LinearItemsLayout SnapPointsAlignment="Center"
+                                       ItemSpacing="0"
+                                       SnapPointsType="MandatorySingle"
+                                       Orientation="Horizontal" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Stroke="{StaticResource PrimaryTextColor}"
+                                WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, Path=Width}"
+                                x:Name="TheQuizcard"
+                                BackgroundColor="Transparent"
+                                HorizontalOptions="Fill"
+                                VerticalOptions="FillAndExpand"
+                                StrokeThickness="{DynamicResource BorderSize}"
+                                Padding="{Binding BorderPadding}"
+                                Margin="{Binding MarginTop}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="5,5,5,5" />
+                            </Border.StrokeShape>
+                            <!--  HeightRequest="{Binding Height, Source={x:Reference TheQuizcard}}"" -->
+                            <ScrollView HorizontalOptions="FillAndExpand"
+                                        VerticalOptions="FillAndExpand"
+                                        x:Name="TheCardScrollView"
+                                        Orientation="Vertical">
+                                <Grid Margin="0,0,0,0"
+                                      VerticalOptions="FillAndExpand"
+                                      HorizontalOptions="FillAndExpand">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Grid row 0 -->
+                                    <StackLayout Orientation="Horizontal"
+                                                 Grid.Row="0"
+                                                 Grid.Column="0"
+                                                 Grid.ColumnSpan="5"
+                                                 BackgroundColor="Transparent"
+                                                 HorizontalOptions="FillAndExpand"
+                                                 VerticalOptions="FillAndExpand">
+                                        <Label x:Name="SelectInstructions"
+                                               LineBreakMode="WordWrap"
+                                               MaxLines="2"
+                                               Margin="0,0,0,2"
+                                               TextColor="{Binding LabelTextColor, Converter = {StaticResource ColorConverter}}"
+                                               VerticalTextAlignment="Center"
+                                               HorizontalTextAlignment="Center"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="CenterAndExpand"
+                                               FontSize="{Binding LabelFontSize}"
+                                               Text="{Binding LabelText}">
+                                        </Label>
+                                    </StackLayout>
+                                    <!-- Grid row 1 -->
+                                    <ImageButton Grid.Column="0"
+                                                 Grid.Row="1"
+                                                 Source="explanation_navy.png"
+                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=ExplanationCommand}"
+                                                 CommandParameter="{Binding .}"
+                                                 Aspect="AspectFit"
+                                                 WidthRequest="{DynamicResource BaseHeightRequest}"
+                                                 HeightRequest="{DynamicResource BaseHeightRequest}"
+                                                 IsVisible="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=ExplanationVisible}">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Normal">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Source"
+                                                                Value="explanation_navy.png" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="Pressed">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Source"
+                                                                Value="explanation.png" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="Released">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Source"
+                                                                Value="explanation_navy.png" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </ImageButton>
+                                    <ImageButton Grid.Column="1"
+                                                 Grid.Row="1"
+                                                 Source="citation_navy.png"
+                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=CitationCommand}"
+                                                 CommandParameter="{Binding .}"
+                                                 Aspect="AspectFit"
+                                                 WidthRequest="{DynamicResource BaseHeightRequest}"
+                                                 HeightRequest="{DynamicResource BaseHeightRequest}"
+                                                 IsVisible="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=CitationVisible}">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Normal">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Source"
+                                                                Value="citation_navy.png" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="Pressed">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Source"
+                                                                Value="citation.png" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="Released">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Source"
+                                                                Value="citation_navy.png" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </ImageButton>
+                                    <ImageButton Grid.Column="2"
+                                                 Grid.Row="1"
+                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=FeedbackCommand}"
+                                                 CommandParameter="{Binding .}"
+                                                 Aspect="AspectFit"
+                                                 Source="feedback_up.png"
+                                                 WidthRequest="{DynamicResource MediumHeightRequest}"
+                                                 HeightRequest="{DynamicResource MediumHeightRequest}"
+                                                 Margin="0,1,0,0"
+                                                 BackgroundColor="Transparent">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Normal">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Scale"
+                                                                Value="1" />
+                                                        <Setter Property="Source"
+                                                                Value="feedback_up.png" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="Pressed">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Scale"
+                                                                Value="1" />
+                                                        <Setter Property="Source"
+                                                                Value="feedback_down.png" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="Released">
+                                                    <VisualState.Setters>
+                                                        <Setter Property="Scale"
+                                                                Value="1" />
+                                                        <Setter Property="Source"
+                                                                Value="feedback_up.png" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </ImageButton>
+                                    <Image Grid.Column="3"
+                                           Grid.Row="1"
+                                           WidthRequest="{DynamicResource MediumHeightRequest}"
+                                           HeightRequest="{DynamicResource MediumHeightRequest}"
+                                           Aspect="AspectFit"
+                                           HorizontalOptions="CenterAndExpand"
+                                           VerticalOptions="Center"
+                                           Source="big_eye.png">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=HiddedCommand}" />
+                                        </Image.GestureRecognizers>
+                                        <Image.Triggers>
+                                            <DataTrigger TargetType="Image"
+                                                         Binding="{Binding Hidden}"
+                                                         Value="0">
+                                                <Setter Property="Source"
+                                                        Value="big_eye.png" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Image"
+                                                         Binding="{Binding Hidden}"
+                                                         Value="1">
+                                                <Setter Property="Source"
+                                                        Value="unbig_eye.png" />
+                                            </DataTrigger>
+                                        </Image.Triggers>
+                                    </Image>
+                                    <Image Grid.Column="4"
+                                           Grid.Row="1"
+                                           WidthRequest="{DynamicResource MediumHeightRequest}"
+                                           HeightRequest="{DynamicResource MediumHeightRequest}"
+                                           Margin="0,4,0,0"
+                                           Aspect="AspectFit"
+                                           HorizontalOptions="CenterAndExpand"
+                                           VerticalOptions="Center"
+                                           Source="flag_off.png">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=FlaggedCommand}" />
+                                        </Image.GestureRecognizers>
+                                        <Image.Triggers x:DataType="mod:Question">
+                                            <DataTrigger TargetType="Image"
+                                                         Binding="{Binding Flagged}"
+                                                         Value="0">
+                                                <Setter Property="Source"
+                                                        Value="flag_off.png" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Image"
+                                                         Binding="{Binding Flagged}"
+                                                         Value="1">
+                                                <Setter Property="Source"
+                                                        Value="flag_on.png" />
+                                            </DataTrigger>
+                                        </Image.Triggers>
+                                    </Image>
+                                    <!-- End Row 1 -->
+                                    <!-- Bottom Grid -->
+                                    <!--  WidthRequest="{Binding Width, Source={x:Reference pageGrid}}" -->
+                                    <Grid Grid.Row="2"
+                                          Grid.Column="0"
+                                          Grid.ColumnSpan="5"
+                                          x:Name="QuizGird"
+                                          Margin="0,0,0,0"
+                                          HorizontalOptions="FillAndExpand">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackLayout Grid.Row="0"
+                                                     Grid.Column="0"
+                                                     Grid.ColumnSpan="3"
+                                                     Orientation="Horizontal">
+                                            <Label Margin="16,0,0,5"
+                                                   Text="Q:"
+                                                   FontAttributes="Bold"
+                                                   FontSize="{DynamicResource LargeLetterFontSize}"
+                                                   HorizontalOptions="Start"
+                                                   VerticalOptions="Center"
+                                                   TextColor="{StaticResource PrimaryTextColor}" />
+                                            <Label Margin="8,0,10,2"
+                                                   Text="{Binding Question}"
+                                                   FontAttributes="Bold"
+                                                   TextColor="{StaticResource PrimaryTextColor}"
+                                                   LineBreakMode="WordWrap"
+                                                   HorizontalTextAlignment="Start"
+                                                   VerticalTextAlignment="Center"
+                                                   FontSize="{DynamicResource MediumFontSize}"
+                                                   VerticalOptions="CenterAndExpand"
+                                                   HorizontalOptions="FillAndExpand" />
+                                        </StackLayout>
+                                        <BoxView Grid.Row="1"
+                                                 Grid.Column="0"
+                                                 Grid.ColumnSpan="3"
+                                                 Color="{StaticResource PrimaryText}"
+                                                 HeightRequest="2"
+                                                 HorizontalOptions="FillAndExpand" />
+                                        <StackLayout Grid.Row="2"
+                                                     Grid.Column="0"
+                                                     Grid.ColumnSpan="3"
+                                                     BackgroundColor="{Binding ABackColor, Converter = {StaticResource ColorConverter}}"
+                                                     Orientation="Horizontal">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnTap_Quiz"
+                                                                      CommandParameter="AnswerA" />
+                                            </StackLayout.GestureRecognizers>
+                                            <Label  Margin="16,5,0,5"
+                                                    Text="A:"
+                                                    FontAttributes="Bold"
+                                                    FontSize="{DynamicResource LetterBaseFontSize}"
+                                                    HorizontalOptions="Start"
+                                                    VerticalOptions="Center"
+                                                    TextColor="{Binding ATextColor, Converter = {StaticResource ColorConverter}}" />
+                                            <Label Margin="8,5,10,5"
+                                                   Text="{Binding ShuffledAnswer1}"
+                                                   TextColor="{Binding ATextColor, Converter = {StaticResource ColorConverter}}"
+                                                   LineBreakMode="WordWrap"
+                                                   HorizontalTextAlignment="Start"
+                                                   VerticalTextAlignment="Center"
+                                                   FontSize="{DynamicResource BaseFontSize}"
+                                                   VerticalOptions="CenterAndExpand"
+                                                   HorizontalOptions="FillAndExpand" />
+                                        </StackLayout>
+                                        <BoxView Grid.Row="3"
+                                                 Grid.Column="0"
+                                                 Grid.ColumnSpan="3"
+                                                 Color="{StaticResource PrimaryText}"
+                                                 HeightRequest="2"
+                                                 InputTransparent="False"
+                                                 HorizontalOptions="FillAndExpand">
+                                            <BoxView.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnTap_Quiz"
+                                                                      CommandParameter="AnswerA" />
+                                            </BoxView.GestureRecognizers>
+                                        </BoxView>
+                                        <StackLayout Grid.Row="4"
+                                                     Grid.Column="0"
+                                                     Grid.ColumnSpan="3"
+                                                     BackgroundColor="{Binding BBackColor, Converter = {StaticResource ColorConverter}}"
+                                                     Orientation="Horizontal">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnTap_Quiz"
+                                                                      CommandParameter="AnswerB" />
+                                            </StackLayout.GestureRecognizers>
+                                            <Label  Margin="16,5,0,5"
+                                                    Text="B:"
+                                                    FontAttributes="Bold"
+                                                    FontSize="{DynamicResource LetterBaseFontSize}"
+                                                    HorizontalOptions="Start"
+                                                    VerticalOptions="Center"
+                                                    TextColor="{Binding BTextColor, Converter = {StaticResource ColorConverter}}" />
+                                            <Label Margin="8,5,10,5"
+                                                   Text="{Binding ShuffledAnswer2}"
+                                                   TextColor="{Binding BTextColor, Converter = {StaticResource ColorConverter}}"
+                                                   LineBreakMode="WordWrap"
+                                                   HorizontalTextAlignment="Start"
+                                                   VerticalTextAlignment="Center"
+                                                   FontSize="{DynamicResource BaseFontSize}"
+                                                   VerticalOptions="CenterAndExpand"
+                                                   HorizontalOptions="FillAndExpand" />
+                                        </StackLayout>
+                                        <BoxView Grid.Row="5"
+                                                 Grid.Column="0"
+                                                 Grid.ColumnSpan="3"
+                                                 Color="{StaticResource PrimaryText}"
+                                                 HeightRequest="2"
+                                                 InputTransparent="False"
+                                                 HorizontalOptions="FillAndExpand">
+                                            <BoxView.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnTap_Quiz"
+                                                                      CommandParameter="AnswerB" />
+                                            </BoxView.GestureRecognizers>
+                                        </BoxView>
+                                        <StackLayout Grid.Row="6"
+                                                     Grid.Column="0"
+                                                     Grid.ColumnSpan="3"
+                                                     IsVisible="{Binding IsCVisible}"
+                                                     BackgroundColor="{Binding CBackColor, Converter = {StaticResource ColorConverter}}"
+                                                     Orientation="Horizontal">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnTap_Quiz"
+                                                                      CommandParameter="AnswerC" />
+                                            </StackLayout.GestureRecognizers>
+                                            <Label  Margin="16,5,0,5"
+                                                    Text="C:"
+                                                    IsVisible="{Binding IsCVisible}"
+                                                    FontAttributes="Bold"
+                                                    FontSize="{DynamicResource LetterBaseFontSize}"
+                                                    HorizontalOptions="Start"
+                                                    VerticalOptions="Center"
+                                                    TextColor="{Binding CTextColor, Converter = {StaticResource ColorConverter}}" />
+                                            <Label x:Name="Label_Quiz_C"
+                                                   Margin="8,5,10,5"
+                                                   IsVisible="{Binding IsCVisible}"
+                                                   Text="{Binding ShuffledAnswer3}"
+                                                   TextColor="{Binding CTextColor, Converter = {StaticResource ColorConverter}}"
+                                                   LineBreakMode="WordWrap"
+                                                   HorizontalTextAlignment="Start"
+                                                   VerticalTextAlignment="Center"
+                                                   FontSize="{DynamicResource BaseFontSize}"
+                                                   VerticalOptions="CenterAndExpand"
+                                                   HorizontalOptions="FillAndExpand" />
+                                        </StackLayout>
+                                        <BoxView Grid.Row="7"
+                                                 Grid.Column="0"
+                                                 Grid.ColumnSpan="3"
+                                                 IsVisible="{Binding IsCVisible}"
+                                                 Color="{StaticResource PrimaryText}"
+                                                 HeightRequest="2"
+                                                 InputTransparent="False"
+                                                 HorizontalOptions="FillAndExpand">
+                                            <BoxView.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnTap_Quiz"
+                                                                      CommandParameter="AnswerC" />
+                                            </BoxView.GestureRecognizers>
+                                        </BoxView>
+                                        <StackLayout Grid.Row="8"
+                                                     Grid.Column="0"
+                                                     Grid.ColumnSpan="3"
+                                                     IsVisible="{Binding IsDVisible}"
+                                                     BackgroundColor="{Binding DBackColor, Converter = {StaticResource ColorConverter}}"
+                                                     Orientation="Horizontal">
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnTap_Quiz"
+                                                                      CommandParameter="AnswerD" />
+                                            </StackLayout.GestureRecognizers>
+                                            <Label  Margin="16,5,0,5"
+                                                    Text="D:"
+                                                    IsVisible="{Binding IsDVisible}"
+                                                    FontAttributes="Bold"
+                                                    FontSize="{DynamicResource LetterBaseFontSize}"
+                                                    HorizontalOptions="Start"
+                                                    VerticalOptions="Center"
+                                                    TextColor="{Binding DTextColor, Converter = {StaticResource ColorConverter}}" />
+                                            <Label x:Name="Label_Quiz_D"
+                                                   Margin="8,5,10,5"
+                                                   IsVisible="{Binding IsDVisible}"
+                                                   Text="{Binding ShuffledAnswer4}"
+                                                   TextColor="{Binding DTextColor, Converter = {StaticResource ColorConverter}}"
+                                                   LineBreakMode="WordWrap"
+                                                   HorizontalTextAlignment="Start"
+                                                   VerticalTextAlignment="Center"
+                                                   FontSize="{DynamicResource BaseFontSize}"
+                                                   VerticalOptions="CenterAndExpand"
+                                                   HorizontalOptions="FillAndExpand" />
+                                        </StackLayout>
+                                        <BoxView Grid.Row="9"
+                                                 Grid.Column="0"
+                                                 Grid.ColumnSpan="3"
+                                                 IsVisible="{Binding IsDVisible}"
+                                                 Color="{StaticResource PrimaryText}"
+                                                 HeightRequest="2"
+                                                 InputTransparent="False"
+                                                 HorizontalOptions="FillAndExpand">
+                                            <BoxView.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnTap_Quiz"
+                                                                      CommandParameter="AnswerD" />
+                                            </BoxView.GestureRecognizers>
+                                        </BoxView>
+                                    </Grid>
+                                </Grid>
+                            </ScrollView>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+        <StackLayout Orientation="Horizontal"
+                     Grid.Row="3"
+                     Grid.Column="0"
+                     BackgroundColor="{StaticResource PrimaryCardQBackground}"
+                     HorizontalOptions="FillAndExpand"
+                     VerticalOptions="End">
+            <Button Command="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=PreviousCommand}"
+                    ImageSource="chevron_left.png"
+                    ContentLayout="Left,0"
+                    Text="Previous"
+                    TextColor="{StaticResource PrimaryText}"
+                    FontSize="{DynamicResource BaseFontSize}"
+                    HeightRequest="{DynamicResource ChevronHeightRequest}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="FillAndExpand"
+                    BackgroundColor="Transparent" />
+            <Button x:Name="Button_Score_Quiz"
+                    IsEnabled="True"
+                    IsVisible="True"
+                    Text="Score Quiz"
+                    TextColor="{StaticResource PrimaryCardQBackground}"
+                    FontSize="{DynamicResource BaseFontSize}"
+                    HeightRequest="{DynamicResource ChevronHeightRequest}"
+                    BackgroundColor="{StaticResource PrimaryTextColor}"
+                    VerticalOptions="Center"
+                    Clicked="Score_Quiz"
+                    HorizontalOptions="FillAndExpand" />
+            <Button Command="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=NextCommand}"
+                    ImageSource="chevron_right.png"
+                    ContentLayout="Right,0"
+                    Text="Next"
+                    TextColor="{StaticResource PrimaryText}"
+                    FontSize="{DynamicResource BaseFontSize}"
+                    HeightRequest="{DynamicResource ChevronHeightRequest}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="FillAndExpand"
+                    BackgroundColor="Transparent" />
+        </StackLayout>
+        <views:HelpContentView x:Name="helpContentQuizOverlay"
+                               Grid.Row="1"
+                               Grid.Column="0" />
+        <views:ReviewQuestion x:Name="reviewQuizQuestion"
+                              Grid.Row="1"
+                              Grid.Column="0" />
+        <views:InformationAlert x:Name="informationQuizAlert"
+                                Grid.Row="1"
+                                Grid.Column="0" />
+        <views:QuestionAlert x:Name="questionQuizAlert"
+                             Grid.Row="1"
+                             Grid.Column="0" />
+        <views:ProgressBarOverlay x:Name="progressBarQuizOverlay"
+                                  Grid.Row="1"
+                                  Grid.Column="0" />
+    </Grid>
+</views:WindowsCardView>

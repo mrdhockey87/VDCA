@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:WindowsCardView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+                ios:Page.UseSafeArea="True"
+                xmlns:views="clr-namespace:VDCA.Views"
+                xmlns:vm="clr-namespace:VDCA.ViewModels"
+                xmlns:mod="clr-namespace:VDCA.Models"
+                xmlns:converters="clr-namespace:VDCA.Converters"
+                xmlns:toastmsg="clr-namespace:VDCA.Popups"
+                BackgroundColor="{StaticResource PrimaryCardQBackground}"
+                x:Class="VDCA.Views.WindowsFlashcardView"
+                x:Name="Flash"
+                Title="Flashcards">
+    <ContentPage.BindingContext>
+        <vm:WindowsFlashcardViewModel x:Name="winfcvm" />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <converters:StringLengthToVisibilityConverter x:Key="stringLengthToVisibilityConverter" />
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Help"
+                     Command="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=HelpCommand}" />
+    </ContentPage.ToolbarItems>
+    <Grid x:Name="pageGrid"
+          HorizontalOptions="FillAndExpand"
+          VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackLayout Orientation="Horizontal"
+                     Grid.Row="0"
+                     Grid.Column="0"
+                     BackgroundColor="Transparent"
+                     HorizontalOptions="FillAndExpand"
+                     VerticalOptions="Start">
+            <Label x:Name="running_count"
+                   Margin="3,0,0,0"
+                   HorizontalTextAlignment="Center"
+                   TextColor="{StaticResource PrimaryTextColor}"
+                   Text="0/000" />
+            <ProgressBar x:Name="count_progress"
+                         HorizontalOptions="FillAndExpand"
+                         Margin="5,0,5,0"
+                         Progress="0.0"
+                         ProgressColor="{StaticResource PrimaryTextColor}" />
+        </StackLayout>
+        <Grid x:Name="mainGrid"
+              Grid.Row="1"
+              Grid.Column="0"
+              HorizontalOptions="FillAndExpand"
+              VerticalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <CollectionView Grid.Row="0"
+                            Grid.Column="0"
+                            ItemsSource="{Binding CardQuestions}"
+                            SelectedItem="{Binding CurrentQuestion, Mode=TwoWay}"
+                            Scrolled="OnScrolled"
+                            SelectionChangedCommand="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=OnSelectionChangedCommand}"
+                            ItemsUpdatingScrollMode="KeepScrollOffset"
+                            HorizontalOptions="Fill"
+                            VerticalOptions="FillAndExpand"
+                            x:Name="CarouselFlashcardCardView">
+                <CollectionView.ItemsLayout x:DataType="mod:Questions">
+                    <LinearItemsLayout SnapPointsAlignment="Center"
+                                       ItemSpacing="0"
+                                       SnapPointsType="MandatorySingle"
+                                       Orientation="Horizontal" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <!--  WidthRequest="{Binding Width, Source={x:Reference PageStack}}" -->
+                    <DataTemplate>
+                        <Border Stroke="{StaticResource PrimaryTextColor}"
+                                x:Name="TheFlashcard"
+                                WidthRequest="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}}, Path=Width}"
+                                BackgroundColor="Transparent"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="FillAndExpand"
+                                StrokeThickness="{StaticResource FlashBorderSize}"
+                                Padding="{Binding BorderPadding}"
+                                Margin="{Binding MarginTop}">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="5,5,5,5" />
+                            </Border.StrokeShape>
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border"
+                                             Binding="{Binding Flipped}"
+                                             Value="True">
+                                    <Setter Property="BackgroundColor"
+                                            Value="{StaticResource PrimaryCardABackground}" />
+                                </DataTrigger>
+                                <DataTrigger TargetType="Border"
+                                             Binding="{Binding Flipped}"
+                                             Value="False">
+                                    <Setter Property="BackgroundColor"
+                                            Value="{StaticResource PrimaryCardQBackground}" />
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <!-- Row of 6 buttons across the top -->
+                                <Image Grid.Row="0"
+                                       Grid.Column="0"
+                                       Margin="5,0,0,0"
+                                       MinimumHeightRequest="{DynamicResource BaseHeightRequest}"
+                                       MaximumWidthRequest="{DynamicResource BaseHeightRequest}"
+                                       Aspect="AspectFit"
+                                       HorizontalOptions="Start"
+                                       Source="navy_q.png">
+                                    <Image.Triggers>
+                                        <DataTrigger TargetType="Image"
+                                                     Binding="{Binding Flipped}"
+                                                     Value="True">
+                                            <Setter Property="Source"
+                                                    Value="navy_a.png" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Image"
+                                                     Binding="{Binding Flipped}"
+                                                     Value="False">
+                                            <Setter Property="Source"
+                                                    Value="navy_q.png" />
+                                        </DataTrigger>
+                                    </Image.Triggers>
+                                </Image>
+                                <ImageButton Grid.Row="0"
+                                             Grid.Column="1"
+                                             Margin="0,4,0,0"
+                                             Source="explanation_navy.png"
+                                             Command="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=ExplanationCommand}"
+                                             CommandParameter="{Binding .}"
+                                             Aspect="AspectFit"
+                                             WidthRequest="{DynamicResource BaseHeightRequest}"
+                                             HeightRequest="{DynamicResource BaseHeightRequest}"
+                                             VerticalOptions="Start"
+                                             HorizontalOptions="StartAndExpand"
+                                             IsVisible="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=ExplanationVisible}">
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal">
+                                                <VisualState.Setters>
+                                                    <Setter Property="Source"
+                                                            Value="explanation_navy.png" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                            <VisualState x:Name="Pressed">
+                                                <VisualState.Setters>
+                                                    <Setter Property="Source"
+                                                            Value="explanation.png" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                            <VisualState x:Name="Released">
+                                                <VisualState.Setters>
+                                                    <Setter Property="Source"
+                                                            Value="explanation_navy.png" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                </ImageButton>
+                                <ImageButton Grid.Row="0"
+                                             Grid.Column="2"
+                                             Margin="0,4,0,0"
+                                             Source="citation_navy.png"
+                                             Command="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=CitationCommand}"
+                                             CommandParameter="{Binding .}"
+                                             Aspect="AspectFit"
+                                             WidthRequest="{DynamicResource BaseHeightRequest}"
+                                             HeightRequest="{DynamicResource BaseHeightRequest}"
+                                             VerticalOptions="Start"
+                                             HorizontalOptions="StartAndExpand"
+                                             IsVisible="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=CitationVisible}">
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal">
+                                                <VisualState.Setters>
+                                                    <Setter Property="Source"
+                                                            Value="citation_navy.png" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                            <VisualState x:Name="Pressed">
+                                                <VisualState.Setters>
+                                                    <Setter Property="Source"
+                                                            Value="citation.png" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                            <VisualState x:Name="Released">
+                                                <VisualState.Setters>
+                                                    <Setter Property="Source"
+                                                            Value="citation_navy.png" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                </ImageButton>
+                                <ImageButton Grid.Row="0"
+                                             Grid.Column="3"
+                                             Command="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=FeedbackCommand}"
+                                             CommandParameter="{Binding .}"
+                                             Aspect="AspectFit"
+                                             Source="feedback_up.png"
+                                             WidthRequest="{DynamicResource MediumHeightRequest}"
+                                             HeightRequest="{DynamicResource MediumHeightRequest}"
+                                             Margin="0,0,0,0"
+                                             HorizontalOptions="CenterAndExpand"
+                                             VerticalOptions="Center"
+                                             BackgroundColor="Transparent">
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal">
+                                                <VisualState.Setters>
+                                                    <Setter Property="Scale"
+                                                            Value="1" />
+                                                    <Setter Property="Source"
+                                                            Value="feedback_up.png" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                            <VisualState x:Name="Pressed">
+                                                <VisualState.Setters>
+                                                    <Setter Property="Scale"
+                                                            Value="1" />
+                                                    <Setter Property="Source"
+                                                            Value="feedback_down.png" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                            <VisualState x:Name="Released">
+                                                <VisualState.Setters>
+                                                    <Setter Property="Scale"
+                                                            Value="1" />
+                                                    <Setter Property="Source"
+                                                            Value="feedback_up.png" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                </ImageButton>
+                                <Image Grid.Row="0"
+                                       Grid.Column="4"
+                                       WidthRequest="{DynamicResource MediumHeightRequest}"
+                                       HeightRequest="{DynamicResource MediumHeightRequest}"
+                                       Margin="0,0,0,0"
+                                       Aspect="AspectFit"
+                                       HorizontalOptions="CenterAndExpand"
+                                       VerticalOptions="Center"
+                                       Source="big_eye.png">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=HiddedCommand}" />
+                                    </Image.GestureRecognizers>
+                                    <Image.Triggers>
+                                        <DataTrigger TargetType="Image"
+                                                     Binding="{Binding Hidden}"
+                                                     Value="0">
+                                            <Setter Property="Source"
+                                                    Value="big_eye.png" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Image"
+                                                     Binding="{Binding Hidden}"
+                                                     Value="1">
+                                            <Setter Property="Source"
+                                                    Value="unbig_eye.png" />
+                                        </DataTrigger>
+                                    </Image.Triggers>
+                                </Image>
+                                <Image Grid.Row="0"
+                                       Grid.Column="5"
+                                       WidthRequest="{DynamicResource MediumHeightRequest}"
+                                       HeightRequest="{DynamicResource MediumHeightRequest}"
+                                       Margin="0,2,0,0"
+                                       Aspect="AspectFit"
+                                       HorizontalOptions="CenterAndExpand"
+                                       VerticalOptions="Center"
+                                       Source="flag_off.png">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=FlaggedCommand}" />
+                                    </Image.GestureRecognizers>
+                                    <Image.Triggers x:DataType="mod:Question">
+                                        <DataTrigger TargetType="Image"
+                                                     Binding="{Binding Flagged}"
+                                                     Value="0">
+                                            <Setter Property="Source"
+                                                    Value="flag_off.png" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Image"
+                                                     Binding="{Binding Flagged}"
+                                                     Value="1">
+                                            <Setter Property="Source"
+                                                    Value="flag_on.png" />
+                                        </DataTrigger>
+                                    </Image.Triggers>
+                                </Image>
+                                <Label Grid.Row="1"
+                                       Grid.Column="0"
+                                       Grid.ColumnSpan="6"
+                                       Text="{Binding Question}"
+                                       FontAttributes="Bold"
+                                       TextColor="{StaticResource PrimaryTextColor}"
+                                       LineBreakMode="WordWrap"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center"
+                                       FontSize="{DynamicResource MediumFontSize}"
+                                       Margin="10,0,10,0"
+                                       FlexLayout.Grow="1"
+                                       VerticalOptions="FillAndExpand"
+                                       HorizontalOptions="FillAndExpand">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label"
+                                                     Binding="{Binding Flipped}"
+                                                     Value="True">
+                                            <Setter Property="Text"
+                                                    Value="{Binding Answer1}" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                                <ImageButton Grid.Row="2"
+                                             Grid.Column="6"
+                                             Clicked="Flip_Clicked"
+                                             Margin="10,10,10,10"
+                                             Aspect="AspectFit"
+                                             Source="flip.png"
+                                             WidthRequest="{DynamicResource MediumHeightRequest}"
+                                             HeightRequest="{DynamicResource MediumHeightRequest}"
+                                             VerticalOptions="End"
+                                             HorizontalOptions="End"
+                                             BackgroundColor="Transparent" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+        <!--</RefreshView> -->
+        <StackLayout Orientation="Horizontal"
+                     Grid.Row="2"
+                     Grid.Column="2"
+                     BackgroundColor="{StaticResource PrimaryCardQBackground}"
+                     HorizontalOptions="FillAndExpand"
+                     VerticalOptions="End">
+            <Button Command="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=PreviousCommand}"
+                    ImageSource="chevron_left.png"
+                    ContentLayout="Left"
+                    Text="Previous"
+                    TextColor="{StaticResource PrimaryTextColor}"
+                    HeightRequest="{DynamicResource ChevronHeightRequest}"
+                    FontSize="{DynamicResource BaseFontSize}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="FillAndExpand"
+                    BackgroundColor="Transparent" />
+            <ImageButton Command="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=RandomCommand}"
+                         x:Name="Random"
+                         Aspect="AspectFit"
+                         Source="two_dice.png"
+                         Margin="10,0,10,0"
+                         WidthRequest="{DynamicResource ChevronHeightRequest}"
+                         HeightRequest="{DynamicResource ChevronHeightRequest}"
+                         VerticalOptions="Center"
+                         HorizontalOptions="Center"
+                         BackgroundColor="Transparent" />
+            <Button Command="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=NextCommand}"
+                    ImageSource="chevron_right.png"
+                    ContentLayout="Right"
+                    Text="Next"
+                    TextColor="{StaticResource PrimaryTextColor}"
+                    HeightRequest="{DynamicResource ChevronHeightRequest}"
+                    FontSize="{DynamicResource BaseFontSize}"
+                    VerticalOptions="Center"
+                    HorizontalOptions="FillAndExpand"
+                    BackgroundColor="Transparent" />
+        </StackLayout>
+        <views:HelpContentView x:Name="helpContentFlashcardOverlay"
+                               Grid.Row="1"
+                               Grid.Column="0" />
+        <views:QuestionAlert x:Name="questionFlashcardAlert"
+                             Grid.Row="1"
+                             Grid.Column="0" />
+        <views:InformationAlert x:Name="informationFlashcardAlert"
+                                Grid.Row="1"
+                                Grid.Column="0" />
+    </Grid>
+</views:WindowsCardView>

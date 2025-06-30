@@ -20,6 +20,8 @@
 
 /*
  * 
+ *  v 6.039.0564 Add the VIews and base view for the cards using a collection view for the cards in the Flashcards, Practice & Quiz views and set it so
+ *               the cards use the layout with the CollectionView for Windows only and the CarouselView for Mac, iOS & Android. mdail 6-30-25
  *  v 6.038.0563 Matching the card to the way they are if a collection view is used as that was how I got the layout to work for the collectionview
  *               and I thought it might be betterespecially as there is only one data type in the cards now. It went to 94 index 93 this way. mdail 6-26-25
  *  v 6.038.0562 Fixed a thread safty issue when loading the questions mdail 6-26-25

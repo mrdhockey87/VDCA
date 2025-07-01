@@ -147,6 +147,11 @@ public partial class CardView : ContentPage
             ReviewQuizQuestion = reviewQuizQuestion;
         }
     }
+    private void OnScrollViewUnloaded(object sender, EventArgs e)
+    {
+        var scrollView = sender as ScrollView;
+        scrollView.ScrollToAsync(0, 0, false);
+    }
     private void OnScrolled(object sender, ItemsViewScrolledEventArgs e)
     {
         System.Diagnostics.Debug.WriteLine("OnScrolled position = " + CarouselCardView.Position.ToString());
@@ -183,38 +188,7 @@ public partial class CardView : ContentPage
             //Reset the previous card to unflipped so the cards are always answer up mdail 3-19-25
             ResetFlipp(e.PreviousPosition);
         }
-        else if ((CardName == Practice || CardName == Quiz) && (DeviceInfo.Current.Platform != DevicePlatform.WinUI))
-        {
-            // Find the ScrollView inside the current & previous items then scroll to the top mdail 2-27-25
-            await ResetScrollToTop(e.PreviousPosition);
-            System.Diagnostics.Debug.WriteLine("OnPositionChanged e.PreviousPosition = " + e.PreviousPosition.ToString());
-        }
-        int position = e.CurrentPosition;
-        ExplanationVisible = ViewModel.CardQuestions[position].Explanation.Length > 0;
-        CitationVisible = ViewModel.CardQuestions[position].Citation.Length > 0;
         await ViewModel.ReloadCurrentItem();
-    }
-    private async Task ResetScrollToTop(int PreviousPosition)
-    {
-        var currentItemView = CarouselCardView.VisibleViews[0];
-        if (currentItemView != null)
-        {
-            ScrollView scrollView = currentItemView.FindByName<ScrollView>("TheCardScrollView");
-            await scrollView?.ScrollToAsync(0, 0, false);
-        }
-        if (PreviousPosition != -1 && CarouselCardView.ItemsSource != null)
-        {
-            if (PreviousPosition >= 0 && PreviousPosition < ViewModel.CardQuestions.Count)
-            {
-                var previousItem = ViewModel.CardQuestions[PreviousPosition];
-                var previousView = CarouselCardView.VisibleViews.FirstOrDefault(v => v.BindingContext == previousItem);
-                if (previousView != null)
-                {
-                    ScrollView previousScrollView = previousView.FindByName<ScrollView>("TheCardScrollView");
-                    previousScrollView?.ScrollToAsync(0, 0, false);
-                }
-            }
-        }
     }
     private void ResetFlipp(int PreviousPosition) 
     {
@@ -224,7 +198,6 @@ public partial class CardView : ContentPage
             ViewModel.CardQuestions[PreviousPosition].Flipped = false;
         }
     } 
-
     public async Task ExecuteRefresh()
     {
         await MainThread.InvokeOnMainThreadAsync(() =>
@@ -270,35 +243,7 @@ public partial class CardView : ContentPage
         {
             if (position < 0 || position >= ViewModel.CardQuestions.Count)
                 return;
-            if (DeviceInfo.Current.Platform == DevicePlatform.WinUI)
-            {
-                await WindowsScollAnimation(position);
-                await Task.Delay(300);
-            }
-            else
-            {
-                CarouselCardView.ScrollTo(position, position: ScrollToPosition.Center, animate: true);
-            }
-        });
-    }
-    public async Task WindowsScollAnimation(int position)
-    {
-        int previousPosition = ViewModel.CardQuestions.IndexOf(ViewModel.CurrentQuestion);
-        await MainThread.InvokeOnMainThreadAsync(async () => {
-            // Determine the direction of the animation
-            double translationDirection = previousPosition < position ? -CarouselCardView.Width : CarouselCardView.Width;
-            // Animate the translation
-            await CarouselCardView.TranslateTo(translationDirection, 0, 250, Easing.SinOut);
-            // Update the current question tried the 3 options below all have the same result mdail 6-23-25
-            // ViewModel.CurrentIndex = position;
-            // ViewModel.CurrentQuestion = ViewModel.CardQuestions[position];
-            CarouselCardView.ScrollTo(position, position: ScrollToPosition.Center, animate: false);
-            // Reset the translation to its original position
-            CarouselCardView.TranslationX = 0;
-            // Optionally, animate the translation back to the original position
-            await CarouselCardView.TranslateTo(0, 0, 250, Easing.SinOut);
-            // Wait for a short duration
-            await Task.Delay(400);
+            CarouselCardView.ScrollTo(position, position: ScrollToPosition.Center, animate: true);
         });
     }
     private async Task OnNextCommandExecuted()
@@ -449,20 +394,16 @@ public partial class CardView : ContentPage
                     CarouselCardView.ItemsSource = null;
                     CarouselCardView.ItemsSource = itemsSource;
                 }
-                await ResetScrollToTop(position);
                 //This tiny delay ensure the CarouselView will scroll to the position requested mdail 3-6-25
                 await Task.Delay(1);
                 CarouselCardView.ScrollTo(position, position: ScrollToPosition.Center, animate: false);
                 //Running OnUpdateProgressCommandExecuted caused an index out of range on iOS
                 // and also the code below does as well mdail 3-14-25
-                if (DeviceInfo.Current.Platform == DevicePlatform.Android)
-                {
-                    position++;
-                    int count = ViewModel.CardQuestions.Count;
-                    RunningCount.Text = position.ToString() + " of " + count.ToString();
-                    double progress = (double)position / (double)count;
-                    RunningProgressBar.Progress = progress;
-                }
+                position++;
+                int count = ViewModel.CardQuestions.Count;
+                RunningCount.Text = position.ToString() + " of " + count.ToString();
+                double progress = (double)position / (double)count;
+                RunningProgressBar.Progress = progress;
             });
         PreviousOrientation = Orientation;
     }

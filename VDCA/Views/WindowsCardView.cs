@@ -16,7 +16,7 @@ namespace VDCA.Views;
 
 public partial class WindowsCardView : ContentPage
 {
-    private static readonly string LOGTAG = "CardView";
+    private static readonly string LOGTAG = "WindowsCardView";
     public WindowsCardViewModel ViewModel;
     public CollectionView CollectionCardView;
     public Label RunningCount;
@@ -88,7 +88,6 @@ public partial class WindowsCardView : ContentPage
         FlaggedCommand = new Command(async () => await OnFlaggedCommandExecuted());
         HelpCommand = new Command(async () => await OnHelpCommandExecuted());
         DummyQuestionCommand = new Command(DummyQuestionCommand_Executed);
-        OnSelectionChangedCommand = new Command<PositionChangedEventArgs>(async (e) => await OnSelectionChanged());
         _ = OnUpdateProgressCommandExecuted();
     }
     public void DummyQuestionCommand_Executed()
@@ -146,11 +145,6 @@ public partial class WindowsCardView : ContentPage
             ReviewQuizQuestion = reviewQuizQuestion;
         }
     }
-    private void OnScrollViewUnloaded(object sender, EventArgs e)
-    {
-        var scrollView = sender as ScrollView;
-        scrollView.ScrollToAsync(0, 0, false);
-    }
     private void OnScrolled(object sender, ItemsViewScrolledEventArgs e)
     {
         if (sender is CollectionView collectionView)
@@ -166,27 +160,18 @@ public partial class WindowsCardView : ContentPage
                 collectionView.SelectedItem = ViewModel.CardQuestions[centerIndex];
                 // Update the view model's current question
                 ViewModel.CurrentQuestion = ViewModel.CardQuestions[centerIndex];
-                // Handle explanation and citation visibility
-                ExplanationVisible = ViewModel.CardQuestions[centerIndex].Explanation.Length > 0;
-                CitationVisible = ViewModel.CardQuestions[centerIndex].Citation.Length > 0;
             }
         }
     }
-    public async Task OnSelectionChanged()
+    public async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         int position = ViewModel.CardQuestions.IndexOf(ViewModel.CurrentQuestion);
-        ExplanationVisible = ViewModel.CardQuestions[position].Explanation.Length > 0;
-        CitationVisible = ViewModel.CardQuestions[position].Citation.Length > 0;
         string CardName = ViewModel.cv.GetType().Name;
         if (CardName == Flash)
         {
             //Reset the cards before an after to unflipped so the cards are always answer up mdail 3-19-25
             ResetFlipp(position - 1);
             ResetFlipp(position + 1);
-        }
-        else if ((CardName == Practice || CardName == Quiz) && (DeviceInfo.Current.Platform != DevicePlatform.WinUI))
-        {
-            System.Diagnostics.Debug.WriteLine("OnPositionChanged");
         }
         await ViewModel.ReloadCurrentItem();
     }
@@ -197,8 +182,7 @@ public partial class WindowsCardView : ContentPage
             //reset the previous card to unflipped so the cards are always answer up mdail 9-23-24
             ViewModel.CardQuestions[PreviousPosition].Flipped = false;
         }
-    } 
-
+    }
     public async Task ExecuteRefresh()
     {
         await MainThread.InvokeOnMainThreadAsync(() =>
@@ -237,45 +221,67 @@ public partial class WindowsCardView : ContentPage
             });
         }
     }
-    //Move to the card at the given position with the animation mdail 5-14-24
+    //Move to the card at the given position with the animation
     public async Task MoveToCard(int position)
     {
         await MainThread.InvokeOnMainThreadAsync(async () =>
         {
             if (position < 0 || position >= ViewModel.CardQuestions.Count)
                 return;
+
+            int currentPosition = ViewModel.CardQuestions.IndexOf(ViewModel.CurrentQuestion);
+            System.Diagnostics.Debug.WriteLine($"Moving from position {currentPosition} to {position}");
+
             if (DeviceInfo.Current.Platform == DevicePlatform.WinUI)
             {
-                await WindowsScollAnimation(position);
-                await Task.Delay(300);
+                // For all navigation, use the same sliding animation regardless of index
+                bool isForward = currentPosition < position;
+                await SimpleWindowsScrollAnimation(currentPosition, position, isForward);
             }
             else
             {
+                // For other platforms, use standard scrolling
                 CollectionCardView.ScrollTo(position, position: ScrollToPosition.Center, animate: true);
             }
-            CollectionCardView.SelectedItem = ViewModel.CardQuestions[position];
+
+            // Update progress indicator
+            await OnUpdateProgressCommandExecuted();
         });
     }
-    public async Task WindowsScollAnimation(int position)
+
+    // Improved sliding animation method for Windows
+    private async Task SimpleWindowsScrollAnimation(int fromPosition, int toPosition, bool isForward)
     {
-        int previousPosition = ViewModel.CardQuestions.IndexOf(ViewModel.CurrentQuestion);
         await MainThread.InvokeOnMainThreadAsync(async () => {
-            // Determine the direction of the animation
-            double translationDirection = previousPosition < position ? -CollectionCardView.Width : CollectionCardView.Width;
-            // Animate the translation
-            await CollectionCardView.TranslateTo(translationDirection, 0, 250, Easing.SinOut);
-            // Update the current question tried the 3 options below all have the same result mdail 6-23-25
-            // ViewModel.CurrentIndex = position;
-            // ViewModel.CurrentQuestion = ViewModel.CardQuestions[position];
-            CollectionCardView.ScrollTo(position, position: ScrollToPosition.Center, animate: false);
-            // Reset the translation to its original position
-            CollectionCardView.TranslationX = 0;
-            // Optionally, animate the translation back to the original position
-            await CollectionCardView.TranslateTo(0, 0, 250, Easing.SinOut);
-            // Wait for a short duration
-            await Task.Delay(400);
+            try
+            {
+                // Direction based on whether we're going forward or backward
+                double translationDirection = isForward ? -CollectionCardView.Width : CollectionCardView.Width;
+                // First translate the view off screen in the appropriate direction
+                await CollectionCardView.TranslateTo(translationDirection, 0, 250, Easing.SinOut);
+                // While off screen, scroll to the new position without animation
+                CollectionCardView.ScrollTo(toPosition, position: ScrollToPosition.Center, animate: false);
+                // Update the selection
+                CollectionCardView.SelectedItem = ViewModel.CardQuestions[toPosition];
+                ViewModel.CurrentQuestion = ViewModel.CardQuestions[toPosition];
+                // Reset the translation immediately (puts it off screen in opposite direction)
+                CollectionCardView.TranslationX = -translationDirection;
+                // Small delay to ensure layout is updated
+                await Task.Delay(10);
+                // Animate back to center
+                await CollectionCardView.TranslateTo(0, 0, 250, Easing.SinOut);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error in SimpleWindowsScrollAnimation: {ex.Message}");
+                // Fallback: direct scroll without animation
+                CollectionCardView.ScrollTo(toPosition, position: ScrollToPosition.Center, animate: false);
+                CollectionCardView.SelectedItem = ViewModel.CardQuestions[toPosition];
+                ViewModel.CurrentQuestion = ViewModel.CardQuestions[toPosition];
+            }
         });
     }
+    // Grow back
     private async Task OnNextCommandExecuted()
     {
         await MainThread.InvokeOnMainThreadAsync(async () =>
@@ -327,26 +333,18 @@ public partial class WindowsCardView : ContentPage
     {
         await MainThread.InvokeOnMainThreadAsync(async () =>
         {
-            // Shrink the CarouselFlashcardCardView to 0.5 for WinUI & MacCatalyst and 0.8 on others mdail 6-13-24
+            int currentPosition = ViewModel.CardQuestions.IndexOf(ViewModel.CurrentQuestion);
+            // Shrink effect
             await CollectionCardView.ScaleTo(DeviceInfo.Current.Platform == DevicePlatform.WinUI ||
                   DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst ? 0.5 : 0.8, 200, Easing.Linear);
-            // Update the current question to the new position
-            if (DeviceInfo.Current.Platform == DevicePlatform.WinUI)
-            { 
-                //CollectionCardView.IsScrollAnimated = false;
-                CollectionCardView.ScrollTo(position, position: ScrollToPosition.Center, animate: false);
-                //ViewModel.CurrentQuestion = ViewModel.CardQuestions[position];
-                //CollectionCardView.IsScrollAnimated = false;
-                await Task.Delay(400);
-            }
-            else
-            {
-                //CollectionCardView.IsScrollAnimated = false;
-                CollectionCardView.ScrollTo(position, position: ScrollToPosition.Center, animate: false);
-                //ViewModel.CurrentQuestion = ViewModel.CardQuestions[position];
-                //CollectionCardView.IsScrollAnimated = true;
-            }
-            // Grow the CarouselFlashcardCardView back to its original size
+            // Direct scroll without animation
+            CollectionCardView.ScrollTo(position, position: ScrollToPosition.Center, animate: false);
+            // Update selection
+            CollectionCardView.SelectedItem = ViewModel.CardQuestions[position];
+            ViewModel.CurrentQuestion = ViewModel.CardQuestions[position];
+            // Small delay to ensure layout is updated
+            await Task.Delay(200);
+            // Grow back
             await CollectionCardView.ScaleTo(1, 200, Easing.Linear);
         });
     }

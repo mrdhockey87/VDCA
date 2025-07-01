@@ -68,7 +68,7 @@
                             ItemsSource="{Binding CardQuestions}"
                             SelectedItem="{Binding CurrentQuestion, Mode=TwoWay}"
                             Scrolled="OnScrolled"
-                            SelectionChangedCommand="{Binding Source={RelativeSource AncestorType={x:Type views:WindowsCardView}}, Path=OnSelectionChangedCommand}"
+                            SelectionChanged="OnSelectionChanged"
                             ItemsUpdatingScrollMode="KeepScrollOffset"
                             HorizontalOptions="Fill"
                             VerticalOptions="FillAndExpand"
@@ -97,7 +97,6 @@
                             <ScrollView HorizontalOptions="FillAndExpand"
                                         VerticalOptions="FillAndExpand"
                                         x:Name="TheCardScrollView"
-                                        Unloaded="OnScrollViewUnloaded"
                                         Orientation="Vertical">
                                 <Grid Margin="0,0,0,0"
                                       VerticalOptions="FillAndExpand"

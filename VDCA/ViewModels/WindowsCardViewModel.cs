@@ -75,6 +75,8 @@ namespace VDCA.ViewModels
                 await MainThread.InvokeOnMainThreadAsync(async () =>
                 {
                     int position = CardQuestions.IndexOf(CurrentQuestion);
+                    cv.ExplanationVisible = CardQuestions[position].Explanation.Length > 0;
+                    cv.CitationVisible = CardQuestions[position].Citation.Length > 0;
                     if (cv is WindowsQuizView qv)
                     {
                         CardQuestions[position].BorderPadding = 0;

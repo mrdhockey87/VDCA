@@ -20,6 +20,7 @@
 
 /*
  * 
+ *  v 6.039.0567 Fix several issues with the windows vesion of the cards not working properly, I can't seem to get the scrollview scroll to top to work properly mdail 7-1-25
  *  v 6.039.0566 Had to add it to the non windows versions of the practice & quiz view to fix the scrollview getting reset to the top mdail 6-30-25
  *  v 6.039.0565 Changed the way that the scrollview is reset to top by diong it in Unloaded="OnScrollViewUnloaded" then reseting it to top there mdail 6-30-25
  *  v 6.039.0564 Add the VIews and base view for the cards using a collection view for the cards in the Flashcards, Practice & Quiz views and set it so

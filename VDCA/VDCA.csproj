@@ -16,7 +16,7 @@
     <ApplicationId>com.vdcainc.vdca</ApplicationId>
     <ApplicationIdGuid>3a6086e7-915d-4e3f-8baa-136c94590765</ApplicationIdGuid>
     <!-- Versions -->
-    <ApplicationDisplayVersion>6.039.0566</ApplicationDisplayVersion>
+    <ApplicationDisplayVersion>6.039.0567</ApplicationDisplayVersion>
     <ApplicationVersion>6</ApplicationVersion>
     <PackageVersion>6.0.0</PackageVersion>
     <AssemblyVersion>$(ApplicationDisplayVersion).$(ApplicationVersion)</AssemblyVersion>
@@ -144,7 +144,7 @@
     <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" TintColor="#FFFFFF" />
     <MauiIcon Include="Resources\AppIcon\appiconfg.svg" />
     <!-- Splash Screen  TintColor="#FFFFFF" -->
-    <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#B0E0E6" BaseSize="400,400" TintColor="Transparent"/> <!-- TintColor="Transparent"/> -->
+    <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#B0E0E6" BaseSize="400,400" TintColor="Transparent" /> <!-- TintColor="Transparent"/> -->
     <!-- Images -->
     <MauiImage Include="Resources\Images\*" />
     <!-- Custom Fonts -->

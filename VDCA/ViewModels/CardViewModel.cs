@@ -82,6 +82,8 @@ namespace VDCA.ViewModels
                 await MainThread.InvokeOnMainThreadAsync(async () =>
                 {
                     int position = cv.CarouselCardView.Position;
+                    cv.ExplanationVisible = CardQuestions[position].Explanation.Length > 0;
+                    cv.CitationVisible = CardQuestions[position].Citation.Length > 0;
                     if (cv is QuizView qv)
                     {
                         CardQuestions[position].BorderPadding = 0;

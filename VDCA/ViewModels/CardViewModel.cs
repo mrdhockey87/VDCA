@@ -13,6 +13,7 @@ namespace VDCA.ViewModels
         //private static readonly string LOGTAG = "CardViewModel";
         private Questions CurrentQuestionLocal;
         private int CurrentIndexLocal;
+        public int PreviousIndex { get; set; } = -1;
         public Func<Task> ReloadCurrentItemAsync { get; set; }
         public CardViewModel()
         {
@@ -34,10 +35,6 @@ namespace VDCA.ViewModels
                     {
 
                         CurrentQuestionLocal = value;
-                        _ = MainThread.InvokeOnMainThreadAsync(async () =>
-                        {
-                            await cv.OnUpdateProgressCommandExecuted();
-                        });
                         OnPropertyChanged();
                     }
                 }
@@ -50,9 +47,12 @@ namespace VDCA.ViewModels
             {
                 if (CurrentIndexLocal != value)
                 {
-
+                    PreviousIndex = CurrentIndexLocal;
                     CurrentIndexLocal = value;
-                    System.Diagnostics.Debug.WriteLine("CurrentIndex = " + CurrentIndex.ToString());
+                    _ = MainThread.InvokeOnMainThreadAsync(async () =>
+                    {
+                        await cv.OnUpdateProgressCommandExecuted();
+                    });
                     OnPropertyChanged();
                 }
             }
@@ -81,7 +81,7 @@ namespace VDCA.ViewModels
             {
                 await MainThread.InvokeOnMainThreadAsync(async () =>
                 {
-                    int position = cv.CarouselCardView.Position;
+                    int position = CurrentIndex;
                     cv.ExplanationVisible = CardQuestions[position].Explanation.Length > 0;
                     cv.CitationVisible = CardQuestions[position].Citation.Length > 0;
                     if (cv is QuizView qv)

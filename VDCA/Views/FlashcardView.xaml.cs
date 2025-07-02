@@ -53,7 +53,7 @@ public partial class FlashcardView : CardView
                 // Original animation for other platforms
                 await MainThread.InvokeOnMainThreadAsync(async () =>
                 {
-                    int position = CarouselCardView.Position;
+                    int position = CarouselCardView.SelectedIndex;
                     // Fade out the front side
                     await CarouselCardView.FadeTo(0, 150, Easing.Linear);
                     // Change the side of the card that's visible
@@ -70,7 +70,7 @@ public partial class FlashcardView : CardView
                     var scaleDownTask = CarouselCardView.ScaleTo(0.8, 150, Easing.Linear);
                     var rotateHalfwayTask = CarouselCardView.RotateYTo(-90, 150, Easing.Linear);
                     await Task.WhenAll(scaleDownTask, rotateHalfwayTask);
-                    int position = CarouselCardView.Position;
+                    int position = CarouselCardView.SelectedIndex;
                     fcvm.CardQuestions[position].Flipped = !fcvm.CardQuestions[position].Flipped;
                     CarouselCardView.RotationY = 90;
                     var scaleUpTask = CarouselCardView.ScaleTo(1, 150, Easing.Linear);

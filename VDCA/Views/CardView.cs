@@ -3,6 +3,7 @@ using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.ApplicationModel.Communication;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Devices;
+using PanCardView.Enums;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Channels;
@@ -11,6 +12,11 @@ using System.Windows.Input;
 using VDCA.Models;
 using VDCA.Utils;
 using VDCA.ViewModels;
+using PanCardView;
+using PanCardView.Extensions;
+using PanCardView.Controls;
+using PanCardView.Controls.Styles;
+using CardCarouselView = PanCardView.CarouselView;
 
 namespace VDCA.Views;
 
@@ -18,7 +24,7 @@ public partial class CardView : ContentPage
 {
     private static readonly string LOGTAG = "CardView";
     public CardViewModel ViewModel;
-    public CarouselView CarouselCardView;
+    public CardCarouselView CarouselCardView;
     public Label RunningCount;
     public ProgressBar RunningProgressBar;
     public Grid PageGrid;
@@ -45,6 +51,8 @@ public partial class CardView : ContentPage
     public ICommand HelpCommand { get; set; }
     private bool ExplanationVisibleLocal { get; set; }
     public ICommand DummyQuestionCommand { get; set; }
+    public ICommand ItemAppearingCommand { get; set; }
+    public ICommand ItemDisappearingCommand { get; set; }
     public bool ExplanationVisible 
     {
         get 
@@ -103,12 +111,12 @@ public partial class CardView : ContentPage
         ViewModel = viewModel;
         BindingContext = viewModel;
     }
-    public void SetCardView(CarouselView carouselView, Label runningCount, ProgressBar runningProgressBar, Grid painGrid, Grid mainGrid) //, RefreshView refreshView)
+    public void SetCardView(CardCarouselView carouselView, Label runningCount, ProgressBar runningProgressBar, Grid painGrid, Grid mainGrid) //, RefreshView refreshView)
     {
         CarouselCardView = carouselView;
         if (DeviceInfo.Current.Platform != DevicePlatform.WinUI)
         {
-            CarouselCardView.Scrolled += OnScrolled;
+            //CarouselCardView.Scrolled += OnScrolled;
         }
         RunningCount = runningCount;
         RunningProgressBar = runningProgressBar;
@@ -116,7 +124,7 @@ public partial class CardView : ContentPage
         MainGrid = mainGrid;
         if (DeviceInfo.Current.Platform == DevicePlatform.WinUI)
         {
-            CarouselCardView.IsScrollAnimated = false;
+            //CarouselCardView.IsScrollAnimated = false;
         }
     }
     public void SetContextViews(HelpContentView helpContentView = null, InformationAlert informationAlert = null, QuestionAlert questionAlert = null, 
@@ -147,48 +155,66 @@ public partial class CardView : ContentPage
             ReviewQuizQuestion = reviewQuizQuestion;
         }
     }
-    private void OnScrollViewUnloaded(object sender, EventArgs e)
+    private async void OnItemDisappearing(object sender, EventArgs e)
     {
-        var scrollView = sender as ScrollView;
-        scrollView.ScrollToAsync(0, 0, false);
-    }
-    private void OnScrolled(object sender, ItemsViewScrolledEventArgs e)
-    {
-        System.Diagnostics.Debug.WriteLine("OnScrolled position = " + CarouselCardView.Position.ToString());
-        if (DeviceInfo.Current.Platform == DevicePlatform.Android || DeviceInfo.Current.Platform == DevicePlatform.WinUI)
+        string CardName = ViewModel.cv.GetType().Name;
+        if ((CardName == Practice || CardName == Quiz) && (DeviceInfo.Current.Platform != DevicePlatform.WinUI))
         {
-            int position = ViewModel.CardQuestions.IndexOf(ViewModel.CurrentQuestion);
-            double scrollThreshold = 0.3; // Set your desired threshold (e.g., 80%)
-            double currentOffset = e.HorizontalOffset;
-            double viewWidth = CarouselCardView.Width;
-            if (position < 0)
-            {
-                if (currentOffset > viewWidth * scrollThreshold)
-                {
-                    // Scroll to the next item
-                    position++;
-                    CarouselCardView.CurrentItem = ViewModel.CardQuestions[position];
-                    System.Diagnostics.Debug.WriteLine("Scrolled Right");
-                }
-                else if (currentOffset < viewWidth * (1 - scrollThreshold))
-                {
-                    // Scroll to the previous item
-                    position--;
-                    CarouselCardView.CurrentItem = ViewModel.CardQuestions[position];
-                    System.Diagnostics.Debug.WriteLine("Scrolled Left");
-                }
-            }
+            // Find the ScrollView inside the current & previous items then scroll to the top mdail 2-27-25
+            //await ResetScrollToTop(e.PreviousPosition);
+            System.Diagnostics.Debug.WriteLine("ItemDisappearing");
         }
+        _ = ResetScrollToTop();
     }
-    public async void OnPositionChanged(object sender, PositionChangedEventArgs e)
+    public async void OnItemAppearing(object sender, EventArgs e)
     {
         string CardName = ViewModel.cv.GetType().Name;
         if (CardName == Flash)
         {
-            //Reset the previous card to unflipped so the cards are always answer up mdail 3-19-25
-            ResetFlipp(e.PreviousPosition);
+            //Reset the
+            //cards before & after the selected to unflipped so the cards are always answer up mdail 3-19-25
+            if (ViewModel.PreviousIndex != -1)
+            {
+                ResetFlipp(ViewModel.PreviousIndex);
+            }
+            if (ViewModel.CurrentIndex < ViewModel.CardQuestions.Count)
+            {
+                ResetFlipp(ViewModel.CurrentIndex + 1);
+            }
         }
         await ViewModel.ReloadCurrentItem();
+        _ = ResetScrollToTop();
+    }
+    private async Task ResetScrollToTop()
+    {
+        int previousIndex = ViewModel.PreviousIndex;
+
+        if (previousIndex >= 0 && previousIndex < ViewModel.CardQuestions.Count && previousIndex != ViewModel.CurrentIndex)
+        {
+            Questions previousQuestion = ViewModel.CardQuestions[previousIndex];
+            System.Diagnostics.Debug.WriteLine($"Previous question was: {previousQuestion.Id}");
+
+            // Access the previous template through the CarouselCardView's VisibleViews collection
+            // PanCardView provides access to views through its ItemViews property
+            var visibleViews = CarouselCardView.CurrentInactiveBackViews;
+            foreach (var view in visibleViews)
+            {
+                if (view.BindingContext is Questions question && question == previousQuestion)
+                {
+                    // Found the previous template
+                    ScrollView previousScrollView = view.FindByName<ScrollView>("TheCardScrollView");
+                    if (previousScrollView != null)
+                    {
+                        await previousScrollView.ScrollToAsync(0, 0, false);
+                        System.Diagnostics.Debug.WriteLine("Reset scroll position of previous view");
+                    }
+                    break;
+                }
+            }
+        }
+        // This method is called when the ScrollView is unloaded
+        // You can add any cleanup or reset logic here if needed
+        System.Diagnostics.Debug.WriteLine("ScrollView Unloaded");
     }
     private void ResetFlipp(int PreviousPosition) 
     {
@@ -198,6 +224,7 @@ public partial class CardView : ContentPage
             ViewModel.CardQuestions[PreviousPosition].Flipped = false;
         }
     } 
+
     public async Task ExecuteRefresh()
     {
         await MainThread.InvokeOnMainThreadAsync(() =>
@@ -227,7 +254,7 @@ public partial class CardView : ContentPage
         {
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
-                int position = ViewModel.CardQuestions.IndexOf(ViewModel.CurrentQuestion);
+                int position = ViewModel.CurrentIndex;
                 position++;
                 int count = ViewModel.CardQuestions.Count;
                 RunningCount.Text = position.ToString() + " of " + count.ToString();
@@ -243,14 +270,45 @@ public partial class CardView : ContentPage
         {
             if (position < 0 || position >= ViewModel.CardQuestions.Count)
                 return;
-            CarouselCardView.ScrollTo(position, position: ScrollToPosition.Center, animate: true);
+            ViewModel.CurrentIndex = position;
+            /* if (DeviceInfo.Current.Platform == DevicePlatform.WinUI)
+             {
+                 await WindowsScollAnimation(position);
+                 await Task.Delay(300);
+             }
+             else
+             {
+                 //CarouselCardView.ScrollTo(position, position: ScrollToPosition.Center, animate: true);
+             }*/
         });
+        }
+    public async Task WindowsScollAnimation(int position)
+    {
+        /*
+        int previousPosition = ViewModel.CurrentIndex;
+        await MainThread.InvokeOnMainThreadAsync(async () => {
+            // Determine the direction of the animation
+            double translationDirection = previousPosition < position ? -CarouselCardView.Width : CarouselCardView.Width;
+            // Animate the translation
+            await CarouselCardView.TranslateTo(translationDirection, 0, 250, Easing.SinOut);
+            // Update the current question tried the 3 options below all have the same result mdail 6-23-25
+            // ViewModel.CurrentIndex = position;
+            // ViewModel.CurrentQuestion = ViewModel.CardQuestions[position];
+            await MoveToCard(position);
+            //CarouselCardView.ScrollTo(position, position: ScrollToPosition.Center, animate: false);
+            // Reset the translation to its original position
+            CarouselCardView.TranslationX = 0;
+            // Optionally, animate the translation back to the original position
+            await CarouselCardView.TranslateTo(0, 0, 250, Easing.SinOut);
+            // Wait for a short duration
+            await Ta
+        */
     }
     private async Task OnNextCommandExecuted()
     {
         await MainThread.InvokeOnMainThreadAsync(async () =>
         {
-            int index = ViewModel.CardQuestions.IndexOf(ViewModel.CurrentQuestion);
+            int index = ViewModel.CurrentIndex;
             index++;
             if (index < ViewModel.CardQuestions.Count)
             {
@@ -266,7 +324,7 @@ public partial class CardView : ContentPage
     {
         await MainThread.InvokeOnMainThreadAsync(async () =>
         {
-            int index = ViewModel.CardQuestions.IndexOf(ViewModel.CurrentQuestion);
+            int index = ViewModel.CurrentIndex;
             index--;
             if (index >= 0)
             {
@@ -303,18 +361,20 @@ public partial class CardView : ContentPage
             // Update the current question to the new position
             if (DeviceInfo.Current.Platform == DevicePlatform.WinUI)
             { 
-                CarouselCardView.IsScrollAnimated = false;
-                CarouselCardView.ScrollTo(position, position: ScrollToPosition.Center, animate: false);
-                //ViewModel.CurrentQuestion = ViewModel.CardQuestions[position];
-                CarouselCardView.IsScrollAnimated = false;
+                //CarouselCardView.IsScrollAnimated = false;
+
+                //CarouselCardView.ScrollTo(position, position: ScrollToPosition.Center, animate: false);
+                ViewModel.CurrentQuestion = ViewModel.CardQuestions[position];
+                // CarouselCardView.IsScrollAnimated = false;
                 await Task.Delay(400);
             }
             else
             {
-                CarouselCardView.IsScrollAnimated = false;
-                CarouselCardView.ScrollTo(position, position: ScrollToPosition.Center, animate: false);
+                ViewModel.CurrentQuestion = ViewModel.CardQuestions[position];
+                //CarouselCardView.IsScrollAnimated = false;
+                //CarouselCardView.ScrollTo(position, position: ScrollToPosition.Center, animate: false);
                 //ViewModel.CurrentQuestion = ViewModel.CardQuestions[position];
-                CarouselCardView.IsScrollAnimated = true;
+                //CarouselCardView.IsScrollAnimated = true;
             }
             // Grow the CarouselFlashcardCardView back to its original size
             await CarouselCardView.ScaleTo(1, 200, Easing.Linear);
@@ -386,24 +446,29 @@ public partial class CardView : ContentPage
         if (PreviousOrientation != Orientation)
             MainThread.InvokeOnMainThreadAsync(async () =>
             {
-                int position = CarouselCardView.Position;
-                if (DeviceInfo.Current.Platform == DevicePlatform.Android)
+                int position = CarouselCardView.SelectedIndex;
+               /* if (DeviceInfo.Current.Platform == DevicePlatform.Android)
                 {
                     // Force the CarouselView to recreate its views
                     var itemsSource = CarouselCardView.ItemsSource;
                     CarouselCardView.ItemsSource = null;
                     CarouselCardView.ItemsSource = itemsSource;
                 }
+                await ResetScrollToTop(position);*/
                 //This tiny delay ensure the CarouselView will scroll to the position requested mdail 3-6-25
                 await Task.Delay(1);
-                CarouselCardView.ScrollTo(position, position: ScrollToPosition.Center, animate: false);
+                CarouselCardView.SelectedIndex = position;
                 //Running OnUpdateProgressCommandExecuted caused an index out of range on iOS
                 // and also the code below does as well mdail 3-14-25
-                position++;
-                int count = ViewModel.CardQuestions.Count;
-                RunningCount.Text = position.ToString() + " of " + count.ToString();
-                double progress = (double)position / (double)count;
-                RunningProgressBar.Progress = progress;
+               /* if (DeviceInfo.Current.Platform == DevicePlatform.Android)
+                {
+                    position++;
+                    int count = ViewModel.CardQuestions.Count;
+                    RunningCount.Text = position.ToString() + " of " + count.ToString();
+                    double progress = (double)position / (double)count;
+                    RunningProgressBar.Progress = progress;
+                }*/
+               ViewModel.ReloadCurrentItem();
             });
         PreviousOrientation = Orientation;
     }

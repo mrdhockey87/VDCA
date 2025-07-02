@@ -2,10 +2,11 @@
 using CommunityToolkit.Maui.Markup;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Hosting;
 using Microsoft.Maui.Devices;
 using Microsoft.Maui.Hosting;
-using Microsoft.Maui.Controls;
+using PanCardView;
 namespace VDCA;
 
 public static class MauiProgram
@@ -15,13 +16,13 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
+            .UseCardsView()
             .UseMauiCommunityToolkit()
             .UseMauiCommunityToolkitMarkup();
 #if IOS || MACCATALYST
 builder.ConfigureMauiHandlers(handlers =>
 {
     handlers.AddHandler<CollectionView, Microsoft.Maui.Controls.Handlers.Items2.CollectionViewHandler2>();
-    handlers.AddHandler<CarouselView, Microsoft.Maui.Controls.Handlers.Items2.CarouselViewHandler2>();
 });
 #endif
         if (!(DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst))

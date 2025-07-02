@@ -43,7 +43,7 @@ public partial class PracticecardView : CardView
     private async void OnTap_Practice(object sender, TappedEventArgs args)
     {
         // Only run the code if the question has not been answered
-        if (!pcvm.CardQuestions[CarouselCardView.Position].Locked)
+        if (!pcvm.CardQuestions[CarouselCardView.SelectedIndex].Locked)
         {
             TappedEventArgs tapEventArgs = (TappedEventArgs)args;
             await AnswerPressed((string)tapEventArgs.Parameter);
@@ -53,7 +53,7 @@ public partial class PracticecardView : CardView
     {
         await MainThread.InvokeOnMainThreadAsync(() =>
         {
-            int position = CarouselCardView.Position;
+            int position = CarouselCardView.SelectedIndex;
             if (!pcvm.CardQuestions[position].Locked)
             {
                 switch (SelectedButton)

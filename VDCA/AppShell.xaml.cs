@@ -64,20 +64,10 @@ public partial class AppShell : Shell
 
     private void RegisterRoutes()
     {
-        if (DeviceInfo.Current.Platform == DevicePlatform.WinUI)
-        {
-            // Windows-specific views
-            Routing.RegisterRoute("Flashcard", typeof(WindowsFlashcardView));
-            Routing.RegisterRoute("Practice", typeof(WindowsPracticecardView));
-            Routing.RegisterRoute("Quiz", typeof(WindowsQuizView));
-        }
-        else
-        {
-            // Default views for other platforms
-            Routing.RegisterRoute("Flashcard", typeof(FlashcardView));
-            Routing.RegisterRoute("Practice", typeof(PracticecardView));
-            Routing.RegisterRoute("Quiz", typeof(QuizView));
-        }
+        // Default views for other platforms
+        Routing.RegisterRoute("Flashcard", typeof(FlashcardView));
+        Routing.RegisterRoute("Practice", typeof(PracticecardView));
+        Routing.RegisterRoute("Quiz", typeof(QuizView));
         Routing.RegisterRoute("SelectFlash", typeof(SelectFlashView));
         Routing.RegisterRoute("SelectPractice", typeof(SelectPracticeView));
         Routing.RegisterRoute("SelectQuiz", typeof(SelectQuizView));

@@ -8,6 +8,7 @@
                 xmlns:mod="clr-namespace:VDCA.Models"
                 xmlns:converters="clr-namespace:VDCA.Converters"
                 xmlns:toastmsg="clr-namespace:VDCA.Popups"
+                xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
                 BackgroundColor="{StaticResource PrimaryCardQBackground}"
                 x:Class="VDCA.Views.QuizView"
                 x:Name="Quiz"
@@ -70,26 +71,20 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <CarouselView Grid.Row="0"
-                          Grid.Column="0"
-                          PeekAreaInsets="0"
-                          ItemsSource="{Binding CardQuestions}"
-                          CurrentItem="{Binding CurrentQuestion, Mode=TwoWay}"
-                          Position="{Binding CurrentIndex, Mode=TwoWay}"
-                          Loaded="CarouselViewLoaded"
-                          Loop="false"
-                          PositionChanged="OnPositionChanged"
-                          ItemsUpdatingScrollMode="KeepScrollOffset"
-                          HorizontalOptions="Fill"
-                          VerticalOptions="FillAndExpand"
-                          x:Name="CarouselQuizView">
-                <CarouselView.ItemsLayout x:DataType="mod:Questions">
-                    <LinearItemsLayout SnapPointsAlignment="Center"
-                                       ItemSpacing="0"
-                                       SnapPointsType="MandatorySingle"
-                                       Orientation="Horizontal" />
-                </CarouselView.ItemsLayout>
-                <CarouselView.ItemTemplate>
+            <cards:CarouselView Grid.Row="0"
+                                Grid.Column="0"
+                                IsClippedToBounds="true"
+                                IsCyclical="false"
+                                ItemsSource="{Binding CardQuestions}"
+                                SelectedItem="{Binding CurrentQuestion, Mode=TwoWay}"
+                                SelectedIndex="{Binding CurrentIndex, Mode=TwoWay}"
+                                Loaded="CarouselViewLoaded"
+                                ItemAppearing="OnItemAppearing"
+                                ItemDisappearing="OnItemDisappearing"
+                                HorizontalOptions="Fill"
+                                VerticalOptions="FillAndExpand"
+                                x:Name="CarouselQuizView">
+                <cards:CarouselView.ItemTemplate>
                     <DataTemplate>
                         <Border Stroke="{StaticResource PrimaryTextColor}"
                                 x:Name="TheQuizcard"
@@ -106,7 +101,6 @@
                             <ScrollView HorizontalOptions="FillAndExpand"
                                         VerticalOptions="FillAndExpand"
                                         x:Name="TheCardScrollView"
-                                        Unloaded="OnScrollViewUnloaded"
                                         Orientation="Vertical">
                                 <Grid Margin="0,0,0,0"
                                       VerticalOptions="FillAndExpand"
@@ -522,8 +516,8 @@
                             </ScrollView>
                         </Border>
                     </DataTemplate>
-                </CarouselView.ItemTemplate>
-            </CarouselView>
+                </cards:CarouselView.ItemTemplate>
+            </cards:CarouselView>
         </Grid>
         <StackLayout Orientation="Horizontal"
                      Grid.Row="3"

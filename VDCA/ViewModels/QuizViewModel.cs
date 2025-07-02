@@ -131,7 +131,7 @@ public partial class QuizViewModel : CardViewModel
         {
             //scoring_answer is set to false at the end of SetEnabled method to keep from having 2 clicks
             //running at the same time and messing up the scoring mdail 10-31-23
-            int position = qv.CarouselCardView.Position;
+            int position = qv.CarouselCardView.SelectedIndex;
             if (!scoring_answer)
             {
                 scoring_answer = true;
@@ -166,7 +166,7 @@ public partial class QuizViewModel : CardViewModel
     }
     private void LetterAPressed()
     {
-        if (!CardQuestions[qv.CarouselCardView.Position].Answered)
+        if (!CardQuestions[qv.CarouselCardView.SelectedIndex].Answered)
         {
             SetAnswered(1);
         }
@@ -178,7 +178,7 @@ public partial class QuizViewModel : CardViewModel
     }
     private void LetterBPressed()
     {
-        if (!CardQuestions[qv.CarouselCardView.Position].Answered)
+        if (!CardQuestions[qv.CarouselCardView.SelectedIndex].Answered)
         {
             SetAnswered(2);
         }
@@ -190,7 +190,7 @@ public partial class QuizViewModel : CardViewModel
     }
     private void LetterCPressed()
     {
-        if (!CardQuestions[qv.CarouselCardView.Position].Answered)
+        if (!CardQuestions[qv.CarouselCardView.SelectedIndex].Answered)
         {
             SetAnswered(3);
         }
@@ -202,7 +202,7 @@ public partial class QuizViewModel : CardViewModel
     }
     private void LetterDPressed()
     {
-        if (!CardQuestions[qv.CarouselCardView.Position].Answered)
+        if (!CardQuestions[qv.CarouselCardView.SelectedIndex].Answered)
         {
             SetAnswered(4);
         }
@@ -214,7 +214,7 @@ public partial class QuizViewModel : CardViewModel
     }
     private void SetAnswered(int answerNumber)
     {
-        int position = qv.CarouselCardView.Position;
+        int position = qv.CarouselCardView.SelectedIndex;
         CardQuestions[position].Answered = true;
         answered++;
         skipped--;
@@ -233,7 +233,7 @@ public partial class QuizViewModel : CardViewModel
     {
         if (LastSelectedAnswer != answerNumber)
         {
-            int position = qv.CarouselCardView.Position;
+            int position = qv.CarouselCardView.SelectedIndex;
             CardQuestions[position].AnswersSelected = answerNumber;
             int idxCount = CardQuestions[position].Answers.Count;
             int chkIdx = answerNumber - 1;
@@ -250,7 +250,7 @@ public partial class QuizViewModel : CardViewModel
     {
         if (LastSelectedAnswer != answerNumber)
         {
-            int position = qv.CarouselCardView.Position;
+            int position = qv.CarouselCardView.SelectedIndex;
             int idxCount = CardQuestions[position].Answers.Count;
             int chkIdx = LastSelectedAnswer - 1;
             if (idxCount > chkIdx && chkIdx >= 0)
@@ -303,7 +303,7 @@ public partial class QuizViewModel : CardViewModel
                 {
                     if (boolResult)
                     {
-                        CardQuestions[qv.CarouselCardView.Position].Locked = true;
+                        CardQuestions[qv.CarouselCardView.SelectedIndex].Locked = true;
                         await ReloadCurrentItem();
                         if (boolResult)
                         {

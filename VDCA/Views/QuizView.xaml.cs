@@ -74,7 +74,7 @@ public partial class QuizView : CardView
     }
     private async void OnTap_Quiz(object sender, TappedEventArgs args)
     {
-        int position = CarouselCardView.Position;
+        int position = CarouselCardView.SelectedIndex;
         if (!qvm.CardQuestions[position].Locked)
         {
             TappedEventArgs tapEventArgs = (TappedEventArgs)args;

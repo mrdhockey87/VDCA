@@ -19,7 +19,10 @@
 }
 
 /*
- * 
+ *  v 6.040.0570 Changed where reset scroll to top is done in the CardView to OnItemAppearing &  OnItemDisappearing so that it works better with the cards
+ *               because the scroll view load & unload happen when in the cashed cards. mdail 7-2-25
+ *  v 6.040.0569 Need to test the scroll loaded & unloaded events to see if they work to reset the scrollview to the top mdail 7-2-25
+ *  v 6.040.0568 Found and an currently using CardsView.Maui plugin to fix the problems with the cards in the Flashcards, Practice & Quiz views. mdail 7-2-25
  *  v 6.039.0567 Fix several issues with the windows vesion of the cards not working properly, I can't seem to get the scrollview scroll to top to work properly mdail 7-1-25
  *  v 6.039.0566 Had to add it to the non windows versions of the practice & quiz view to fix the scrollview getting reset to the top mdail 6-30-25
  *  v 6.039.0565 Changed the way that the scrollview is reset to top by diong it in Unloaded="OnScrollViewUnloaded" then reseting it to top there mdail 6-30-25

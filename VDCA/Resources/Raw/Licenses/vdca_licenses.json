@@ -1,7 +1,20 @@
 [
   {
+    "PackageName": "CardsView.Maui",
+    "PackageVersion": "1.1.2",
+    "PackageUrl": "https://github.com/AndreiMisiukevich/CardView.MAUI",
+    "Copyright": "© Andrei Misiukevich. All rights reserved.",
+    "Authors": 
+    [
+      "Andrei Misiukevich"
+    ],
+    "Description": "This package allows to create classic CarouselView, CoverFlowView, CardsView and CubeView.",
+    "LicenseUrl": "https://licenses.nuget.org/MIT",
+    "LicenseType": "MIT"
+  },
+  {
     "PackageName": "CommunityToolkit.Maui",
-    "PackageVersion": "11.2.0",
+    "PackageVersion": "12.0.0",
     "PackageUrl": "https://github.com/CommunityToolkit/Maui",
     "Copyright": "© Microsoft Corporation. All rights reserved.",
     "Authors": 
@@ -14,7 +27,7 @@
   },
   {
     "PackageName": "CommunityToolkit.Maui.Markup",
-    "PackageVersion": "6.0.0",
+    "PackageVersion": "6.0.1",
     "PackageUrl": "https://github.com/communitytoolkit/Maui.Markup",
     "Copyright": "© Microsoft Corporation. All rights reserved.",
     "Authors": 
@@ -53,7 +66,7 @@
   },
   {
     "PackageName": "Microsoft.Maui.Controls",
-    "PackageVersion": "9.0.70",
+    "PackageVersion": "9.0.81",
     "PackageUrl": "https://github.com/dotnet/maui",
     "Copyright": "© Microsoft Corporation. All rights reserved.",
     "Authors": 
@@ -66,7 +79,7 @@
   },
   {
     "PackageName": "Microsoft.Maui.Controls.Compatibility",
-    "PackageVersion": "9.0.70",
+    "PackageVersion": "9.0.81",
     "PackageUrl": "https://github.com/dotnet/maui",
     "Copyright": "© Microsoft Corporation. All rights reserved.",
     "Authors": 
@@ -79,7 +92,7 @@
   },
   {
     "PackageName": "Microsoft.Maui.Essentials",
-    "PackageVersion": "9.0.70",
+    "PackageVersion": "9.0.81",
     "PackageUrl": "https://github.com/dotnet/maui",
     "Copyright": "© Microsoft Corporation. All rights reserved.",
     "Authors": 

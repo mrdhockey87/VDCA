@@ -20,6 +20,8 @@
 
 /*
  * 
+ *  v 6.040.0572 Try to remove the hesitation before going to the select screen from the menu bar and the menu bar not showing up until after
+                 navigation occurs mdail 7-3-25
  *  v 6.040.0571 Update the licenses json file to include the new licenses for the CardsView.Maui plugin and the other plugins used in the app. mdail 7-3-25
  *  v 6.040.0570 Changed where reset scroll to top is done in the CardView to OnItemAppearing &  OnItemDisappearing so that it works better with the cards
  *               because the scroll view load & unload happen when in the cashed cards. mdail 7-2-25

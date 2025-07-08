@@ -87,7 +87,6 @@ public partial class AppShell : Shell
 #endif
         }
     }
-
     /// <summary>
     /// Gets access to the macOS IUIMenuBuilder through the MacMenuBarService
     /// </summary>
@@ -101,59 +100,6 @@ public partial class AppShell : Shell
 #endif
     }
 
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-        // Force menu bar refresh on Mac when the shell appears
-        if (DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst)
-        {
-            // Immediate refresh
-            RefreshMenuBar();
-
-            // Delayed refresh to catch any timing issues
-            Dispatcher.DispatchDelayed(TimeSpan.FromMilliseconds(100), () => RefreshMenuBar());
-            Dispatcher.DispatchDelayed(TimeSpan.FromMilliseconds(500), () => RefreshMenuBar());
-        }
-    }
-    private void RefreshMenuBar()
-    {
-        if (DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst)
-        {
-            try
-            {
-                // Ensure binding context is set
-                if (BindingContext == null)
-                {
-                    BindingContext = this;
-                }
-
-                // Force property change notifications for all menu commands
-                OnPropertyChanged(nameof(MenuBarHome));
-                OnPropertyChanged(nameof(MenuBarExit));
-                OnPropertyChanged(nameof(MenuBarFlashcards));
-                OnPropertyChanged(nameof(MenuBarPractice));
-                OnPropertyChanged(nameof(MenuBarQuiz));
-                OnPropertyChanged(nameof(MenuBarReview));
-                OnPropertyChanged(nameof(MenuBarFlagged));
-                OnPropertyChanged(nameof(MenuBarHidden));
-                OnPropertyChanged(nameof(MenuBarClearFlagged));
-                OnPropertyChanged(nameof(MenuBarClearHidden));
-                OnPropertyChanged(nameof(MenuBarClearReview));
-                OnPropertyChanged(nameof(MenuBarSendFeedback));
-                OnPropertyChanged(nameof(MenuBarRateApp));
-                OnPropertyChanged(nameof(MenuBarAbout));
-                OnPropertyChanged(nameof(MenuBarLicenses));
-                OnPropertyChanged(nameof(MenuBarHelp));
-
-                // Force layout update
-                this.InvalidateMeasure();
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"RefreshMenuBar error: {ex.Message}");
-            }
-        }
-    }
     public void InitializeCommands()
     {   // Set up the menu bar commands for Windows and Mac platforms
         MenuBarHome = new Command(MenuBarHome_Clicked);

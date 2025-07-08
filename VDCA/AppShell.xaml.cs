@@ -8,6 +8,9 @@ using VDCA.Data;
 using VDCA.SendEmails;
 using VDCA.Services;
 using VDCA.Views;
+#if MACCATALYST
+using VDCA.Platforms.MacCatalyst;
+#endif
 namespace VDCA;
 
 public partial class AppShell : Shell
@@ -40,8 +43,69 @@ public partial class AppShell : Shell
         // Force flyout behavior after MenuBarItems are added
         FlyoutBehavior = FlyoutBehavior.Flyout;
         this.Navigated += OnNavigated;
+        this.Loaded += OnLoaded;
     }
 
+    private async void OnLoaded(object sender, EventArgs e)
+    {
+        if (DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst)
+        {
+            // Multiple refresh attempts with different delays
+            await Task.Delay(50);
+            RefreshMenuBar();
+            await Task.Delay(150);
+            RefreshMenuBar();
+            await Task.Delay(300);
+            RefreshMenuBar();
+        }
+    }
+    
+    /// <summary>
+    /// Refreshes the menu bar on macOS by calling SetNeedsRebuild on the IUIMenuBuilder
+    /// </summary>
+    public void RefreshMenuBar()
+    {
+        if (DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst)
+        {
+#if MACCATALYST
+            try
+            {
+                var menuBarService = MenuBarServiceProvider.GetInstance();
+                if (menuBarService != null)
+                {
+                    menuBarService.SetNeedsRebuild();
+                    System.Diagnostics.Debug.WriteLine("AppShell RefreshMenuBar - SetNeedsRebuild called");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("AppShell RefreshMenuBar - MenuBarService not available yet");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"AppShell RefreshMenuBar error: {ex.Message}");
+            }
+#endif
+        }
+    }
+
+    /// <summary>
+    /// Gets access to the macOS IUIMenuBuilder through the MacMenuBarService
+    /// </summary>
+    /// <returns>The MacMenuBarService instance or null if not available</returns>
+    public object GetMenuBarService()
+    {
+#if MACCATALYST
+        return MenuBarServiceProvider.GetInstance();
+#else
+        return null;
+#endif
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+    }
     public void InitializeCommands()
     {   // Set up the menu bar commands for Windows and Mac platforms
         MenuBarHome = new Command(MenuBarHome_Clicked);

@@ -2,7 +2,7 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ActiveDebugFramework>net9.0-ios</ActiveDebugFramework>
-    <ActiveDebugProfile>iPhone 16 Pro Max iOS 18.4</ActiveDebugProfile>
+    <ActiveDebugProfile>Simulator</ActiveDebugProfile>
     <IsFirstTimeProjectOpen>False</IsFirstTimeProjectOpen>
     <SelectedPlatformGroup>Simulator</SelectedPlatformGroup>
     <DefaultDevice>iPhone 16 Pro Max iOS 18.4</DefaultDevice>

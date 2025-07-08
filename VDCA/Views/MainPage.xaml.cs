@@ -14,6 +14,9 @@ using VDCA.CustomControl;
 using VDCA.Data;
 using VDCA.Models;
 using VDCA.Utils;
+#if MACCATALYST
+using VDCA.Platforms.MacCatalyst;
+#endif
 
 namespace VDCA.Views;
 
@@ -37,6 +40,19 @@ public partial class MainPage  : ContentPage, INotifyPropertyChanged
     public ICommand QuizCommand => new Command(QuizClicked);
     public ICommand ReviewCommand => new Command(ReviewClicked);
 
+    private AppShell _appShellInstance;
+    public AppShell AppShellInstance 
+    {
+        get 
+        {
+            if (_appShellInstance == null)
+            {
+                _appShellInstance = Shell.Current as AppShell;
+            }
+            return _appShellInstance;
+        }
+    }
+
     private DBVersionNo _versionInfo;
     public DBVersionNo VersionInfo
     {
@@ -53,6 +69,16 @@ public partial class MainPage  : ContentPage, INotifyPropertyChanged
     public MainPage()
     {
         InitializeComponent();
+        
+        if(DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst)
+        {
+            // Call SetNeedsRebuild to ensure menu displays correctly on first load
+            RefreshMacMenuBar();
+            
+            // Also refresh the AppShell menu bar
+            AppShellInstance?.RefreshMenuBar();
+        }
+        
         VersionInfo = Constants.AppVersionNumberInfo;
         Title = "VA Accredited Exam Study Guide";
         BindingContext = this;
@@ -60,6 +86,61 @@ public partial class MainPage  : ContentPage, INotifyPropertyChanged
         ProgressBarOverlayMain = progressBarOverlayMain;
         CheckForAsk();
     }
+
+    /// <summary>
+    /// Refreshes the macOS menu bar by calling SetNeedsRebuild
+    /// </summary>
+    private void RefreshMacMenuBar()
+    {
+        if (DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst)
+        {
+#if MACCATALYST
+            try
+            {
+                var menuBarService = MenuBarServiceProvider.GetInstance();
+                if (menuBarService != null)
+                {
+                    menuBarService.SetNeedsRebuild();
+                    System.Diagnostics.Debug.WriteLine("MainPage RefreshMacMenuBar - SetNeedsRebuild called");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("MainPage RefreshMacMenuBar - MenuBarService not available yet");
+                    
+                    // Try again after a short delay using the modern approach
+                    Dispatcher.Dispatch(async () =>
+                    {
+                        await Task.Delay(100);
+                        var retryService = MenuBarServiceProvider.GetInstance();
+                        if (retryService != null)
+                        {
+                            retryService.SetNeedsRebuild();
+                            System.Diagnostics.Debug.WriteLine("MainPage RefreshMacMenuBar - SetNeedsRebuild called on retry");
+                        }
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"MainPage RefreshMacMenuBar error: {ex.Message}");
+            }
+#endif
+        }
+    }
+
+    /// <summary>
+    /// Gets access to the macOS IUIMenuBuilder through the MacMenuBarService
+    /// </summary>
+    /// <returns>The MacMenuBarService instance or null if not available</returns>
+    public object GetMacMenuBarService()
+    {
+#if MACCATALYST
+        return MenuBarServiceProvider.GetInstance();
+#else
+        return null;
+#endif
+    }
+
     private async void OnHelpClicked(object sender, EventArgs e)
     {
         if((DeviceInfo.Platform == DevicePlatform.WinUI) || (DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst))

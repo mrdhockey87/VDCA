@@ -39,13 +39,12 @@ public partial class AppShell : Shell
         InitializeCommands();
         InitializeComponent();
         RegisterRoutes();
-        //BindingContext = this;
+        BindingContext = this;
         // Force flyout behavior after MenuBarItems are added
         FlyoutBehavior = FlyoutBehavior.Flyout;
         this.Navigated += OnNavigated;
         this.Loaded += OnLoaded;
     }
-
     private async void OnLoaded(object sender, EventArgs e)
     {
         if (DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst)
@@ -105,6 +104,55 @@ public partial class AppShell : Shell
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        // Force menu bar refresh on Mac when the shell appears
+        if (DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst)
+        {
+            // Immediate refresh
+            RefreshMenuBar();
+
+            // Delayed refresh to catch any timing issues
+            Dispatcher.DispatchDelayed(TimeSpan.FromMilliseconds(100), () => RefreshMenuBar());
+            Dispatcher.DispatchDelayed(TimeSpan.FromMilliseconds(500), () => RefreshMenuBar());
+        }
+    }
+    private void RefreshMenuBar()
+    {
+        if (DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst)
+        {
+            try
+            {
+                // Ensure binding context is set
+                if (BindingContext == null)
+                {
+                    BindingContext = this;
+                }
+
+                // Force property change notifications for all menu commands
+                OnPropertyChanged(nameof(MenuBarHome));
+                OnPropertyChanged(nameof(MenuBarExit));
+                OnPropertyChanged(nameof(MenuBarFlashcards));
+                OnPropertyChanged(nameof(MenuBarPractice));
+                OnPropertyChanged(nameof(MenuBarQuiz));
+                OnPropertyChanged(nameof(MenuBarReview));
+                OnPropertyChanged(nameof(MenuBarFlagged));
+                OnPropertyChanged(nameof(MenuBarHidden));
+                OnPropertyChanged(nameof(MenuBarClearFlagged));
+                OnPropertyChanged(nameof(MenuBarClearHidden));
+                OnPropertyChanged(nameof(MenuBarClearReview));
+                OnPropertyChanged(nameof(MenuBarSendFeedback));
+                OnPropertyChanged(nameof(MenuBarRateApp));
+                OnPropertyChanged(nameof(MenuBarAbout));
+                OnPropertyChanged(nameof(MenuBarLicenses));
+                OnPropertyChanged(nameof(MenuBarHelp));
+
+                // Force layout update
+                this.InvalidateMeasure();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"RefreshMenuBar error: {ex.Message}");
+            }
+        }
     }
     public void InitializeCommands()
     {   // Set up the menu bar commands for Windows and Mac platforms
@@ -140,7 +188,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("LicenseView", typeof(LicenseView));
         Routing.RegisterRoute("About", typeof(About));
     }
-    protected override async void OnNavigating(ShellNavigatingEventArgs args)
+    protected override void OnNavigating(ShellNavigatingEventArgs args)
     {
         base.OnNavigating(args);
     }
@@ -358,7 +406,7 @@ public partial class AppShell : Shell
         await OnMenuItemClicked("///MainPage");
     }
 
-    public async void MenuBarExit_Clicked()
+    public void MenuBarExit_Clicked()
     {
         //await OnMenuItemClicked("///MainPage");
         if(DeviceInfo.Current.Platform == DevicePlatform.WinUI || DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst)
@@ -427,43 +475,43 @@ public partial class AppShell : Shell
     }
     public async void MenuBarFlagged_Clicked()
     {
-        await AppShell.GoMainPage();
+        _ = AppShell.GoMainPage();
         await OnFlaggedOnlyClicked();
     }
     public async void MenuBarHidden_Clicked()
     {
-        await AppShell.GoMainPage();
+        _ = AppShell.GoMainPage();
         await OnHiddenOnlyClicked();
     }
     public async void MenuBarClearFlagged_Clicked()
     {
-        await AppShell.GoMainPage();
+        _ = AppShell.GoMainPage();
         await OnClearFlaggedClicked();
     }
     public async void MenuBarClearHidden_Clicked()
     {
-        await AppShell.GoMainPage();
+        _ = AppShell.GoMainPage();
         await OnClearHiddenClicked();
     }
     public async void MenuBarClearReview_Clicked()
     {
-        await AppShell.GoMainPage();
+        _ = AppShell.GoMainPage();
         await OnClearReviewClicked();
     }
     
     public async void MenuBarSendFeedback_Clicked()
     {
-        await AppShell.GoMainPage();
+        _ = AppShell.GoMainPage();
         await OnSendFeedbackClicked();
     }
     public async void MenuBarRateApp_Clicked()
     {
-        await AppShell.GoMainPage();
+        _ = AppShell.GoMainPage();
         await OnRateAppClicked();
     }
     public async void MenuBarAbout_Clicked()
     {
-        await AppShell.GoMainPage();
+        _ = AppShell.GoMainPage();
         await OnAboutClicked();
     }
     public async void MenuBarLicenses_Clicked()

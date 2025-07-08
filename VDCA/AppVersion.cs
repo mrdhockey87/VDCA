@@ -20,7 +20,10 @@
 
 /*
  *  
+<<<<<<< HEAD
  *  v 6.040.0573 Fix some how losing this file from the project, I don't know how it happened, but it was missing from the project file. mdail 7-8-25
+=======
+>>>>>>> main
  *  v 6.040.0572 Added a interface to allow the default menubar on mac to be deleted and replaced with a custom one. and have rebuilt called when the main 
  *               page is loaded so that hopefully it will show the correct menubar when the app starts on mac. mdail 7-8-25
  *  v 6.040.0571 Update the licenses json file to include the new licenses for the CardsView.Maui plugin and the other plugins used in the app. mdail 7-3-25

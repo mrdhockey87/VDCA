@@ -20,6 +20,7 @@
 
 /*
  *  
+ *  v 6.040.0575 Added code to remove the File menu on mac's menubar, made seperate menubar for windows and mac mdail 7-10-25
  *  v 6.040.0574 Fix extra text in this file mdail 7-8-25
  *  v 6.040.0573 Fix some how losing this file from the project, I don't know how it happened, but it was missing from the project file. mdail 7-8-25
  *  v 6.040.0572 Added a interface to allow the default menubar on mac to be deleted and replaced with a custom one. and have rebuilt called when the main 

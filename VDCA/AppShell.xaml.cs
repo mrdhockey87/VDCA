@@ -38,6 +38,10 @@ public partial class AppShell : Shell
     {
         InitializeCommands();
         InitializeComponent();
+        
+        // Configure platform-specific menus after component initialization
+        ConfigurePlatformSpecificMenus();
+        
         RegisterRoutes();
         BindingContext = this;
         // Force flyout behavior after MenuBarItems are added
@@ -45,6 +49,103 @@ public partial class AppShell : Shell
         this.Navigated += OnNavigated;
         this.Loaded += OnLoaded;
     }
+
+    private void ConfigurePlatformSpecificMenus()
+    {
+        // Clear existing menu items
+        MenuBarItems.Clear();
+
+        if (DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst)
+        {
+            // Mac-specific menu structure
+            CreateMacMenus();
+        }
+        else
+        {
+            // Windows and other platforms - keep the original structure
+            CreateWindowsMenus();
+        }
+    }
+
+    private void CreateMacMenus()
+    {
+        // For Mac: No "Home" menu, "Questions" becomes "Options" with "Home Page" first, 
+        // "Application" menu with Help items, no separate "Help" menu
+
+        // Options menu (formerly Questions menu)
+        var optionsMenu = new MenuBarItem { Text = "Options" };
+        optionsMenu.Add(new MenuFlyoutItem { Text = "Home Page", Command = MenuBarHome });
+        optionsMenu.Add(new MenuFlyoutItem { Text = "Flashcard", Command = MenuBarFlashcards });
+        optionsMenu.Add(new MenuFlyoutItem { Text = "Practice", Command = MenuBarPractice });
+        optionsMenu.Add(new MenuFlyoutItem { Text = "Quiz", Command = MenuBarQuiz });
+        optionsMenu.Add(new MenuFlyoutItem { Text = "Review", Command = MenuBarReview });
+        optionsMenu.Add(new MenuFlyoutItem { Text = "Flagged Only", Command = MenuBarFlagged });
+        optionsMenu.Add(new MenuFlyoutItem { Text = "Hidden Only", Command = MenuBarHidden });
+        MenuBarItems.Add(optionsMenu);
+
+        // Maintenance menu (unchanged)
+        var maintenanceMenu = new MenuBarItem { Text = "Maintenance" };
+        maintenanceMenu.Add(new MenuFlyoutItem { Text = "Clear Flagged", Command = MenuBarClearFlagged });
+        maintenanceMenu.Add(new MenuFlyoutItem { Text = "Clear Hidden", Command = MenuBarClearHidden });
+        maintenanceMenu.Add(new MenuFlyoutItem { Text = "Clear Review", Command = MenuBarClearReview });
+        MenuBarItems.Add(maintenanceMenu);
+
+        // Contact menu (unchanged)
+        var contactMenu = new MenuBarItem { Text = "Contact" };
+        contactMenu.Add(new MenuFlyoutItem { Text = "SendFeedback", Command = MenuBarSendFeedback });
+        contactMenu.Add(new MenuFlyoutItem { Text = "Rate App", Command = MenuBarRateApp });
+        MenuBarItems.Add(contactMenu);
+
+        // Application menu (contains former Help items + Exit)
+        var applicationMenu = new MenuBarItem { Text = "Application" };
+        applicationMenu.Add(new MenuFlyoutItem { Text = "About", Command = MenuBarAbout });
+        applicationMenu.Add(new MenuFlyoutItem { Text = "3rd License Info", Command = MenuBarLicenses });
+        applicationMenu.Add(new MenuFlyoutItem { Text = "Help", Command = MenuBarHelp });
+        applicationMenu.Add(new MenuFlyoutItem { Text = "Exit", Command = MenuBarExit });
+        MenuBarItems.Add(applicationMenu);
+    }
+
+    private void CreateWindowsMenus()
+    {
+        // Windows menu structure (original)
+        
+        // Home menu
+        var homeMenu = new MenuBarItem { Text = "Home" };
+        homeMenu.Add(new MenuFlyoutItem { Text = "Home Page", Command = MenuBarHome });
+        homeMenu.Add(new MenuFlyoutItem { Text = "Exit", Command = MenuBarExit });
+        MenuBarItems.Add(homeMenu);
+
+        // Questions menu
+        var questionsMenu = new MenuBarItem { Text = "Questions" };
+        questionsMenu.Add(new MenuFlyoutItem { Text = "Flashcard", Command = MenuBarFlashcards });
+        questionsMenu.Add(new MenuFlyoutItem { Text = "Practice", Command = MenuBarPractice });
+        questionsMenu.Add(new MenuFlyoutItem { Text = "Quiz", Command = MenuBarQuiz });
+        questionsMenu.Add(new MenuFlyoutItem { Text = "Review", Command = MenuBarReview });
+        questionsMenu.Add(new MenuFlyoutItem { Text = "Flagged Only", Command = MenuBarFlagged });
+        questionsMenu.Add(new MenuFlyoutItem { Text = "Hidden Only", Command = MenuBarHidden });
+        MenuBarItems.Add(questionsMenu);
+
+        // Maintenance menu
+        var maintenanceMenu = new MenuBarItem { Text = "Maintenance" };
+        maintenanceMenu.Add(new MenuFlyoutItem { Text = "Clear Flagged", Command = MenuBarClearFlagged });
+        maintenanceMenu.Add(new MenuFlyoutItem { Text = "Clear Hidden", Command = MenuBarClearHidden });
+        maintenanceMenu.Add(new MenuFlyoutItem { Text = "Clear Review", Command = MenuBarClearReview });
+        MenuBarItems.Add(maintenanceMenu);
+
+        // Contact menu
+        var contactMenu = new MenuBarItem { Text = "Contact" };
+        contactMenu.Add(new MenuFlyoutItem { Text = "SendFeedback", Command = MenuBarSendFeedback });
+        contactMenu.Add(new MenuFlyoutItem { Text = "Rate App", Command = MenuBarRateApp });
+        MenuBarItems.Add(contactMenu);
+
+        // Help menu
+        var helpMenu = new MenuBarItem { Text = "Help" };
+        helpMenu.Add(new MenuFlyoutItem { Text = "About", Command = MenuBarAbout });
+        helpMenu.Add(new MenuFlyoutItem { Text = "3rd License Info", Command = MenuBarLicenses });
+        helpMenu.Add(new MenuFlyoutItem { Text = "Help", Command = MenuBarHelp });
+        MenuBarItems.Add(helpMenu);
+    }
+
     private async void OnLoaded(object sender, EventArgs e)
     {
         if (DeviceInfo.Current.Platform == DevicePlatform.MacCatalyst)

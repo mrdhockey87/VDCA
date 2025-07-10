@@ -7,55 +7,8 @@
        BindingContext="{x:Reference shell}"
        x:Name="shell"
        FlyoutBackground="{StaticResource PrimaryBackground}"> <!-- Set the Flyout background -->
-    <!-- Define the MenuBar Items -->
-    <Shell.MenuBarItems>
-        <MenuBarItem Text="Home">
-            <MenuFlyoutItem Text="Home Page"
-                            Command="{Binding MenuBarHome}"/>
-            <MenuFlyoutItem Text="Exit"
-                            Command="{Binding MenuBarExit}" />
-        </MenuBarItem>
-
-        <MenuBarItem Text="Questions">
-            <MenuFlyoutItem Text="Flashcard"
-                            Command="{Binding MenuBarFlashcards}" />
-            <MenuFlyoutItem Text="Practice"
-                            Command="{Binding MenuBarPractice}" />
-            <MenuFlyoutItem Text="Quiz"
-                            Command="{Binding MenuBarQuiz}" />
-            <MenuFlyoutItem Text="Review"
-                            Command="{Binding MenuBarReview}" />
-            <MenuFlyoutItem Text="Flagged Only"
-                            Command="{Binding MenuBarFlagged}" />
-            <MenuFlyoutItem Text="Hidden Only"
-                            Command="{Binding MenuBarHidden}" />
-        </MenuBarItem>
-
-        <MenuBarItem Text="Maintenance">
-            <MenuFlyoutItem Text="Clear Flagged"
-                            Command="{Binding MenuBarClearFlagged}" />
-            <MenuFlyoutItem Text="Clear Hidden"
-                            Command="{Binding MenuBarClearHidden}" />
-            <MenuFlyoutItem Text="Clear Review"
-                            Command="{Binding MenuBarClearReview}" />
-        </MenuBarItem>
-
-        <MenuBarItem Text="Contact">
-            <MenuFlyoutItem Text="SendFeedback"
-                            Command="{Binding MenuBarSendFeedback}" />
-            <MenuFlyoutItem Text="Rate App"
-                            Command="{Binding MenuBarRateApp}" />
-        </MenuBarItem>
-
-        <MenuBarItem Text="Help">
-            <MenuFlyoutItem Text="About"
-                            Command="{Binding MenuBarAbout}" />
-            <MenuFlyoutItem Text="3rd License Info"
-                            Command="{Binding MenuBarLicenses}" />
-            <MenuFlyoutItem Text="Help"
-                            Command="{Binding MenuBarHelp}" />
-        </MenuBarItem>
-    </Shell.MenuBarItems>
+    <!-- MenuBar Items are now created dynamically in code-behind based on platform -->
+    
     <!-- Define the Flyout Header -->
     <Shell.FlyoutHeader>
         <Grid BackgroundColor="{StaticResource PrimaryBackground}">

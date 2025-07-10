@@ -29,7 +29,10 @@ namespace VDCA.Platforms.MacCatalyst
                 // Remove default menu items using their identifiers
                 // These are the standard macOS application menu identifiers
                 
-                // Remove File menu items
+                // Remove File menu completely
+                _menuBuilder.RemoveMenu(new NSString("com.apple.menu.file"));
+                
+                // Remove individual File menu items as backup
                 _menuBuilder.RemoveMenu(new NSString("UINSStandardAboutMenuItem"));
                 _menuBuilder.RemoveMenu(new NSString("UINSStandardHideMenuItem"));
                 _menuBuilder.RemoveMenu(new NSString("UINSStandardHideOthersMenuItem"));
@@ -51,7 +54,10 @@ namespace VDCA.Platforms.MacCatalyst
                 // Remove Format menu if present
                 _menuBuilder.RemoveMenu(new NSString("com.apple.menu.format"));
                 
-                System.Diagnostics.Debug.WriteLine("Default menu items removal attempted");
+                // Remove Services menu if present
+                _menuBuilder.RemoveMenu(new NSString("com.apple.menu.services"));
+                
+                System.Diagnostics.Debug.WriteLine("Default menu items removal attempted - including File menu");
             }
             catch (Exception ex)
             {

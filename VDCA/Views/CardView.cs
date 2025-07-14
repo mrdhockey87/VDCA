@@ -95,7 +95,6 @@ public partial class CardView : ContentPage
         FlaggedCommand = new Command(async () => await OnFlaggedCommandExecuted());
         HelpCommand = new Command(async () => await OnHelpCommandExecuted());
         DummyQuestionCommand = new Command(CardView.DummyQuestionCommand_Executed);
-        _ = OnUpdateProgressCommandExecuted();
     }
     public static void DummyQuestionCommand_Executed()
     {
@@ -105,6 +104,7 @@ public partial class CardView : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        _ = OnUpdateProgressCommandExecuted();
     }
     public void SetViewModel(CardViewModel viewModel)
     {

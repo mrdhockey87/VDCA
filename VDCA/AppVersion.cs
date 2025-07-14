@@ -20,6 +20,11 @@
 
 /*
  *  
+ *  v 6.040.0577 Had to up target of iOS to 15 in the project file & the info.plist in the iOS platform folder as the toolkit requires it.
+                 Also had to move the update of the progress bar to the on appearing method as it did not update form the init method.
+                 Also had to set the License View label width to match the inner box view width because on screen rotation the
+                 text would go off the screen. The inner box is too long if the view is on the screen when rotated from landscape to portrait,
+                 yet it is correct all other time so I am not worried about it.  mdail 7-15-25
  *  v 6.040.0576 Renoved the exit from the menubar of the mac as it isn't needed due to the fact that mac has an exit built in mdail 7-14-25
  *  v 6.040.0575 Added code to remove the File menu on mac's menubar, made seperate menubar for windows and mac mdail 7-10-25
  *  v 6.040.0574 Fix extra text in this file mdail 7-8-25

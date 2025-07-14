@@ -22,6 +22,7 @@
 
                 <!-- Inner BoxView: background, inset to reveal border -->
                 <BoxView
+                    x:Name="InnerBoxView"
                     Color="{StaticResource PrimaryBackgroundColor}"
                     CornerRadius="4"
                     Margin="2" /> <!-- Adjust margin for border thickness -->
@@ -32,11 +33,13 @@
                        x:Name="LicenseTextLabel"
                        TextColor="{StaticResource PrimaryText}"
                        Padding="12"
+                       Margin="1"
                        BackgroundColor="Transparent"
                        HorizontalTextAlignment="Justify"
                        VerticalTextAlignment="Start"
                        VerticalOptions="Start"
-                       HorizontalOptions="Start" />
+                       HorizontalOptions="Start"
+                       WidthRequest="{Binding Source={x:Reference InnerBoxView}, Path=Width}" />
             </Grid>
         </StackLayout>
     </ScrollView>

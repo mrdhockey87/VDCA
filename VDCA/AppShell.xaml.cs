@@ -101,7 +101,6 @@ public partial class AppShell : Shell
         applicationMenu.Add(new MenuFlyoutItem { Text = "About", Command = MenuBarAbout });
         applicationMenu.Add(new MenuFlyoutItem { Text = "3rd License Info", Command = MenuBarLicenses });
         applicationMenu.Add(new MenuFlyoutItem { Text = "Help", Command = MenuBarHelp });
-        applicationMenu.Add(new MenuFlyoutItem { Text = "Exit", Command = MenuBarExit });
         MenuBarItems.Add(applicationMenu);
     }
 

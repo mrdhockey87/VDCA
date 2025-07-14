@@ -20,6 +20,7 @@
 
 /*
  *  
+ *  v 6.040.0576 Renoved the exit from the menubar of the mac as it isn't needed due to the fact that mac has an exit built in mdail 7-14-25
  *  v 6.040.0575 Added code to remove the File menu on mac's menubar, made seperate menubar for windows and mac mdail 7-10-25
  *  v 6.040.0574 Fix extra text in this file mdail 7-8-25
  *  v 6.040.0573 Fix some how losing this file from the project, I don't know how it happened, but it was missing from the project file. mdail 7-8-25
